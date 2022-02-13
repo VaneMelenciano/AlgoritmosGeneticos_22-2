@@ -1,0 +1,79 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package objetos;
+
+/**
+ *
+ * @author Vanessa
+ */
+public class Individuo {
+    private int[] genotipo;
+    private int fenotipo, fitness;
+    public Individuo(){
+        this.genotipo = new int[24];
+        this.fenotipo = 0;
+        this.fitness = 0;
+    }
+    //ceación aleatori
+    public Individuo(int[] genotipo){
+        this.genotipo = genotipo.clone();
+        //hacer los calculos de fenotipo/fitness
+        calcularFenotipo();
+        calcularFitness();
+    }
+
+    /**
+     * @return the genotipo
+     */
+    public int[] getGenotipo() {
+        return genotipo;
+    }
+
+    /**
+     * @return the fenotipo
+     */
+    public int getFenotipo() {
+        return fenotipo;
+    }
+
+    /**
+     * @return the firness
+     */
+    public int getFirness() {
+        return fitness;
+    }
+
+    private void calcularFenotipo() {
+        //hacer un corrimiento del arreglo y pasar a entero los bits
+        for(int i=0, j=this.genotipo.length-1; i<this.genotipo.length && j>=0; i++, j--){
+            if(this.genotipo[i]==1){ //si es 0 no tiene caso
+                this.fenotipo+=Math.pow(2, j);
+            }
+        }
+        /*
+        this.fenotipo = 0;
+        for(int x=0; x<this.genotipo.length;x++){
+            if (this.genotipo[x]==1){
+              this.fenotipo+= Math.pow(2,this.genotipo.length-1-x);
+            }
+        }
+        */
+        /*
+        int suma = 0;
+        for(int x=0; x<this.genotipo.length;x++){
+            if (this.genotipo[x]==1){
+              suma+= Math.pow(2,this.genotipo.length-1-x);
+            }
+        }
+        return suma;
+        */
+    }
+
+    private void calcularFitness() {
+      this.fitness = 2*(this.fenotipo);
+    }
+    
+}
