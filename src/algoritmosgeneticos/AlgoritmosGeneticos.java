@@ -19,7 +19,7 @@ public class AlgoritmosGeneticos {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        int[] m = Herramientas.generarArreglo(8);
+        /*int[] m = Herramientas.generarArreglo(8);
         int[] p = Herramientas.generarArreglo(8);
         int[] mascara = Herramientas.generarArreglo(8);
         //int[] g = {0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1}; //53
@@ -27,7 +27,11 @@ public class AlgoritmosGeneticos {
         Individuo p2 = new Individuo(p); 
         //Cruza.cruzaMascara(new Individuo(Herramientas.generarArreglo(8)), new Individuo(Herramientas.generarArreglo(8)), Herramientas.generarArreglo(8));
         System.out.println(Cruza.cruzaMascara(m2, p2, mascara).getFitness());
-        System.out.println();
+        System.out.println();*/
+        int[] n = Herramientas.generarMascara1punto(8, 3);
+        int[] m = Herramientas.generarMascara2punto(7, 3, 6);
+        for(int i=0; i<m.length; i++)
+            System.out.println(m[i]);
     }
     
 }
