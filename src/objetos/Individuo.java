@@ -42,7 +42,7 @@ public class Individuo {
     /**
      * @return the firness
      */
-    public int getFirness() {
+    public int getFitness() {
         return fitness;
     }
 
@@ -53,23 +53,6 @@ public class Individuo {
                 this.fenotipo+=Math.pow(2, j);
             }
         }
-        /*
-        this.fenotipo = 0;
-        for(int x=0; x<this.genotipo.length;x++){
-            if (this.genotipo[x]==1){
-              this.fenotipo+= Math.pow(2,this.genotipo.length-1-x);
-            }
-        }
-        */
-        /*
-        int suma = 0;
-        for(int x=0; x<this.genotipo.length;x++){
-            if (this.genotipo[x]==1){
-              suma+= Math.pow(2,this.genotipo.length-1-x);
-            }
-        }
-        return suma;
-        */
     }
 
     private void calcularFitness() {

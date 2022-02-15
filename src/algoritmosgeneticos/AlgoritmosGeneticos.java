@@ -5,6 +5,7 @@
  */
 package algoritmosgeneticos;
 
+import funcionSimple.Cruza;
 import objetos.Herramientas;
 import objetos.Individuo;
 
@@ -18,9 +19,14 @@ public class AlgoritmosGeneticos {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        int[] g = Herramientas.generarArreglo(24);
-        int[] ge = {1, 1, 0, 1, 0, 1}; //53
-        Individuo a = new Individuo(ge); 
+        int[] m = Herramientas.generarArreglo(8);
+        int[] p = Herramientas.generarArreglo(8);
+        int[] mascara = Herramientas.generarArreglo(8);
+        //int[] g = {0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1}; //53
+        Individuo m2 = new Individuo(m); 
+        Individuo p2 = new Individuo(p); 
+        //Cruza.cruzaMascara(new Individuo(Herramientas.generarArreglo(8)), new Individuo(Herramientas.generarArreglo(8)), Herramientas.generarArreglo(8));
+        System.out.println(Cruza.cruzaMascara(m2, p2, mascara).getFitness());
         System.out.println();
     }
     
