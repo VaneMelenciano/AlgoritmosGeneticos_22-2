@@ -28,10 +28,36 @@ public class AlgoritmosGeneticos {
         //Cruza.cruzaMascara(new Individuo(Herramientas.generarArreglo(8)), new Individuo(Herramientas.generarArreglo(8)), Herramientas.generarArreglo(8));
         System.out.println(Cruza.cruzaMascara(m2, p2, mascara).getFitness());
         System.out.println();*/
-        int[] n = Herramientas.generarMascara1punto(8, 3);
-        int[] m = Herramientas.generarMascara2punto(7, 3, 6);
+        
+        //Mascara
+        int[] mascara = Herramientas.generarMascara1punto(8, 3);
+        //int[] mascara = Herramientas.generarMascara2punto(7, 3, 6);
+        //int[] mascara = Herramientas.generarArreglo(8);
+        System.out.println("Mascara");
+        for(int i=0; i<mascara.length; i++)
+            System.out.print(mascara[i]);
+        System.out.println("\n");
+        
+        //mamá papá
+        int[] m = Herramientas.generarArreglo(8);
+        int[] p = Herramientas.generarArreglo(8);
+        Individuo m2 = new Individuo(m); 
+        Individuo p2 = new Individuo(p); 
+        System.out.println("Mamá");
         for(int i=0; i<m.length; i++)
-            System.out.println(m[i]);
+            System.out.print(m[i]);
+        System.out.println();
+        System.out.println("Papá");
+        for(int i=0; i<p.length; i++)
+            System.out.print(p[i]);
+        System.out.println();
+        
+        
+        Individuo elegido = Cruza.cruzaMascara(m2, p2,mascara);
+        System.out.println("Hijo elegido");
+        for(int i=0; i<elegido.getGenotipo().length; i++)
+            System.out.print(elegido.getGenotipo()[i]);
+        System.out.println("\tFitness: " + elegido.getFitness());
     }
     
 }
