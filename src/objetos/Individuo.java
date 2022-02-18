@@ -12,17 +12,17 @@ package objetos;
 public class Individuo {
     private int[] genotipo;
     private int fenotipo, fitness;
+    
+    //aleatoria
     public Individuo(){
-        this.genotipo = new int[24];
-        this.fenotipo = 0;
-        this.fitness = 0;
+        this.genotipo = Herramientas.generarArreglo(24);
+        actualizar();
     }
-    //ceación aleatori
+    //ceación aleatoria
     public Individuo(int[] genotipo){
         this.genotipo = genotipo.clone();
         //hacer los calculos de fenotipo/fitness
-        calcularFenotipo();
-        calcularFitness();
+        actualizar();
     }
 
     /**
@@ -57,6 +57,11 @@ public class Individuo {
 
     private void calcularFitness() {
       this.fitness = 2*(this.fenotipo);
+    }
+
+    public void actualizar() {
+        calcularFenotipo();
+        calcularFitness();
     }
     
 }

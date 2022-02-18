@@ -5,6 +5,7 @@
  */
 package funcionSimple;
 
+import java.util.Random;
 import objetos.Individuo;
 
 /**
@@ -41,4 +42,5 @@ public class Cruza {
         
         return (h1.getFitness()>h2.getFitness() ? h1 : h2);
     }
+    
 }
