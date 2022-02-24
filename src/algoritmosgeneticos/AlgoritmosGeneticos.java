@@ -5,6 +5,7 @@
  */
 package algoritmosgeneticos;
 
+import TSP.Tokenizador;
 import funcionSimple.Cruza;
 import funcionSimple.GeneticoSimple;
 import funcionSimple.Muta;
@@ -71,8 +72,12 @@ public class AlgoritmosGeneticos {
         //Comprobar seleccion torneo
         // mayor con 24 -> 16,777,215
         //tamaño de población, npumero de genéraciones, probabilidad de muta
-        GeneticoSimple gs = new GeneticoSimple(1400, 100, 0.5);
-        gs.evolucionar();
+        //GeneticoSimple gs = new GeneticoSimple(1400, 100, 0.5);
+        //gs.evolucionar();
+        
+        //TSP
+        Tokenizador t = new Tokenizador();
+        t.guardarArchivo(t.getMatriz());
     }
     
 }

@@ -6,8 +6,10 @@
 package TSP;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -78,12 +80,50 @@ public class Tokenizador {
             
         }
     }
+    public void guardarArchivo(int[][] m){
+        this.matriz = m;
+        FileWriter flwriter = null;
+            try {
+                    //crea el flujo para escribir en el archivo
+                    flwriter = new FileWriter(".././matriz.txt");
+                    //crea un buffer o flujo intermedio antes de escribir directamente en el archivo
+                    BufferedWriter bfwriter = new BufferedWriter(flwriter);
+                    
+                    for(int i=0; i<this.matriz.length; i++){
+                        for(int j : this.matriz[i]){
+                           bfwriter.write(j + " "); 
+                        }
+                        bfwriter.write("\n");
+                    }
+                    //cierra el buffer intermedio
+                    bfwriter.close();
+
+            } catch (IOException e) {
+                    e.printStackTrace();
+            } finally {
+                    if (flwriter != null) {
+                            try {//cierra el flujo principal
+                                    flwriter.close();
+                            } catch (IOException e) {
+                                    e.printStackTrace();
+                            }
+                    }
+            }
+    }
 
     /**
      * @return the matriz
      */
     public int[][] getMatriz() {
         return matriz;
+    }
+    public void imprimirMatriz(){
+       for(int i=0; i<this.matriz.length; i++){
+            for(int j : this.matriz[i]){
+               System.out.print(j + " "); 
+            }
+            System.out.println();
+        } 
     }
 
     /**
