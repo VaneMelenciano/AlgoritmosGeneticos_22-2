@@ -6,7 +6,9 @@
 package algoritmosgeneticos;
 
 import funcionSimple.Cruza;
+import funcionSimple.GeneticoSimple;
 import funcionSimple.Muta;
+import java.util.ArrayList;
 import objetos.Herramientas;
 import objetos.Individuo;
 
@@ -60,10 +62,17 @@ public class AlgoritmosGeneticos {
             System.out.print(elegido.getGenotipo()[i]);
         System.out.println("\tFitness: " + elegido.getFitness());*/
         
-        int[] g = Herramientas.generarArreglo(8);
+        //COMPROBAR MUTA
+        /*int[] g = Herramientas.generarArreglo(8);
         Individuo a = new Individuo(g);
         Muta.muta(a);
-         System.out.println();
+         System.out.println();*/
+        
+        //Comprobar seleccion torneo
+        // mayor con 24 -> 16,777,215
+        //tamaño de población, npumero de genéraciones, probabilidad de muta
+        GeneticoSimple gs = new GeneticoSimple(1400, 100, 0.5);
+        gs.evolucionar();
     }
     
 }

@@ -20,4 +20,8 @@ public class Muta {
         i.getGenotipo()[pos] = (i.getGenotipo()[pos]==0) ? 1 : 0; //si es 0, lo pone en 1 y viseversa
         i.actualizar(); //actualiza el firtness y genotipo del individuo
     }
+
+    static boolean muta(double probMuta) {
+        return Math.random()<=probMuta;
+    }
 }

@@ -32,13 +32,13 @@ public class Cruza {
         Individuo h2 = new Individuo(g2);
         
         
-        System.out.println("\nIndividuo 1");
+        /*System.out.println("\nIndividuo 1");
         for(int i=0; i<h1.getGenotipo().length; i++)
             System.out.print(h1.getGenotipo()[i]);
         System.out.println("\tFitness: " + h1.getFitness() + "\nIndividuo 2");
         for(int i=0; i<h2.getGenotipo().length; i++)
             System.out.print(h2.getGenotipo()[i]);
-        System.out.println("\tFitness: " + h2.getFitness());
+        System.out.println("\tFitness: " + h2.getFitness());*/
         
         return (h1.getFitness()>h2.getFitness() ? h1 : h2);
     }
