@@ -5,13 +5,15 @@
  */
 package algoritmosgeneticos;
 
-import TSP.Tokenizador;
+import TSP.Matriz;
+import TSP.MatrizDistancia;
 import funcionSimple.Cruza;
 import funcionSimple.GeneticoSimple;
 import funcionSimple.Muta;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import objetos.Herramientas;
-import objetos.Individuo;
+import TSP.Individuo;
 
 /**
  *
@@ -76,8 +78,25 @@ public class AlgoritmosGeneticos {
         //gs.evolucionar();
         
         //TSP
-        Tokenizador t = new Tokenizador();
-        t.guardarArchivo(t.getMatriz());
+        
+        //MatrizDistancia.imprimirMatriz(MatrizDistancia.matrizAleatoria(6, 3, 99));
+        //Herramientas.imprimirArreglo(Herramientas.generarArreglo(3, 9));
+        
+        Matriz.marizDisancia = new int[][]{{0,34,6,12},
+                                           {34,0,40,8},
+                                           {6,40,0,7},
+                                           {12,8,7,0}};
+        //31203 = 8+40+6+12=66
+        //10231 = 34+6+7+8=55
+        //03210 = 12+7+40+34=93
+        //Individuo aux = new Individuo(3,4);
+        int[] genotipo = {3,1,2,0};
+        Individuo aux = new Individuo(genotipo);
+        //int[] genotipo = {1,0,2,3};
+        //int[] genotipo = {0,3,2,1};
+        
+        System.out.println(aux.getFitness());
+        System.out.println();
     }
     
 }

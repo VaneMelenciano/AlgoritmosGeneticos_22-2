@@ -13,6 +13,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Random;
 import java.util.StringTokenizer;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -21,16 +22,11 @@ import javax.swing.JOptionPane;
  *
  * @author Vanessa
  */
-public class Tokenizador {
-    //lee datos de un archivo, los tokeniza, y los guarda en una matriz
-    private int matriz[][];
-    //Leer archivo (csv, txt), tokenizar datos, guardar los Items (de cada renglon)
-    public Tokenizador(){
-        leerArchivo();
-    }
-    //Leer el archivo (csc o txt)
-    public void leerArchivo(){
+public class MatrizDistancia {
+    
+    public static int[][] leerArchivo(){
         String aux, texto;
+        int matriz[][] = null;
         LinkedList<String> lista = new LinkedList(); //para guardar los datos que se vayan leyendo
         
         
@@ -56,7 +52,7 @@ public class Tokenizador {
                 
                 //TOKENIZAR DATOS
                 ArrayList<String> lista2 = new ArrayList<>(); //un renglon
-                this.matriz = new int[lista.size()][lista.size()];
+                matriz = new int[lista.size()][lista.size()];
                 for (int i = 0; i < lista.size(); i++) { 
 
                     StringTokenizer tokens = new StringTokenizer(lista.get(i), " "); //va separando los renglones guardado en la lista, por los espacios
@@ -66,7 +62,7 @@ public class Tokenizador {
                     }
                     
                     for (int x = 0; x < lista2.size(); x++) { 
-                        this.matriz[i][x] = Integer.parseInt(lista2.get(x));
+                        matriz[i][x] = Integer.parseInt(lista2.get(x));
                     }
                     lista2.clear();
                 }
@@ -79,9 +75,11 @@ public class Tokenizador {
                     "ADVERTENCIA!!!", JOptionPane.WARNING_MESSAGE);
             
         }
+        return matriz;
     }
-    public void guardarArchivo(int[][] m){
-        this.matriz = m;
+    
+    public static void guardarArchivo(int[][] m){
+        int matriz[][] = m;
         FileWriter flwriter = null;
             try {
                     //crea el flujo para escribir en el archivo
@@ -89,8 +87,8 @@ public class Tokenizador {
                     //crea un buffer o flujo intermedio antes de escribir directamente en el archivo
                     BufferedWriter bfwriter = new BufferedWriter(flwriter);
                     
-                    for(int i=0; i<this.matriz.length; i++){
-                        for(int j : this.matriz[i]){
+                    for(int i=0; i<matriz.length; i++){
+                        for(int j : matriz[i]){
                            bfwriter.write(j + " "); 
                         }
                         bfwriter.write("\n");
@@ -110,23 +108,32 @@ public class Tokenizador {
                     }
             }
     }
-
-    /**
-     * @return the matriz
-     */
-    public int[][] getMatriz() {
+    
+    public static int[][] matrizAleatoria(int n, int min, int max){
+        Random r = new Random();
+        int[][] matriz = new int[n][n];
+        for(int i=0; i<n; i++){
+            for(int j=0; j<=i; j++){
+                int num = r.nextInt(max-min+1) + min;
+                if(i==j)
+                    matriz[i][j] = 0;
+                    //matriz[j][i] = (j==i ? 0 :num);
+                else{
+                   matriz[i][j] = num; 
+                   matriz[j][i] = num; 
+                }
+            }
+        }
         return matriz;
     }
-    public void imprimirMatriz(){
-       for(int i=0; i<this.matriz.length; i++){
-            for(int j : this.matriz[i]){
+    
+    public static void imprimirMatriz(int[][] matriz){
+       for(int i=0; i<matriz.length; i++){
+            for(int j : matriz[i]){
                System.out.print(j + " "); 
             }
             System.out.println();
         } 
     }
-
-    /**
-     * @return the items
-     */
+    
 }
