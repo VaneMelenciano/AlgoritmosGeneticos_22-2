@@ -73,7 +73,7 @@ public class Herramientas {
     public static void imprimirArreglo(int[] n){
         System.out.println("Arreglo");
         for(int i=0; i<n.length; i++)
-            System.out.println(n[i] + " ");
+            System.out.print(n[i] + " ");
         System.out.println();
     }
 }

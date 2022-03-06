@@ -87,14 +87,16 @@ public class AlgoritmosGeneticos {
                                            {6,40,0,7},
                                            {12,8,7,0}};
         //31203 = 8+40+6+12=66
+            //34 + 40 + 7 + 12
+            
         //10231 = 34+6+7+8=55
+            //34 + 40 + 7 + 8
         //03210 = 12+7+40+34=93
         //Individuo aux = new Individuo(3,4);
         int[] genotipo = {3,1,2,0};
-        Individuo aux = new Individuo(genotipo);
         //int[] genotipo = {1,0,2,3};
         //int[] genotipo = {0,3,2,1};
-        
+        Individuo aux = new Individuo(genotipo);
         System.out.println(aux.getFitness());
         System.out.println();
     }
