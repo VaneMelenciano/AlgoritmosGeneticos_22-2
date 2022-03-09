@@ -5,15 +5,15 @@
  */
 package algoritmosgeneticos;
 
-import TSP.Matriz;
+
 import TSP.MatrizDistancia;
-import funcionSimple.Cruza;
+import objetos.Cruza;
 import funcionSimple.GeneticoSimple;
-import funcionSimple.Muta;
+import objetos.Muta;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import objetos.Herramientas;
-import TSP.Individuo;
+import TSP.IndividuoTSP;
 
 /**
  *
@@ -29,9 +29,9 @@ public class AlgoritmosGeneticos {
         int[] p = Herramientas.generarArreglo(8);
         int[] mascara = Herramientas.generarArreglo(8);
         //int[] g = {0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1}; //53
-        Individuo m2 = new Individuo(m); 
-        Individuo p2 = new Individuo(p); 
-        //Cruza.cruzaMascara(new Individuo(Herramientas.generarArreglo(8)), new Individuo(Herramientas.generarArreglo(8)), Herramientas.generarArreglo(8));
+        IndividuoTSP m2 = new IndividuoTSP(m); 
+        IndividuoTSP p2 = new IndividuoTSP(p); 
+        //Cruza.cruzaMascara(new IndividuoTSP(Herramientas.generarArreglo(8)), new IndividuoTSP(Herramientas.generarArreglo(8)), Herramientas.generarArreglo(8));
         System.out.println(Cruza.cruzaMascara(m2, p2, mascara).getFitness());
         System.out.println();*/
         
@@ -48,8 +48,8 @@ public class AlgoritmosGeneticos {
         //mamá papá
         int[] m = Herramientas.generarArreglo(8);
         int[] p = Herramientas.generarArreglo(8);
-        Individuo m2 = new Individuo(m); 
-        Individuo p2 = new Individuo(p); 
+        IndividuoTSP m2 = new IndividuoTSP(m); 
+        IndividuoTSP p2 = new IndividuoTSP(p); 
         System.out.println("Mamá");
         for(int i=0; i<m.length; i++)
             System.out.print(m[i]);
@@ -59,7 +59,7 @@ public class AlgoritmosGeneticos {
         System.out.println();
         
         
-        Individuo elegido = Cruza.cruzaMascara(m2, p2,mascara);
+        IndividuoTSP elegido = Cruza.cruzaMascara(m2, p2,mascara);
         System.out.println("Hijo elegido");
         for(int i=0; i<elegido.getGenotipo().length; i++)
             System.out.print(elegido.getGenotipo()[i]);
@@ -67,7 +67,7 @@ public class AlgoritmosGeneticos {
         
         //COMPROBAR MUTA
         /*int[] g = Herramientas.generarArreglo(8);
-        Individuo a = new Individuo(g);
+        IndividuoTSP a = new IndividuoTSP(g);
         Muta.muta(a);
          System.out.println();*/
         
@@ -82,7 +82,7 @@ public class AlgoritmosGeneticos {
         //MatrizDistancia.imprimirMatriz(MatrizDistancia.matrizAleatoria(6, 3, 99));
         //Herramientas.imprimirArreglo(Herramientas.generarArreglo(3, 9));
         
-        Matriz.marizDisancia = new int[][]{{0,34,6,12},
+        MatrizDistancia.matriz = new int[][]{{0,34,6,12},
                                            {34,0,40,8},
                                            {6,40,0,7},
                                            {12,8,7,0}};
@@ -92,12 +92,15 @@ public class AlgoritmosGeneticos {
         //10231 = 34+6+7+8=55
             //34 + 40 + 7 + 8
         //03210 = 12+7+40+34=93
-        //Individuo aux = new Individuo(3,4);
+        //Individuo aux = new IndividuoTSP(3,4);
         int[] genotipo = {3,1,2,0};
-        //int[] genotipo = {1,0,2,3};
+        int[] genotipo2 = {1,0,2,3};
         //int[] genotipo = {0,3,2,1};
-        Individuo aux = new Individuo(genotipo);
-        System.out.println(aux.getFitness());
+        IndividuoTSP aux = new IndividuoTSP(genotipo);
+        IndividuoTSP aux2 = new IndividuoTSP(genotipo2);
+        int[] mascara = {1, 0, 1, 0};
+        IndividuoTSP nuevo = Cruza.cruzaTSP(aux, aux2, mascara);
+        //Muta.muta(aux);
         System.out.println();
     }
     

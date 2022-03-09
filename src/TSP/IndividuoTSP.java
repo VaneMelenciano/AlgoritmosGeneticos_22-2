@@ -11,22 +11,22 @@ import objetos.Herramientas;
  *
  * @author Vanessa
  */
-public class Individuo {
+public class IndividuoTSP {
     private int[] genotipo;
     private int fenotipo, fitness;
     
     //aleatoria 
-    public Individuo(int ci, int nc){ //cuidad inicial, número de cuidades
+    public IndividuoTSP(int ci, int nc){ //cuidad inicial, número de cuidades
         this.genotipo = Herramientas.generarArreglo(ci, nc);
         actualizar();
     }
     //ceación aleatoria
-    /*public Individuo(){
+    /*public IndividuoTSP(){
         this.genotipo = genotipo.clone();
         //hacer los calculos de fenotipo/fitness
         actualizar();
     }*/
-    public Individuo(int[] genotipo){
+    public IndividuoTSP(int[] genotipo){
         this.genotipo = genotipo.clone();
         //hacer los calculos de fenotipo/fitness
         actualizar();
@@ -66,10 +66,10 @@ public class Individuo {
         //genotipo es el arreglo aleatorio de la ruta
       //recorrer el genotipo y consultar la matriz de distancias
       for(int i=0; i<this.genotipo.length-1; i++){
-          this.fitness += Matriz.marizDisancia[this.genotipo[i]][this.genotipo[i+1]];
+          this.fitness += MatrizDistancia.matriz[this.genotipo[i]][this.genotipo[i+1]];
       }
       //ultima ruta hacia la iniciar (de regreso)
-      this.fitness +=Matriz.marizDisancia[this.genotipo[this.genotipo.length-1]][this.genotipo[0]];
+      this.fitness +=MatrizDistancia.matriz[this.genotipo[this.genotipo.length-1]][this.genotipo[0]];
       
     }
 

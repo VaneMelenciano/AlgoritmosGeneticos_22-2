@@ -23,6 +23,7 @@ import javax.swing.JOptionPane;
  * @author Vanessa
  */
 public class MatrizDistancia {
+    public static int[][] matriz;
     
     public static int[][] leerArchivo(){
         String aux, texto;

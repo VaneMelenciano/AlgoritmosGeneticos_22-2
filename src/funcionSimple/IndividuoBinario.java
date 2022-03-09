@@ -3,23 +3,25 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package objetos;
+package funcionSimple;
+
+import objetos.Herramientas;
 
 /**
  *
  * @author Vanessa
  */
-public class Individuo {
+public class IndividuoBinario {
     private int[] genotipo;
     private int fenotipo, fitness;
     
     //aleatoria
-    public Individuo(){
+    public IndividuoBinario(){
         this.genotipo = Herramientas.generarArreglo(24);
         actualizar();
     }
     //ceación aleatoria
-    public Individuo(int[] genotipo){
+    public IndividuoBinario(int[] genotipo){
         this.genotipo = genotipo.clone();
         //hacer los calculos de fenotipo/fitness
         actualizar();

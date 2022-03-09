@@ -3,11 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Melencino/Documents/Universidad/semestre_22-2/AlgoritmosGeneticos/AlgoritmosGeneticos_22-2/src/objetos/Individuo.java</file>
-            <file>file:/C:/Users/Melencino/Documents/Universidad/semestre_22-2/AlgoritmosGeneticos/AlgoritmosGeneticos_22-2/src/TSP/Matriz.java</file>
+            <file>file:/C:/Users/Melencino/Documents/Universidad/semestre_22-2/AlgoritmosGeneticos/AlgoritmosGeneticos_22-2/src/funcionSimple/GeneticoSimple.java</file>
+            <file>file:/C:/Users/Melencino/Documents/Universidad/semestre_22-2/AlgoritmosGeneticos/AlgoritmosGeneticos_22-2/src/TSP/IndividuoTSP.java</file>
+            <file>file:/C:/Users/Melencino/Documents/Universidad/semestre_22-2/AlgoritmosGeneticos/AlgoritmosGeneticos_22-2/src/funcionSimple/IndividuoBinario.java</file>
+            <file>file:/C:/Users/Melencino/Documents/Universidad/semestre_22-2/AlgoritmosGeneticos/AlgoritmosGeneticos_22-2/src/objetos/Seleccion.java</file>
+            <file>file:/C:/Users/Melencino/Documents/Universidad/semestre_22-2/AlgoritmosGeneticos/AlgoritmosGeneticos_22-2/src/objetos/Cruza.java</file>
             <file>file:/C:/Users/Melencino/Documents/Universidad/semestre_22-2/AlgoritmosGeneticos/AlgoritmosGeneticos_22-2/src/TSP/MatrizDistancia.java</file>
             <file>file:/C:/Users/Melencino/Documents/Universidad/semestre_22-2/AlgoritmosGeneticos/AlgoritmosGeneticos_22-2/src/algoritmosgeneticos/AlgoritmosGeneticos.java</file>
-            <file>file:/C:/Users/Melencino/Documents/Universidad/semestre_22-2/AlgoritmosGeneticos/AlgoritmosGeneticos_22-2/src/TSP/Individuo.java</file>
+            <file>file:/C:/Users/Melencino/Documents/Universidad/semestre_22-2/AlgoritmosGeneticos/AlgoritmosGeneticos_22-2/src/objetos/Muta.java</file>
             <file>file:/C:/Users/Melencino/Documents/Universidad/semestre_22-2/AlgoritmosGeneticos/AlgoritmosGeneticos_22-2/src/objetos/Herramientas.java</file>
         </group>
     </open-files>
