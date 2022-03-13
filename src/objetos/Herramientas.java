@@ -51,6 +51,8 @@ public class Herramientas {
                 num = (int)(Math.random()*nc);
             }
         }
+        
+        //Herramientas.imprimir(aux);
         return aux;
     }
         
@@ -73,7 +75,7 @@ public class Herramientas {
         return aux;
     }
     public static void imprimirArreglo(int[] n){
-        System.out.println("Arreglo");
+        //System.out.println("Arreglo");
         for(int i=0; i<n.length; i++)
             System.out.print(n[i] + " ");
         System.out.println();

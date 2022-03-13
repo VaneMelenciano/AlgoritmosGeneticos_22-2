@@ -26,8 +26,6 @@ public class Muta {
         return Math.random()<=probMuta;
     }
     public static void muta(IndividuoTSP i){
-        
-        
         int pos = calcularAleatorio(i.getGenotipo().length); //r.nextInt(i.getGenotipo().length-1)+1; //elige una posición entre el genotipo del individuo, al azar
         int pos2 = calcularAleatorio(i.getGenotipo().length);
         while(pos==pos2) pos2=calcularAleatorio(i.getGenotipo().length);

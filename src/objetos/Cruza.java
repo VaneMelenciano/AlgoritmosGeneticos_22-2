@@ -8,6 +8,7 @@ package objetos;
 import TSP.IndividuoTSP;
 import funcionSimple.IndividuoBinario;
 import static java.lang.Math.max;
+import java.util.LinkedHashSet;
 import java.util.Random;
 
 /**
@@ -63,19 +64,54 @@ public class Cruza {
         boolean h2valido = Herramientas.verificarIndividuo(h2);
         
         if(h1valido && h2valido)
-            return verificarMayor(h1,h2);
+            return verificarMenor(h1,h2);
         else if(h1valido) 
             return h1;
         else if(h2valido)
             return h2;
          else
-            return verificarMayor(m,p);
+            return verificarMenor(m,p);
     }
     
-    private static IndividuoTSP verificarMayor(IndividuoTSP m, IndividuoTSP p){
-        if(m.getFitness()>p.getFitness()) return m;
-        if(m.getFitness()<p.getFitness()) return p;
+    private static IndividuoTSP verificarMenor(IndividuoTSP m, IndividuoTSP p){
+        //if(m.getFitness()<p.getFitness()) return m;
+        if(m.getFitness()>p.getFitness()) return p;
         else return m;
     }
+    
+    public static IndividuoTSP cruzaTSP(IndividuoTSP m, IndividuoTSP p){
+        LinkedHashSet<Integer> li1 = new LinkedHashSet<>(m.getGenotipo().length);
+        LinkedHashSet<Integer> li2 = new LinkedHashSet<>(m.getGenotipo().length);
+        boolean bandera = true;
+        li1.add(m.getGenotipo()[0]);
+        li2.add(m.getGenotipo()[0]);
+        //primer individuo
+        for(int i=1; i<m.getGenotipo().length; i++){
+            if(bandera){
+                li1.add(m.getGenotipo()[i]);
+                bandera=false;
+            }
+            if(!bandera){
+                li1.add(p.getGenotipo()[i]);
+                bandera=true;
+            }
+        }
+        //segundo individuo
+        bandera = true;
+        for(int i=m.getGenotipo().length-1; i>0; i--){
+            if(bandera){
+                li2.add(m.getGenotipo()[i]);
+                bandera=false;
+            }
+            if(!bandera){
+                li2.add(p.getGenotipo()[i]);
+                bandera=true;
+            }
+        }
+        IndividuoTSP indi1 = new IndividuoTSP(li1.stream().mapToInt(i -> i).toArray());// de integer -> int
+        IndividuoTSP indi2 = new IndividuoTSP(li2.stream().mapToInt(i -> i).toArray());
+        return verificarMenor(indi1, indi2); 
+    }
+    
     
 }

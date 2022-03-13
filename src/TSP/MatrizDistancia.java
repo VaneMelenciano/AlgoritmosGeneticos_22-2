@@ -11,7 +11,9 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.Random;
 import java.util.StringTokenizer;
@@ -33,7 +35,7 @@ public class MatrizDistancia {
         
         try {
             JFileChooser file = new JFileChooser(); //llamamos el metodo que permite cargar la ventana
-            file.setCurrentDirectory(new File("./"));
+            file.setCurrentDirectory(new File(".././Pruebas/TSP"));
             file.showOpenDialog(file);
             //Abre el archivo
             File abre = file.getSelectedFile();
@@ -79,17 +81,99 @@ public class MatrizDistancia {
         return matriz;
     }
     
-    public static void guardarArchivo(int[][] m){
+    public static void guardarArchivo(int[][] m){ //nombre con base en hora de creación
         int matriz[][] = m;
         FileWriter flwriter = null;
             try {
                     //crea el flujo para escribir en el archivo
-                    flwriter = new FileWriter(".././matriz.txt");
+                    //SimpleDateFormat ff = new SimpleDateFormat("yyyy-MM-dd-hh-mm-ss");
+                    SimpleDateFormat ff1 = new SimpleDateFormat("ss-mm-hh");
+                    SimpleDateFormat ff2 = new SimpleDateFormat("dd-MM-yyyy");
+                    Date d = new Date();
+                    String time1 = ff1.format(d);
+                    String time2 = ff2.format(d);
+                    String name = "matriz_" + time1 + "_" +time2; 
+                    
+                    flwriter = new FileWriter(".././" + name + ".txt");
+                    //flwriter = new FileWriter(".././matriz.txt");
                     //crea un buffer o flujo intermedio antes de escribir directamente en el archivo
                     BufferedWriter bfwriter = new BufferedWriter(flwriter);
                     
                     for(int i=0; i<matriz.length; i++){
                         for(int j : matriz[i]){
+                           bfwriter.write(j + " "); 
+                        }
+                        bfwriter.write("\n");
+                    }
+                    //cierra el buffer intermedio
+                    bfwriter.close();
+
+            } catch (IOException e) {
+                    e.printStackTrace();
+            } finally {
+                    if (flwriter != null) {
+                            try {//cierra el flujo principal
+                                    flwriter.close();
+                            } catch (IOException e) {
+                                    e.printStackTrace();
+                            }
+                    }
+            }
+    }
+    
+    public static void guardarArchivo(int[][] m, String name){ //recibe nombre como parametro
+        int matriz[][] = m;
+        FileWriter flwriter = null;
+            try {
+                    //crea el flujo para escribir en el archivo
+                    
+                    flwriter = new FileWriter(".././" + name + ".txt");
+                    //flwriter = new FileWriter(".././matriz.txt");
+                    //crea un buffer o flujo intermedio antes de escribir directamente en el archivo
+                    BufferedWriter bfwriter = new BufferedWriter(flwriter);
+                    
+                    for(int i=0; i<matriz.length; i++){
+                        for(int j : matriz[i]){
+                           bfwriter.write(j + " "); 
+                        }
+                        bfwriter.write("\n");
+                    }
+                    //cierra el buffer intermedio
+                    bfwriter.close();
+
+            } catch (IOException e) {
+                    e.printStackTrace();
+            } finally {
+                    if (flwriter != null) {
+                            try {//cierra el flujo principal
+                                    flwriter.close();
+                            } catch (IOException e) {
+                                    e.printStackTrace();
+                            }
+                    }
+            }
+    }
+    
+    public static void guardarArchivo(String[][] m){ //nombre con base en hora de creación
+        String matriz[][] = m;
+        FileWriter flwriter = null;
+            try {
+                    //crea el flujo para escribir en el archivo
+                    //SimpleDateFormat ff = new SimpleDateFormat("yyyy-MM-dd-hh-mm-ss");
+                    SimpleDateFormat ff1 = new SimpleDateFormat("yyyy-MM-dd");
+                    SimpleDateFormat ff2 = new SimpleDateFormat("hh-mm-ss");
+                    Date d = new Date();
+                    String time1 = ff1.format(d);
+                    String time2 = ff2.format(d);
+                    String name = "matriz_" + time1 + "_" +time2; 
+                    
+                    flwriter = new FileWriter(".././Pruebas/TSP/" + name + ".txt");
+                    //flwriter = new FileWriter(".././matriz.txt");
+                    //crea un buffer o flujo intermedio antes de escribir directamente en el archivo
+                    BufferedWriter bfwriter = new BufferedWriter(flwriter);
+                    
+                    for(int i=0; i<matriz.length; i++){
+                        for(String j : matriz[i]){
                            bfwriter.write(j + " "); 
                         }
                         bfwriter.write("\n");

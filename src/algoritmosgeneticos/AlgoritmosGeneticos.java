@@ -82,7 +82,7 @@ public class AlgoritmosGeneticos {
         //MatrizDistancia.imprimirMatriz(MatrizDistancia.matrizAleatoria(6, 3, 99));
         //Herramientas.imprimirArreglo(Herramientas.generarArreglo(3, 9));
         
-        MatrizDistancia.matriz = new int[][]{{0,34,6,12},
+        /*MatrizDistancia.matriz = new int[][]{{0,34,6,12},
                                            {34,0,40,8},
                                            {6,40,0,7},
                                            {12,8,7,0}};
@@ -99,9 +99,19 @@ public class AlgoritmosGeneticos {
         IndividuoTSP aux = new IndividuoTSP(genotipo);
         IndividuoTSP aux2 = new IndividuoTSP(genotipo2);
         int[] mascara = {1, 0, 1, 0};
-        IndividuoTSP nuevo = Cruza.cruzaTSP(aux, aux2, mascara);
+        IndividuoTSP nuevo = Cruza.cruzaTSP(aux, aux2);
         //Muta.muta(aux);
-        System.out.println();
+        System.out.println();*/
+        
+        
+        int tamanioPob = 24; //numero de cuidades
+        int numG = 3500; //numero de generaciones
+        double posMuta = 0.2; //posibilidad de muta
+        int cuI = 18; //cuidad inical
+        MatrizDistancia.matriz = MatrizDistancia.leerArchivo();
+        GeneticoSimple gs = new GeneticoSimple(tamanioPob, numG, posMuta);
+        gs.evolucionarTSP();
+        //227
     }
     
 }

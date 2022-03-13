@@ -22,7 +22,7 @@ public class IndividuoTSP {
     }
     //ceación aleatoria
     /*public IndividuoTSP(){
-        this.genotipo = genotipo.clone();
+        this.genotipo = Herramientas.generarArreglo(fitness, fitness);
         //hacer los calculos de fenotipo/fitness
         actualizar();
     }*/
