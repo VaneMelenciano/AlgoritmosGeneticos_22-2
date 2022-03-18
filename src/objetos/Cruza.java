@@ -59,7 +59,7 @@ public class Cruza {
         }
         IndividuoTSP h1 = new IndividuoTSP(g1);
         IndividuoTSP h2 = new IndividuoTSP(g2);
-        //REVISAR SI LOS INFIVIDUOS CREADOS SON VALIDOS
+        //REVISAR SI LOS INDIVIDUOS CREADOS SON VALIDOS
         boolean h1valido = Herramientas.verificarIndividuo(h1);
         boolean h2valido = Herramientas.verificarIndividuo(h2);
         

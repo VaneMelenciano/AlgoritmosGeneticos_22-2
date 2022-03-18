@@ -14,6 +14,8 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import objetos.Herramientas;
 import TSP.IndividuoTSP;
+import java.util.Arrays;
+import objetos.Muestreo;
 
 /**
  *
@@ -104,13 +106,27 @@ public class AlgoritmosGeneticos {
         System.out.println();*/
         
         
-        int tamanioPob = 24; //numero de cuidades
+        /*int tamanioPob = 50; //tamaño de poblacion
         int numG = 3500; //numero de generaciones
         double posMuta = 0.2; //posibilidad de muta
         int cuI = 18; //cuidad inical
         MatrizDistancia.matriz = MatrizDistancia.leerArchivo();
         GeneticoSimple gs = new GeneticoSimple(tamanioPob, numG, posMuta);
-        gs.evolucionarTSP();
+        ArrayList<IndividuoTSP> original = (ArrayList<IndividuoTSP>) gs.poblacionTSP.clone();
+        int porcentaje = 50;
+        ArrayList<IndividuoTSP> nuevo = Muestreo.torneo((ArrayList<IndividuoTSP>) original.clone(), 50);
+        System.out.println();*/
+        //System.out.println(Arrays.toString(Herramientas.generarArreglo(10, 12)));
+        
+        int tamanioPob = 200; //tamaño de poblacion
+        int numG = 4000; //numero de generaciones
+        double posMuta = 0.1; //posibilidad de muta
+        int cuI = 10; //cuidad inical
+        MatrizDistancia.matriz = MatrizDistancia.leerArchivo();
+        //MatrizDistancia.imprimirMatriz(MatrizDistancia.matriz);
+        GeneticoSimple gs = new GeneticoSimple(tamanioPob, numG, posMuta, cuI);
+        gs.evolucionarTSP(0.15F);
+        //gs.evolucionarTSP(0.15F);
         //227
     }
     

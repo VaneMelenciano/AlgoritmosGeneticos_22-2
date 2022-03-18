@@ -215,7 +215,7 @@ public class MatrizDistancia {
     public static void imprimirMatriz(int[][] matriz){
        for(int i=0; i<matriz.length; i++){
             for(int j : matriz[i]){
-               System.out.print(j + " "); 
+               System.out.print(j + "\t"); 
             }
             System.out.println();
         } 
