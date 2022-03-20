@@ -106,28 +106,46 @@ public class AlgoritmosGeneticos {
         System.out.println();*/
         
         
-        /*int tamanioPob = 50; //tamaño de poblacion
+        /*int tamanioPob = 170; //tamaño de poblacion
         int numG = 3500; //numero de generaciones
-        double posMuta = 0.2; //posibilidad de muta
+        int ciuI = 20;
+        double posMuta = 0.07; //posibilidad de muta
         int cuI = 18; //cuidad inical
         MatrizDistancia.matriz = MatrizDistancia.leerArchivo();
-        GeneticoSimple gs = new GeneticoSimple(tamanioPob, numG, posMuta);
-        ArrayList<IndividuoTSP> original = (ArrayList<IndividuoTSP>) gs.poblacionTSP.clone();
-        int porcentaje = 50;
-        ArrayList<IndividuoTSP> nuevo = Muestreo.torneo((ArrayList<IndividuoTSP>) original.clone(), 50);
-        System.out.println();*/
+        GeneticoSimple gs = new GeneticoSimple(tamanioPob, numG, posMuta, ciuI);
+        gs.evolucionarTSP(cuI);*/
+        //ArrayList<IndividuoTSP> original = (ArrayList<IndividuoTSP>) gs.poblacionTSP.clone();
+        //int porcentaje = 50;
+        //ArrayList<IndividuoTSP> nuevo = Muestreo.torneo((ArrayList<IndividuoTSP>) original.clone(), 50);
+        //System.out.println();
         //System.out.println(Arrays.toString(Herramientas.generarArreglo(10, 12)));
         
-        int tamanioPob = 200; //tamaño de poblacion
-        int numG = 4000; //numero de generaciones
-        double posMuta = 0.1; //posibilidad de muta
-        int cuI = 10; //cuidad inical
+        int tamanioPob = 1100; //tamaño de poblacion
+        int numG = 5000; //numero de generaciones
+        double posMuta = 0.09; //posibilidad de muta
+        int cuI = 18; //cuidad inical
         MatrizDistancia.matriz = MatrizDistancia.leerArchivo();
         //MatrizDistancia.imprimirMatriz(MatrizDistancia.matriz);
-        GeneticoSimple gs = new GeneticoSimple(tamanioPob, numG, posMuta, cuI);
-        gs.evolucionarTSP(0.15F);
+        GeneticoSimple gs = new GeneticoSimple(tamanioPob, numG, posMuta);
+        //gs.evolucionarTSP();
+        gs.evolucionarTSP(0.18F);
+        System.out.println();
+        int t=5;
+        while(t>=0){
+            //String gs = String.valueOf(t) + "gs"; 
+            gs = new GeneticoSimple(tamanioPob, numG, posMuta);
+            gs.evolucionarTSP(0.18F);
+            t--;
+            System.out.println();
+        }
         //gs.evolucionarTSP(0.15F);
         //227
+        
+       
+        //MatrizDistancia.guardarArchivo( MatrizDistancia.matrizAleatoria(15, 15, 96), "Mtariz 15 cuidades min 15 max 96");
+        //MatrizDistancia.guardarArchivo( MatrizDistancia.matrizAleatoria(50, 20, 130), "Matriz 50 cuidades min 20 max 130");
+        //MatrizDistancia.guardarArchivo( MatrizDistancia.matrizAleatoria(100, 0, 50), "Matriz 100 cuidades min 0 max 50");
+        //MatrizDistancia.guardarArchivo( MatrizDistancia.matrizAleatoria(400, 15, 80), "Matriz 400 cuidades min 15 max 80");
     }
     
 }

@@ -84,7 +84,7 @@ public class GeneticoSimple {
         //someter a la poblacion a un proceso evolutivo
         int mejorRes=0, genRes=0;
        for(int i=0; i<this.numGeneraciones; i++){
-           System.out.println("GENERACIÓN: " + i);
+           //System.out.println("GENERACIÓN: " + i);
            //crear una población nueva           
            pobAux = new ArrayList<>();
            for(int j=0; j<this.tamanioPoblacion; j++){
@@ -113,11 +113,11 @@ public class GeneticoSimple {
            
            IndividuoTSP mejor = Seleccion.seleccionTorneoTSP(this.poblacionTSP);
            //System.out.println("\nGeneración :"+(i+1) + "\n  mejor individuo: ");
-           System.out.println("\n  Mejor individuo: ");
+           /*System.out.println("\n  Mejor individuo: ");
            for(int k=0; k<mejor.getGenotipo().length-1; k++){
                System.out.print(mejor.getGenotipo()[k] + ", ");
             }System.out.print(mejor.getGenotipo()[mejor.getGenotipo().length-1]);
-            System.out.println("\n\tFitness: "+mejor.getFitness()+"\n");
+            System.out.println("\n\tFitness: "+mejor.getFitness()+"\n");*/
             
             //AGREGAR MEJOR INDIVIDUO A TXT
             /*matrizRes[i][0] = "g" + i;
@@ -128,10 +128,14 @@ public class GeneticoSimple {
             if(i==0){
                 mejorRes = mejor.getFitness();
                 genRes=i;
+                System.out.println("Generacion: " + genRes + " Fitness: " + mejor.getFitness()+ "  Mejor resultado: "+ Arrays.toString(mejor.getGenotipo()));
+            
             } 
             else if(mejorRes>mejor.getFitness()){
                 mejorRes = mejor.getFitness();
                 genRes=i;
+                System.out.println("Generacion: " + genRes + " Fitness: " + mejor.getFitness()+ "  Mejor resultado: "+ Arrays.toString(mejor.getGenotipo()));
+            
             }
        }
        /*matrizRes[this.numGeneraciones][0] = "Mejor resultado:";
@@ -157,6 +161,8 @@ public class GeneticoSimple {
                     //Torneo, aleatorio y 50/50
            int cantidad = Math.round(porcentaje*this.poblacionTSP.size());
            pobAux = Muestreo.torneo(this.poblacionTSP, cantidad);
+           //pobAux = Muestreo.aleatorio(this.poblacionTSP, cantidad);
+           //pobAux = Muestreo.mitad(this.poblacionTSP, cantidad);
            //ArrayList<IndividuoTSP> nueAux = Muestreo.aleatorio(this.poblacionTSP, cantidad);
            //ArrayList<IndividuoTSP> nueAux = Muestreo.mitad(this.poblacionTSP, cantidad);
            
@@ -187,11 +193,11 @@ public class GeneticoSimple {
            
            IndividuoTSP mejor = Seleccion.seleccionTorneoTSP(this.poblacionTSP);
            //System.out.println("\nGeneración :"+(i+1) + "\n  mejor individuo: ");
-           System.out.println("\n  Mejor individuo: ");
+           /*System.out.println("\n  Mejor individuo: ");
            for(int k=0; k<mejor.getGenotipo().length-1; k++){
                System.out.print(mejor.getGenotipo()[k] + ", ");
             }System.out.print(mejor.getGenotipo()[mejor.getGenotipo().length-1]);
-            System.out.println("\n\tFitness: "+mejor.getFitness()+"\n");
+            System.out.println("\n\tFitness: "+mejor.getFitness()+"\n");*/
             
             //AGREGAR MEJOR INDIVIDUO A TXT
             matrizRes[i][0] = "g" + i;
@@ -202,10 +208,12 @@ public class GeneticoSimple {
             if(i==0){
                 mejorRes = mejor.getFitness();
                 genRes=i;
+                System.out.println("Generacion: " + genRes + " Fitness: " + mejor.getFitness()+ "  Mejor resultado: "+ Arrays.toString(mejor.getGenotipo()));
             } 
             else if(mejorRes>mejor.getFitness()){
                 mejorRes = mejor.getFitness();
                 genRes=i;
+                System.out.println("Generacion: " + genRes + " Fitness: " + mejor.getFitness()+ "  Mejor resultado: "+ Arrays.toString(mejor.getGenotipo()));
             }
        }
        matrizRes[this.numGeneraciones][0] = "Mejor resultado:";
@@ -213,7 +221,7 @@ public class GeneticoSimple {
        matrizRes[this.numGeneraciones][2] = "\tGeneracion:";
        matrizRes[this.numGeneraciones][3] = "\t" + genRes;
        
-       System.out.println("Mejor resultado: " + mejorRes + "  Generacin: " + genRes);
+       //System.out.println("Mejor resultado: " + mejorRes + "  Generacin: " + genRes);
        for(int i=4; i<this.poblacionTSP.get(0).getGenotipo().length+1; i++) matrizRes[this.numGeneraciones][i] = "";
        MatrizDistancia.guardarArchivo(matrizRes);
     }
@@ -260,7 +268,7 @@ public class GeneticoSimple {
             }System.out.print(mejor.getGenotipo()[mejor.getGenotipo().length-1]);
             System.out.println("\n\tFitness: "+mejor.getFitness());*/
             
-           System.out.print("\r" + Arrays.toString(mejor.getGenotipo()) + " " + mejor.getFitness() + " " + (i + 1));
+           //System.out.print("\r" + Arrays.toString(mejor.getGenotipo()) + " " + mejor.getFitness() + " " + (i + 1));
            
            
             //AGREGAR MEJOR INDIVIDUO A TXT
@@ -272,10 +280,12 @@ public class GeneticoSimple {
             if(i==0){
                 mejorRes = mejor.getFitness();
                 genRes=i;
+                System.out.print( Arrays.toString(mejor.getGenotipo()) + " " + mejor.getFitness() + " " + (i + 1));
             } 
             else if(mejorRes>mejor.getFitness()){
                 mejorRes = mejor.getFitness();
                 genRes=i;
+                System.out.print("\r" + Arrays.toString(mejor.getGenotipo()) + " " + mejor.getFitness() + " " + (i + 1));
             }
        }
        matrizRes[this.numGeneraciones][0] = "Mejor resultado:";
@@ -295,20 +305,20 @@ public class GeneticoSimple {
     public void generarPoblacionInicialTSP() {
         //se genere de manera aleatoria
         Random r = new Random();
-        int n = r.nextInt(this.tamanioPoblacion);
+        int n = r.nextInt(MatrizDistancia.matriz.length);
         for(int i=0; i<this.tamanioPoblacion; i++)
             this.poblacionTSP.add(new IndividuoTSP(n, MatrizDistancia.matriz.length));
         
     }
     public void generarPoblacionInicialTSP(int n) {
-        System.out.println("POBLACIÓN INICIAL");
+        //System.out.println("POBLACIÓN INICIAL");
         //se genere de manera aleatoria
         for(int i=0; i<this.tamanioPoblacion; i++){
             IndividuoTSP in = new IndividuoTSP(n, MatrizDistancia.matriz.length);
             this.poblacionTSP.add(in);
             //VER EL INDIVIDUO
-            Herramientas.imprimirArreglo(in.getGenotipo());
-            System.out.println("\t Fitness: " + in.getFitness());
+            //Herramientas.imprimirArreglo(in.getGenotipo());
+            //System.out.println("\t Fitness: " + in.getFitness());
         }  
     }
     
