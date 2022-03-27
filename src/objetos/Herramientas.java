@@ -5,7 +5,7 @@
  */
 package objetos;
 
-import TSP.IndividuoTSP;
+import Individuos.IndividuoTSP;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
@@ -56,6 +56,15 @@ public class Herramientas {
         return aux;
     }
         
+    //REINAS
+    public static int[] generarArregloReinas(int n){
+        int[] aux = new int[n];
+        Random r = new Random();
+        for( int i=0; i<n; i++){
+            aux[i]=r.nextInt(n);
+        }
+        return aux;
+    }
     
     public static int[] generarMascara1punto(int n, int j){
         int[] aux = new int[n];
@@ -81,7 +90,7 @@ public class Herramientas {
         System.out.println();
     }
     //bool -> verificar si un un individuo (camino es valido)-> que no se repita un número
-    public static boolean verificarIndividuo(IndividuoTSP in){
+    public static boolean verificarIndividuoTSP(IndividuoTSP in){
         System.out.println("Verificando");
         ArrayList<Integer> numeros = new ArrayList();
         for(int i=0; i<in.getGenotipo().length;i++) numeros.add(i);

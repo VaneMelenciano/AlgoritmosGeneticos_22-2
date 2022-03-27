@@ -5,8 +5,10 @@
  */
 package objetos;
 
-import TSP.IndividuoTSP;
-import funcionSimple.IndividuoBinario;
+import Individuos.Individuo;
+import Individuos.IndividuoReinas;
+import Individuos.IndividuoTSP;
+import Individuos.IndividuoBinario;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -17,7 +19,7 @@ import java.util.Random;
 public class Seleccion {
     
     //selecciona al individuo con mejor fitness en la población
-    public static IndividuoBinario seleccionTorneo(ArrayList<IndividuoBinario> poblacion){
+    /*public static IndividuoBinario seleccionTorneo(ArrayList<IndividuoBinario> poblacion){
        //recorrer la poblacción
        IndividuoBinario mejor = poblacion.get(0);
        for(IndividuoBinario i: poblacion){
@@ -35,9 +37,27 @@ public class Seleccion {
        }
        return (new IndividuoTSP(mejor.getGenotipo()));
     }
+    public static IndividuoReinas seleccionTorneoReinas(ArrayList<IndividuoReinas> poblacion){
+       //recorrer la poblacción
+       IndividuoReinas mejor = poblacion.get(0);
+       for(IndividuoReinas i: poblacion){
+           if(i.getFitness()<mejor.getFitness()) //minimizar
+               mejor = i;
+       }
+       return (new IndividuoReinas(mejor.getGenotipo()));
+    }*/
+    public static Individuo torneo(ArrayList<Individuo> poblacion){
+       //recorrer la poblacción
+       Individuo mejor = poblacion.get(0);
+       for(Individuo i: poblacion){
+           if(i.getFitness()<mejor.getFitness()) //minimizar
+               mejor = i;
+       }
+       return (new Individuo(mejor.getGenotipo()));
+    }
     
     //seleccion aleatoria
-    public static IndividuoBinario seleccionAleatoria(ArrayList<IndividuoBinario> poblacion){
+    /*public static IndividuoBinario seleccionAleatoria(ArrayList<IndividuoBinario> poblacion){
        //recorrer la poblacción
        Random r = new Random();
        int pos = r.nextInt(poblacion.size());
@@ -48,6 +68,18 @@ public class Seleccion {
        Random r = new Random();
        int pos = r.nextInt(poblacion.size());
        return new IndividuoTSP(poblacion.get(pos).getGenotipo());
+    }
+    public static IndividuoReinas seleccionAleatoriaReinas(ArrayList<IndividuoReinas> poblacion){
+       //recorrer la poblacción
+       Random r = new Random();
+       int pos = r.nextInt(poblacion.size());
+       return new IndividuoReinas(poblacion.get(pos).getGenotipo());
+    }*/
+    public static Individuo aleatoria(ArrayList<Individuo> poblacion){
+       //recorrer la poblacción
+       Random r = new Random();
+       int pos = r.nextInt(poblacion.size());
+       return new Individuo(poblacion.get(pos).getGenotipo());
     }
     
 }
