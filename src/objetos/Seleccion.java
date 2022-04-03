@@ -10,7 +10,12 @@ import Individuos.IndividuoReinas;
 import Individuos.IndividuoTSP;
 import Individuos.IndividuoBinario;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
+import java.time.Clock;
+import java.time.Duration;
+import java.time.Instant;
+import java.util.concurrent.TimeUnit;
 
 /**
  *
@@ -46,12 +51,33 @@ public class Seleccion {
        }
        return (new IndividuoReinas(mejor.getGenotipo()));
     }*/
-    public static Individuo torneo(ArrayList<Individuo> poblacion){
+    public static Individuo torneoMenor(ArrayList<Individuo> poblacion){
        //recorrer la poblacción
+       //System.out.println("\t\tTORNEO");
        Individuo mejor = poblacion.get(0);
+       //System.out.println(Arrays.toString(mejor.genotipo) + " " + mejor.getFitness()); 
        for(Individuo i: poblacion){
-           if(i.getFitness()<mejor.getFitness()) //minimizar
+           //System.out.println("\t\t\t " + i.getFitness()+" "+mejor.getFitness());
+           if(i.getFitness()<mejor.getFitness()){
+               //minimizar
                mejor = i;
+         //       System.out.println(Arrays.toString(mejor.genotipo)); 
+           }
+       }
+       return (new Individuo(mejor.getGenotipo()));
+    }
+    
+    public static Individuo torneoMayor(ArrayList<Individuo> poblacion){
+       //recorrer la poblacción
+       //System.out.println("TORNEO");
+       Individuo mejor = poblacion.get(0);
+       //System.out.println(Arrays.toString(mejor.genotipo)); 
+       for(Individuo i: poblacion){
+           if(i.getFitness()>mejor.getFitness()){
+               //minimizar
+               mejor = i;
+         //       System.out.println(Arrays.toString(mejor.genotipo)); 
+           }
        }
        return (new Individuo(mejor.getGenotipo()));
     }
@@ -80,6 +106,36 @@ public class Seleccion {
        Random r = new Random();
        int pos = r.nextInt(poblacion.size());
        return new Individuo(poblacion.get(pos).getGenotipo());
+    }
+
+    public static IndividuoReinas torneoMenorR(ArrayList<IndividuoReinas> poblacion) {
+        //System.out.println("\tTORNEO");
+       IndividuoReinas mejor = poblacion.get(0);
+       //System.out.println(Arrays.toString(mejor.genotipo) + " " + mejor.getFitness()); 
+       for(IndividuoReinas i: poblacion){
+           //System.out.println("\t\t\t " + i.getFitness()+" "+mejor.getFitness());
+           if(i.getFitness()<mejor.getFitness()){
+               //minimizar
+               mejor = i;
+                //System.out.println( " " + Arrays.toString(mejor.genotipo) + " " + mejor.fitness); 
+           }
+       }
+       return (new IndividuoReinas(mejor.getGenotipo()));
+    }
+    private static Random ran  = new Random();
+    
+    /*public static IndividuoReinas aleatoriaR(ArrayList<IndividuoReinas> pob) {
+        //ran = new Random();
+       int pos = ran.nextInt(pob.size());
+       //System.out.println("Aleato: " + pos + " " + Arrays.toString(pob.get(pos).getGenotipo()) + " " + pob.get(pos).fitness);
+       return new IndividuoReinas(pob.get(pos).getGenotipo());
+    }*/
+    
+    public static IndividuoReinas aleatoriaR(ArrayList<IndividuoReinas> pob) {
+        //ran = new Random();
+       int pos = ran.nextInt(pob.size());  //ran.nextInt((int) DateTime.Now.Ticks & 0x0000FFFF);//ran((int) DateTime.Now.Ticks & 0x0000FFFF).Next(pob.size());//ran.nextInt(pob.size());
+       //System.out.println("Aleato: " + pos + " " + Arrays.toString(pob.get(pos).getGenotipo()) + " " + pob.get(pos).fitness);
+       return new IndividuoReinas(pob.get(pos).getGenotipo());
     }
     
 }

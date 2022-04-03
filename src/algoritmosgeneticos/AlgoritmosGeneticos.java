@@ -7,6 +7,7 @@ package algoritmosgeneticos;
 
 
 import Geneticos.GeneticoReina;
+import Geneticos.GeneticoTSP;
 import Individuos.IndividuoReinas;
 import objetos.MatrizDistancia;
 import objetos.Cruza;
@@ -99,7 +100,9 @@ public class AlgoritmosGeneticos {
         int[] genotipo = {3,1,2,0};
         int[] genotipo2 = {1,0,2,3};
         //int[] genotipo = {0,3,2,1};
+        //System.out.println(Arrays.toString(genotipo));
         IndividuoTSP aux = new IndividuoTSP(genotipo);
+        
         IndividuoTSP aux2 = new IndividuoTSP(genotipo2);
         int[] mascara = {1, 0, 1, 0};
         IndividuoTSP nuevo = Cruza.cruzaTSP(aux, aux2);
@@ -107,14 +110,14 @@ public class AlgoritmosGeneticos {
         System.out.println();*/
         
         
-        /*int tamanioPob = 170; //tamaño de poblacion
-        int numG = 3500; //numero de generaciones
+        int tamanioPob = 500; //tamaño de poblacion
+        int numG = 50; //numero de generaciones
         int ciuI = 20;
         double posMuta = 0.07; //posibilidad de muta
         int cuI = 18; //cuidad inical
         MatrizDistancia.matriz = MatrizDistancia.leerArchivo();
-        GeneticoSimple gs = new GeneticoSimple(tamanioPob, numG, posMuta, ciuI);
-        gs.evolucionarTSP(cuI);*/
+        GeneticoTSP gs = new GeneticoTSP(tamanioPob, numG, posMuta);
+        gs.evolucionar(0.15F);
         //ArrayList<IndividuoTSP> original = (ArrayList<IndividuoTSP>) gs.poblacionTSP.clone();
         //int porcentaje = 50;
         //ArrayList<IndividuoTSP> nuevo = Muestreo.torneo((ArrayList<IndividuoTSP>) original.clone(), 50);
@@ -147,7 +150,9 @@ public class AlgoritmosGeneticos {
         //MatrizDistancia.guardarArchivo( MatrizDistancia.matrizAleatoria(50, 20, 130), "Matriz 50 cuidades min 20 max 130");
         //MatrizDistancia.guardarArchivo( MatrizDistancia.matrizAleatoria(100, 0, 50), "Matriz 100 cuidades min 0 max 50");
         //MatrizDistancia.guardarArchivo( MatrizDistancia.matrizAleatoria(400, 15, 80), "Matriz 400 cuidades min 15 max 80");
-        int[] ge = {3,3,1,0,0};
+        
+        //REINAS
+        /*int[] ge = {3,3,1,0,0};
         //IndividuoReinas ir = new IndividuoReinas(ge); 
         //System.out.println(ir.getFitness());
         int tamanio = 500;
@@ -155,7 +160,7 @@ public class AlgoritmosGeneticos {
         double probM = 0.01;
         int tamTab = 8;
         GeneticoReina g = new GeneticoReina(tamanio, numGen, probM, tamTab);
-        g.evolucionar(0.10F);
+        g.evolucionar(0.10F);*/
     }
     
 }

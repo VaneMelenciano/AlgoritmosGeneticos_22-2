@@ -20,11 +20,11 @@ public class IndividuoReinas extends Individuo{
     //private int fenotipo, fitness;
     
     //aleatoria 
-    /*public IndividuoReinas(int n){ 
+    public IndividuoReinas(int n){ 
         super();
         this.genotipo = Herramientas.generarArregloReinas(n);
-        actualizar();
-    }*/
+        actu();
+    }
     public IndividuoReinas(int n, SeleccionG g){
         super(n, g);
     }
@@ -36,9 +36,18 @@ public class IndividuoReinas extends Individuo{
         //hacer los calculos de fenotipo/fitness
         //actualizar();
         super(g);
+        actu();
     }
     public IndividuoReinas(){
         super();
+    }
+
+    public IndividuoReinas(Individuo aux) {
+        super();
+        this.fenotipo = aux.getFenotipo();
+        this.fitness = aux.getFitness();
+        this.genotipo = aux.getGenotipo();
+        actu();
     }
 
     @Override
@@ -64,7 +73,10 @@ public class IndividuoReinas extends Individuo{
        }
        return confli;
     }
-    
+    private void actu(){
+      //calcularFitness();  
+      this.fitness = conflictos();
+    }
     /*private int conflictosH(){
        LinkedHashSet<Integer> li = new LinkedHashSet<>();
        for(int i=0; i<this.genotipo.length; i++){

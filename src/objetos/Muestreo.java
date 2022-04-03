@@ -9,6 +9,7 @@ import Individuos.Individuo;
 import Individuos.IndividuoReinas;
 import Individuos.IndividuoTSP;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Random;
@@ -122,6 +123,11 @@ public class Muestreo {
              Random r = new Random();
             int pos = r.nextInt(pob.size());
             nuevaPob.add(pob.get(pos));
+            
+            //System.out.println(pos+ " " + pob.size());
+                //System.out.println(Arrays.toString(nuevaPob.get(pos).genotipo) + " " + nuevaPob.get(pos).fitness + " " + nuevaPob.get(pos).fenotipo);
+        
+        
         }
         return nuevaPob;
     }

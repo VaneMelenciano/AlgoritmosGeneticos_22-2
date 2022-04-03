@@ -30,10 +30,10 @@ public class GeneticoTSP extends Genetico{
         this.numGeneraciones=n;
         this.poblacionTSP = new ArrayList<>();
         generarPoblacionInicialTSP(cuidadI);*/
-        super(t, n, p, cuidadI);
+        super(t, n, p, cuidadI, SeleccionG.TSP);
     }
     
-    public void evolucionarTSP(){
+    public void evolucionar(){
         //String [][] matrizRes = new String[this.numGeneraciones+1][this.poblacionTSP.get(0).getGenotipo().length+2];
         ArrayList<IndividuoTSP> pobAux;
         //someter a la poblacion a un proceso evolutivo
@@ -43,7 +43,7 @@ public class GeneticoTSP extends Genetico{
            //crear una población nueva           
            pobAux = new ArrayList<>();
            for(int j=0; j<this.tamanioPoblacion; j++){
-               IndividuoTSP madre = (IndividuoTSP) Seleccion.torneo(poblacion);
+               IndividuoTSP madre = (IndividuoTSP) Seleccion.torneoMenor(poblacion);
                
                /*System.out.println("MADRE: ");
                System.out.println(Arrays.toString(madre.getGenotipo()) + " " + madre.getFitness());*/
@@ -66,7 +66,7 @@ public class GeneticoTSP extends Genetico{
            //se tiene que acualizar la población
            actualizarPoblacion(cambiarIndividuo1(pobAux));
            
-           IndividuoTSP mejor = (IndividuoTSP) Seleccion.torneo(this.poblacion);
+           IndividuoTSP mejor = (IndividuoTSP) Seleccion.torneoMenor(this.poblacion);
            //System.out.println("\nGeneración :"+(i+1) + "\n  mejor individuo: ");
            /*System.out.println("\n  Mejor individuo: ");
            for(int k=0; k<mejor.getGenotipo().length-1; k++){
@@ -103,13 +103,14 @@ public class GeneticoTSP extends Genetico{
        //MatrizDistancia.guardarArchivo(matrizRes);*/
     }
     
-    public void evolucionarTSP(float porcentaje){
+    public void evolucionar(float porcentaje){
         String [][] matrizRes = new String[this.numGeneraciones+1][this.poblacion.get(0).getGenotipo().length+2];
         ArrayList<IndividuoTSP> pobAux;
-        
+        System.out.println(this.poblacion.size() + " " + "poblacion");
         //someter a la poblacion a un proceso evolutivo
         int mejorRes=0, genRes=0;
        for(int i=0; i<this.numGeneraciones; i++){
+           //System.out.println("GENERACIÓN: " + i);
            pobAux = new ArrayList<>();
            //crear una población nueva
            ///MUESTREO
@@ -118,17 +119,17 @@ public class GeneticoTSP extends Genetico{
            //pobAux = Muestreo.torneo(this.poblacionTSP, cantidad);
            pobAux = cambiarIndividuo(Muestreo.aleatorio(this.poblacion, cantidad));
            //pobAux = Muestreo.mitad(this.poblacionTSP, cantidad);
-           //ArrayList<IndividuoTSP> nueAux = Muestreo.aleatorio(this.poblacionTSP, cantidad);
+           /*ArrayList<Individuo> nueAux = Muestreo.aleatorio(this.poblacion, cantidad);*/
            //ArrayList<IndividuoTSP> nueAux = Muestreo.mitad(this.poblacionTSP, cantidad);
            
            //crear una población nueva   
            for(int j=0; j<this.tamanioPoblacion-cantidad; j++){
-               IndividuoTSP madre = (IndividuoTSP) Seleccion.torneo(poblacion);
+               IndividuoTSP madre = new IndividuoTSP(Seleccion.torneoMenor(poblacion));
                
                /*System.out.println("MADRE: ");
                System.out.println(Arrays.toString(madre.getGenotipo()) + " " + madre.getFitness());*/
                /**/
-               IndividuoTSP padre = (IndividuoTSP) Seleccion.aleatoria(poblacion);
+               IndividuoTSP padre = new IndividuoTSP(Seleccion.aleatoria(poblacion));
                //System.out.println("PADRE: ");
                //System.out.println(Arrays.toString(padre.getGenotipo()) + " " + padre.getFitness());
                //cruza
@@ -146,7 +147,7 @@ public class GeneticoTSP extends Genetico{
            //se tiene que acualizar la población
            actualizarPoblacion(cambiarIndividuo1(pobAux));
            
-           IndividuoTSP mejor = (IndividuoTSP) Seleccion.torneo(this.poblacion);
+           IndividuoTSP mejor = new IndividuoTSP(Seleccion.torneoMenor(this.poblacion));
            //System.out.println("\nGeneración :"+(i+1) + "\n  mejor individuo: ");
            /*System.out.println("\n  Mejor individuo: ");
            for(int k=0; k<mejor.getGenotipo().length-1; k++){
@@ -181,7 +182,7 @@ public class GeneticoTSP extends Genetico{
        MatrizDistancia.guardarArchivo(matrizRes);
     }
     
-    public void evolucionarTSP(int porcentaje){ //porcentaje que se va a tomar de muestreo
+    public void evolucionar(int porcentaje){ //porcentaje que se va a tomar de muestreo
         String [][] matrizRes = new String[this.numGeneraciones+1][this.tamanioPoblacion+1];
         
         ArrayList<IndividuoTSP> pobAux;
@@ -200,7 +201,7 @@ public class GeneticoTSP extends Genetico{
            for(int j=0; j<this.tamanioPoblacion/*-cantidad*/; j++){
                //selección:
                //torneo
-               IndividuoTSP madre = (IndividuoTSP) Seleccion.torneo(poblacion);
+               IndividuoTSP madre = (IndividuoTSP) Seleccion.torneoMenor(poblacion);
                IndividuoTSP padre = (IndividuoTSP) Seleccion.aleatoria(poblacion);
                //cruza
                IndividuoTSP hijo = Cruza.cruzaTSP(madre, padre);
@@ -216,7 +217,7 @@ public class GeneticoTSP extends Genetico{
            //se tiene que acualizar la población
            actualizarPoblacion(cambiarIndividuo1(pobAux));
            
-           IndividuoTSP mejor = (IndividuoTSP) Seleccion.torneo(this.poblacion);
+           IndividuoTSP mejor = (IndividuoTSP) Seleccion.torneoMenor(this.poblacion);
            /*System.out.println("\nGeneración :"+(i+1) + "\n  mejor individuo: ");
            for(int k=0; k<mejor.getGenotipo().length-1; k++){
                System.out.print(mejor.getGenotipo()[k] + ", ");
@@ -253,8 +254,9 @@ public class GeneticoTSP extends Genetico{
 
     public ArrayList<IndividuoTSP> cambiarIndividuo(ArrayList<Individuo> pob) {
         ArrayList<IndividuoTSP> pobAux = new ArrayList<>();
-        for (Individuo aux111 : pob) {
-                pobAux.add((IndividuoTSP) aux111);
+        for (int i=0; i< pob.size(); i++) {
+             //System.out.println(Arrays.toString(pob.get(i).genotipo) + " " + pob.get(i).fitness + " " + pob.get(i).fenotipo);
+             pobAux.add(new IndividuoTSP(pob.get(i)));
         }
         return pobAux;
     }

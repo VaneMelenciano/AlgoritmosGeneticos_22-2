@@ -35,7 +35,7 @@ public class GeneticoBinario extends Genetico{
            for(int j=0; j<this.tamanioPoblacion; j++){
                //muestreo y/o selección
                //torneo
-               IndividuoBinario madre = (IndividuoBinario) Seleccion.torneo(poblacion);
+               IndividuoBinario madre = (IndividuoBinario) Seleccion.torneoMayor(poblacion);
                IndividuoBinario padre = (IndividuoBinario) Seleccion.aleatoria(poblacion);
                //cruza
                IndividuoBinario hijo = Cruza.cruzaMascara(madre, padre, mascara);
@@ -49,7 +49,7 @@ public class GeneticoBinario extends Genetico{
            //se tiene que acualizar la población
            actualizarPoblacion(cambiarIndividuo(pobAux));
            
-           IndividuoBinario mejor = (IndividuoBinario) Seleccion.torneo(this.poblacion);
+           IndividuoBinario mejor = (IndividuoBinario) Seleccion.torneoMayor(this.poblacion);
            if(mejor.getFenotipo()<16777215){
            System.out.print("\nGeneración :"+(i+1)+"\n\tFenotipo: "+mejor.getFenotipo() + "  Genotipo: "); //con 24, el mayor puede ser -> 16,777,215
            for(int m : mejor.getGenotipo()) 

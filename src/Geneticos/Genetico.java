@@ -6,6 +6,7 @@
 package Geneticos;
 
 import Individuos.Individuo;
+import Individuos.IndividuoReinas;
 import objetos.MatrizDistancia;
 import java.util.ArrayList;
 import java.util.Random;
@@ -21,8 +22,9 @@ public class Genetico {
     public  ArrayList<Individuo> poblacion;
     public SeleccionG g;
     //N-REINAS
-    public int n; //tamaño del tablero
+    public int n; //tamaño del tablero y para TSP es cuidad inicial
     public Genetico(int t, int num, double p, int n, SeleccionG g){ //reinas y TSP
+        
         this.tamanioPoblacion=t;
         this.probMuta=p;
         this.numGeneraciones=num;
@@ -44,13 +46,17 @@ public class Genetico {
         }
         generarPoblacionInicial();
     }
-    public Genetico(int t, int num, double p, int ci){ //TSP con cuidad inicial
+    
+    public Genetico(){
+        
+    }
+    /*public Genetico(int t, int num, double p, int ci){ //TSP con cuidad inicial
         this.tamanioPoblacion=t;
         this.probMuta=p;
         this.numGeneraciones=num;
         this.poblacion = new ArrayList<>();
         generarPoblacionInicial(ci);
-    }
+    }*/
 
     public void generarPoblacionInicial(int n) {
          if(g.equals(SeleccionG.TSP)){
@@ -80,9 +86,15 @@ public class Genetico {
     
     public void actualizarPoblacion(ArrayList<Individuo> pobAux) {
         this.poblacion = new ArrayList<>();
-        for(Individuo i : pobAux){
-            this.poblacion.add(new Individuo(i.getGenotipo()));
+        for(int i=0; i<pobAux.size(); i++){
+            //System.out.println(pobAux.get(i).fitness);
+            this.poblacion.add(new Individuo(pobAux.get(i).getGenotipo()));
+            //this.poblacion.get(i).actualizar();
+            //System.out.println(this.poblacion.get(i).fitness);
         }
+        //for(int i=0; i<this.poblacion.size(); i++){
+        //    System.out.println(this.poblacion.get(i).fitness);
+        //}
     }
     public void evolucionar(float porcentaje){
         

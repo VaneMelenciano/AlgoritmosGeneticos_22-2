@@ -151,7 +151,7 @@ public class Cruza {
                 bandera=true;
             }
         }
-        System.out.println(li1.size());
+        //System.out.println(li1.size() + "aqui");
         IndividuoReinas indi1 = new IndividuoReinas(li1.stream().mapToInt(i -> i).toArray());// de integer -> int
         IndividuoReinas indi2 = new IndividuoReinas(li2.stream().mapToInt(i -> i).toArray());
         return verificarMenor(indi1, indi2); 
@@ -182,6 +182,6 @@ public class Cruza {
             System.out.print(h2.getGenotipo()[i]);
         System.out.println("\tFitness: " + h2.getFitness());*/
         
-        return (h1.getFitness()>h2.getFitness() ? h1 : h2);
+        return (h1.getFitness()<h2.getFitness() ? h1 : h2);
     }
 }
