@@ -6,10 +6,10 @@
 package algoritmosgeneticos;
 
 
-import Geneticos.GeneticoReina;
-import Geneticos.GeneticoTSP;
-import Individuos.IndividuoReinas;
-import objetos.MatrizDistancia;
+//import geneticos.GeneticoReina;
+import geneticos.GeneticoTSP;
+//import Individuos.IndividuoReinas;
+import objetos.Matriz;
 import objetos.Cruza;
 import objetos.Muta;
 import java.lang.reflect.Array;
@@ -83,10 +83,10 @@ public class AlgoritmosGeneticos {
         
         //TSP
         
-        //MatrizDistancia.imprimirMatriz(MatrizDistancia.matrizAleatoria(6, 3, 99));
+        //Matriz.imprimirMatriz(Matriz.matrizAleatoria(6, 3, 99));
         //Herramientas.imprimirArreglo(Herramientas.generarArreglo(3, 9));
         
-        /*MatrizDistancia.matriz = new int[][]{{0,34,6,12},
+        /*Matriz.matriz = new int[][]{{0,34,6,12},
                                            {34,0,40,8},
                                            {6,40,0,7},
                                            {12,8,7,0}};
@@ -111,11 +111,11 @@ public class AlgoritmosGeneticos {
         
         
         int tamanioPob = 500; //tamaño de poblacion
-        int numG = 50; //numero de generaciones
+        int numG = 500; //numero de generaciones
         int ciuI = 20;
         double posMuta = 0.07; //posibilidad de muta
         int cuI = 18; //cuidad inical
-        MatrizDistancia.matriz = MatrizDistancia.leerArchivo();
+        Matriz.matriz = Matriz.leerArchivo();
         GeneticoTSP gs = new GeneticoTSP(tamanioPob, numG, posMuta);
         gs.evolucionar(0.15F);
         //ArrayList<IndividuoTSP> original = (ArrayList<IndividuoTSP>) gs.poblacionTSP.clone();
@@ -128,8 +128,8 @@ public class AlgoritmosGeneticos {
         int numG = 5000; //numero de generaciones
         double posMuta = 0.09; //posibilidad de muta
         int cuI = 18; //cuidad inical
-        MatrizDistancia.matriz = MatrizDistancia.leerArchivo();
-        //MatrizDistancia.imprimirMatriz(MatrizDistancia.matriz);
+        Matriz.matriz = Matriz.leerArchivo();
+        //Matriz.imprimirMatriz(Matriz.matriz);
         GeneticoSimple gs = new GeneticoSimple(tamanioPob, numG, posMuta, cuI);
         gs.evolucionarTSP();
         gs.evolucionarTSP(0.18F);
@@ -146,10 +146,10 @@ public class AlgoritmosGeneticos {
         //227
         
        
-        //MatrizDistancia.guardarArchivo( MatrizDistancia.matrizAleatoria(15, 15, 96), "Mtariz 15 cuidades min 15 max 96");
-        //MatrizDistancia.guardarArchivo( MatrizDistancia.matrizAleatoria(50, 20, 130), "Matriz 50 cuidades min 20 max 130");
-        //MatrizDistancia.guardarArchivo( MatrizDistancia.matrizAleatoria(100, 0, 50), "Matriz 100 cuidades min 0 max 50");
-        //MatrizDistancia.guardarArchivo( MatrizDistancia.matrizAleatoria(400, 15, 80), "Matriz 400 cuidades min 15 max 80");
+        //Matriz.guardarArchivo( Matriz.matrizAleatoria(15, 15, 96), "Mtariz 15 cuidades min 15 max 96");
+        //Matriz.guardarArchivo( Matriz.matrizAleatoria(50, 20, 130), "Matriz 50 cuidades min 20 max 130");
+        //Matriz.guardarArchivo( Matriz.matrizAleatoria(100, 0, 50), "Matriz 100 cuidades min 0 max 50");
+        //Matriz.guardarArchivo( Matriz.matrizAleatoria(400, 15, 80), "Matriz 400 cuidades min 15 max 80");
         
         //REINAS
         /*int[] ge = {3,3,1,0,0};

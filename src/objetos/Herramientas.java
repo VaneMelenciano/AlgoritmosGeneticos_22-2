@@ -7,7 +7,6 @@ package objetos;
 
 import Individuos.IndividuoTSP;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -15,8 +14,7 @@ import java.util.Random;
  * @author Vanessa
  */
 public class Herramientas {
-    //arreglos con datos binarios
-    public static int[] generarArreglo(int n){
+    public static int[] generarArregloBinario(int n){
         int[] aux = new int[n];
         Random r = new Random();
         for( int i=0; i<n; i++){
@@ -54,9 +52,8 @@ public class Herramientas {
         
         //Herramientas.imprimir(aux);
         return aux;
-    }
+    } //TSP
         
-    //REINAS
     public static int[] generarArregloReinas(int n){
         int[] aux = new int[n];
         Random r = new Random();
@@ -83,14 +80,9 @@ public class Herramientas {
         }
         return aux;
     }
-    public static void imprimirArreglo(int[] n){
-        //System.out.println("Arreglo");
-        for(int i=0; i<n.length; i++)
-            System.out.print(n[i] + " ");
-        System.out.println();
-    }
-    //bool -> verificar si un un individuo (camino es valido)-> que no se repita un número
-    public static boolean verificarIndividuoTSP(IndividuoTSP in){
+    
+    
+    public static boolean verificarIndividuo(IndividuoTSP in){ //TSP, camino correcto
         System.out.println("Verificando");
         ArrayList<Integer> numeros = new ArrayList();
         for(int i=0; i<in.getGenotipo().length;i++) numeros.add(i);
@@ -105,13 +97,7 @@ public class Herramientas {
         }
         return true;
     }
-    //4 0 2 3 1
-    //0 1 2 3 4
-    private static void imprimir(int[] a){
-        for(int i : a){
-            System.out.print(i + " ");
-        }System.out.println();
-    }
+    
     private static void imprimir(ArrayList<Integer> a){
         for(int i : a){
             System.out.print(i + " ");

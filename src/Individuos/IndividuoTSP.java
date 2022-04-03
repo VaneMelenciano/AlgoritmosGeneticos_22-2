@@ -6,9 +6,7 @@
 package Individuos;
 
 import objetos.Herramientas;
-import Individuos.Individuo;
-import java.util.Arrays;
-import objetos.MatrizDistancia;
+import objetos.Matriz;
 
 /**
  *
@@ -18,41 +16,27 @@ public class IndividuoTSP extends Individuo{
     
     //aleatoria 
     public IndividuoTSP(int ci, int nc){ //cuidad inicial, número de cuidades
-        /*this.genotipo = Herramientas.generarArreglo(ci, nc);
-        actualizar();*/
-        super(ci, nc);
+        setGenotipo(Herramientas.generarArreglo(ci, nc));
+        actualizar();
     }
-    //ceación aleatoria
-    /*public IndividuoTSP(){
-        this.genotipo = Herramientas.generarArreglo(fitness, fitness);
+    public IndividuoTSP(int[] genotipo){
+        setGenotipo(genotipo.clone());
         //hacer los calculos de fenotipo/fitness
         actualizar();
-    }*/
-    public IndividuoTSP(int[] genotipo){
-        //this.genotipo = genotipo.clone();
-        //hacer los calculos de fenotipo/fitness
-        //actualizar();
-        
-        super(genotipo);
-    }
-    public IndividuoTSP(){
-        super();
     }
 
-    public IndividuoTSP(Individuo aux) {
-        super(aux);
-    }
-
-    @Override
-    public void calcularFitness() {
-        //System.out.println(Arrays.toString(genotipo));
+    private void calcularFitness() {
         //genotipo es el arreglo aleatorio de la ruta
       //recorrer el genotipo y consultar la matriz de distancias
-      for(int i=0; i<this.genotipo.length-1; i++){
-          this.fitness += MatrizDistancia.matriz[this.genotipo[i]][this.genotipo[i+1]];
+      for(int i=0; i<getGenotipo().length-1; i++){
+          setFitness( getFitness() + Matriz.matriz[getGenotipo()[i]][getGenotipo()[i+1]]);
       }
       //ultima ruta hacia la iniciar (de regreso)
-      this.fitness +=MatrizDistancia.matriz[this.genotipo[this.genotipo.length-1]][this.genotipo[0]];
-      //System.out.println("F: " + this.fitness);
+      setFitness( getFitness() + Matriz.matriz[getGenotipo()[getGenotipo().length-1]][getGenotipo()[0]]);
+      
+    }
+
+    public void actualizar() {
+        calcularFitness();
     }
 }

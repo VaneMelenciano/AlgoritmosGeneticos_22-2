@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Geneticos;
+package geneticos;
 
-import Individuos.Individuo;
 import Individuos.IndividuoBinario;
 import java.util.ArrayList;
 import objetos.Cruza;
@@ -18,38 +17,40 @@ import objetos.Seleccion;
  * @author Vanessa
  */
 public class GeneticoBinario extends Genetico{
+    /*private int tamanioPoblacion; //numero de cuidades
+    private int numGeneraciones;
+    private double probMuta; //probabilidad de muta*/
+    private ArrayList<IndividuoBinario> poblacion;
     
     public GeneticoBinario(int t, int n, double p){ //24, 20, 0.2
-        super(t, n, p, SeleccionG.Binario);
+        super(t, n, p);
     }
-    
-    @Override
-    public void evolucionar(){
+    public void evolucionarBinario(){
         ArrayList<IndividuoBinario> pobAux;
         //una sola mascara para todo el proceso evolutivo
-        int[] mascara = Herramientas.generarArreglo(24);
+        int[] mascara = Herramientas.generarArregloBinario(24);
         //someter a la poblacion a un proceso evolutivo
-       for(int i=0; i<this.numGeneraciones; i++){
+       for(int i=0; i<getNumGeneraciones(); i++){
            //crear una población nueva
            pobAux = new ArrayList<>();
-           for(int j=0; j<this.tamanioPoblacion; j++){
+           for(int j=0; j<getTamanioPoblacion(); j++){
                //muestreo y/o selección
                //torneo
-               IndividuoBinario madre = (IndividuoBinario) Seleccion.torneoMayor(poblacion);
-               IndividuoBinario padre = (IndividuoBinario) Seleccion.aleatoria(poblacion);
+               IndividuoBinario madre = Seleccion.seleccionTorneoBinario(poblacion);
+               IndividuoBinario padre = Seleccion.seleccionAleatoriaBinario(poblacion);
                //cruza
                IndividuoBinario hijo = Cruza.cruzaMascara(madre, padre, mascara);
                //evaluar la posibilidad de muta
-               if(Muta.muta(this.probMuta)){
+               if(Muta.muta(getProbMuta())){
                    Muta.muta(hijo);
                }
                //agregar el hijo a la población Auxiliar
                pobAux.add(hijo);
            }
            //se tiene que acualizar la población
-           actualizarPoblacion(cambiarIndividuo(pobAux));
+           actualizarPoblacion(pobAux);
            
-           IndividuoBinario mejor = (IndividuoBinario) Seleccion.torneoMayor(this.poblacion);
+           IndividuoBinario mejor = Seleccion.seleccionTorneoBinario(this.poblacion);
            if(mejor.getFenotipo()<16777215){
            System.out.print("\nGeneración :"+(i+1)+"\n\tFenotipo: "+mejor.getFenotipo() + "  Genotipo: "); //con 24, el mayor puede ser -> 16,777,215
            for(int m : mejor.getGenotipo()) 
@@ -57,11 +58,20 @@ public class GeneticoBinario extends Genetico{
            System.out.println();}
        }
     }
-    public ArrayList<Individuo> cambiarIndividuo(ArrayList<IndividuoBinario> pob) {
-        ArrayList<Individuo> pobAux = new ArrayList<>();
-        for (IndividuoBinario aux111 : pob) {
-                pobAux.add(aux111);
+    
+    @Override
+    public void generarPoblacionInicial() {
+        this.poblacion = new ArrayList<>();
+        //se genere de manera aleatoria
+        for(int i=0; i<getTamanioPoblacion(); i++)
+            this.poblacion.add(new IndividuoBinario());
+        
+    }
+    
+     private void actualizarPoblacion(ArrayList<IndividuoBinario> pobAux) {
+        this.poblacion = new ArrayList<>();
+        for(IndividuoBinario i : pobAux){
+            this.poblacion.add(new IndividuoBinario(i.getGenotipo()));
         }
-        return pobAux;
     }
 }

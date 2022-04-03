@@ -5,7 +5,7 @@
  */
 package algoritmosgeneticos;
 
-import Geneticos.GeneticoReina;
+import geneticos.GeneticoReinas;
 
 /**
  *
@@ -21,7 +21,7 @@ public class mainReinas {
         int numGen = 5000;
         double probM = 0.15;
         int tamTab = 8;
-        GeneticoReina g = new GeneticoReina(tamanio, numGen, probM, tamTab);
+        GeneticoReinas g = new GeneticoReinas(tamanio, numGen, probM, tamTab);
         g.evolucionar(0.10F);
   }  
 }

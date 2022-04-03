@@ -4,40 +4,60 @@
  * and open the template in the editor.
  */
 package Individuos;
-
 import objetos.Herramientas;
-import Individuos.Individuo;
+import objetos.Matriz;
 
 /**
  *
  * @author Vanessa
  */
 public class IndividuoBinario extends Individuo{
-    //private int[] genotipo;
+    //private int[] getGenotipo();
+    private int fenotipo;
     //private int fenotipo, fitness;
     
     //aleatoria
-    public IndividuoBinario(){
-        super(24);
+    /*public IndividuoBinario(){
+        setGenotipo(Herramientas.generarArregloBinario(24));
+        actualizar();
     }
     //ceación aleatoria
-    public IndividuoBinario(int[] genotipo){
-        super(genotipo);
+    public IndividuoBinario(int[] gen){
+        setGenotipo(gen.clone());
+        //hacer los calculos de fenotipo/fitness
+        actualizar();
+    }*/
+    
+    public IndividuoBinario(){
+        setGenotipo(Herramientas.generarArregloBinario(24));
+        actualizar();
+    }
+    //ceación aleatoria
+    public IndividuoBinario(int[] gen){
+        super(gen);
+    }
+
+    private void calcularFitness() {
+      setFitness(2*(getFenotipo()));
     }
 
     @Override
-    public void calcularFenotipo() {
-        //hacer un corrimiento del arreglo y pasar a entero los bits
-        for(int i=0, j=this.genotipo.length-1; i<this.genotipo.length && j>=0; i++, j--){
-            if(this.genotipo[i]==1){ //si es 0 no tiene caso
-                this.fenotipo+=Math.pow(2, j);
-            }
-        }
+    public void actualizar() {
+        calcularFitness();
     }
 
-    @Override
-    public void calcularFitness() {
-      this.fitness = 2*(this.fenotipo);
+    /**
+     * @return the fenotipo
+     */
+    public int getFenotipo() {
+        return fenotipo;
+    }
+
+    /**
+     * @param fenotipo the fenotipo to set
+     */
+    public void setFenotipo(int fenotipo) {
+        this.fenotipo = fenotipo;
     }
     
 }

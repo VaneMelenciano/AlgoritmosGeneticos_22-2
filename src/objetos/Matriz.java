@@ -24,7 +24,7 @@ import javax.swing.JOptionPane;
  *
  * @author Vanessa
  */
-public class MatrizDistancia {
+public class Matriz {
     public static int[][] matriz;
     
     public static int[][] leerArchivo(){
@@ -220,5 +220,4 @@ public class MatrizDistancia {
             System.out.println();
         } 
     }
-    
 }
