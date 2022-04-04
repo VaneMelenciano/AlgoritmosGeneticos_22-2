@@ -35,7 +35,7 @@ public class Matriz {
         
         try {
             JFileChooser file = new JFileChooser(); //llamamos el metodo que permite cargar la ventana
-            file.setCurrentDirectory(new File(".././Pruebas/TSP"));
+            file.setCurrentDirectory(new File(".././Pruebas"));
             file.showOpenDialog(file);
             //Abre el archivo
             File abre = file.getSelectedFile();

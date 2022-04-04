@@ -59,8 +59,7 @@ public class Seleccion {
        return new IndividuoTSP(poblacion.get(pos).getGenotipo());
     }
 
-    public static IndividuoReinas seleccionAleatoriaReinas(ArrayList<IndividuoTSP> poblacion) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public static IndividuoReinas seleccionAleatoriaReinas(ArrayList<IndividuoReinas> poblacion) {
        Random r = new Random();
        int pos = r.nextInt(poblacion.size());
        return new IndividuoReinas(poblacion.get(pos).getGenotipo());

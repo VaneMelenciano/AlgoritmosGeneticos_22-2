@@ -12,9 +12,10 @@ import java.util.ArrayList;
  * @author Vanessa
  */
 public class Genetico {
-    private int tamanioPoblacion; //numero de cuidades
+    private int tamanioPoblacion;
     private int numGeneraciones;
     private double probMuta; //probabilidad de muta
+    public int n; //tamaño del tablero para Reinas
 
     public Genetico(int t, int n, double p){ //para TSP y binario
         this.tamanioPoblacion=t;
@@ -22,10 +23,11 @@ public class Genetico {
         this.numGeneraciones=n;
         generarPoblacionInicial();
     }
-    public Genetico(int t, int n, double p, int cI){ //para TSP y binario
+    public Genetico(int t, int n, double p, int cI){ //para TSP, binario y Reinas
         this.tamanioPoblacion=t;
         this.probMuta=p;
         this.numGeneraciones=n;
+        this.n = cI;
         generarPoblacionInicial(cI);
     }
     

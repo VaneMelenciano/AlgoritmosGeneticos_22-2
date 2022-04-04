@@ -7,6 +7,7 @@ package objetos;
 
 import Individuos.IndividuoTSP;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -54,12 +55,16 @@ public class Herramientas {
         return aux;
     } //TSP
         
-    public static int[] generarArregloReinas(int n){
+    public static int[] generarArregloReinas(int n){ 
+        //System.out.println("N: " + n);
         int[] aux = new int[n];
         Random r = new Random();
         for( int i=0; i<n; i++){
-            aux[i]=r.nextInt(n);
+            int j = r.nextInt(n);
+            aux[i]=j;
+           
         }
+        //System.out.println(Arrays.toString(aux));
         return aux;
     }
     
