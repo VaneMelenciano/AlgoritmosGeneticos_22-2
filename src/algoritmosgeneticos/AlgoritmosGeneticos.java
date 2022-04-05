@@ -115,7 +115,7 @@ public class AlgoritmosGeneticos {
         int ciuI = 20;
         double posMuta = 0.07; //posibilidad de muta
         int cuI = 18; //cuidad inical
-        Matriz.matriz = Matriz.leerArchivo();
+        Matriz.matriz = Matriz.leerArchivo(0);
         GeneticoTSP gs = new GeneticoTSP(tamanioPob, numG, posMuta);
         gs.evolucionar(0.15F);
         //ArrayList<IndividuoTSP> original = (ArrayList<IndividuoTSP>) gs.poblacionTSP.clone();

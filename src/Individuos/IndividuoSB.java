@@ -29,7 +29,11 @@ public class IndividuoSB extends Individuo{
         for(int i=0; i<Matriz.matriz.length; i++){ //filas
             boolean n = false; //si esa fila es verdadera o falsa
             for(int j=0; j<3; j++){ //columnas
-                if(getGenotipo()[Matriz.matriz[i][j]]==1){
+                int pos = Matriz.matriz[i][j];
+                int aux = getGenotipo()[Math.abs(pos)];
+                if(pos<0) aux = Math.abs(aux-1); //1 -1 = 0 // 0 -1 = -1 -> 1
+                
+                if(aux==1){
                     n = true;
                     break;
                 }

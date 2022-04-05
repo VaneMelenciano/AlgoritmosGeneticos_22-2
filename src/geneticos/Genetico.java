@@ -17,6 +17,8 @@ public class Genetico {
     private double probMuta; //probabilidad de muta
     public int n; //tamaño del tablero para Reinas
 
+    private int seleccionM, seleccionP; // 0: torneo, 1: aleatorios
+    private int muestreo; //tipo de muestreo-> 0: torneo, 1: aleatorio
     public Genetico(int t, int n, double p){ //para TSP y binario
         this.tamanioPoblacion=t;
         this.probMuta=p;
@@ -84,5 +86,48 @@ public class Genetico {
     public void setProbMuta(double probMuta) {
         this.probMuta = probMuta;
     }
+
+    /**
+     * @return the seleccionM
+     */
+    public int getSeleccionM() {
+        return seleccionM;
+    }
+
+    /**
+     * @param seleccionM the seleccionM to set
+     */
+    public void setSeleccionM(int seleccionM) {
+        this.seleccionM = seleccionM;
+    }
+
+    /**
+     * @return the seleccionP
+     */
+    public int getSeleccionP() {
+        return seleccionP;
+    }
+
+    /**
+     * @param seleccionP the seleccionP to set
+     */
+    public void setSeleccionP(int seleccionP) {
+        this.seleccionP = seleccionP;
+    }
+
+    /**
+     * @return the muestreo
+     */
+    public int getMuestreo() {
+        return muestreo;
+    }
+
+    /**
+     * @param muestreo the muestreo to set
+     */
+    public void setMuestreo(int muestreo) {
+        this.muestreo = muestreo;
+    }
+    
     
 }

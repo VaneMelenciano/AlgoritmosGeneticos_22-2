@@ -15,6 +15,7 @@ import java.util.Random;
  * @author Vanessa
  */
 public class Muestreo {
+    /*TSP*/
     //Ordenamiento
     private static ArrayList<IndividuoTSP> ordenar(ArrayList<IndividuoTSP> pob){
         pob.sort(Comparator.comparingInt(i -> i.getFitness()));

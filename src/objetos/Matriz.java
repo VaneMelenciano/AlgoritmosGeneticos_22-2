@@ -27,7 +27,7 @@ import javax.swing.JOptionPane;
 public class Matriz {
     public static int[][] matriz;
     
-    public static int[][] leerArchivo(){
+    public static int[][] leerArchivo(int n){
         String aux, texto;
         int matriz[][] = null;
         LinkedList<String> lista = new LinkedList(); //para guardar los datos que se vayan leyendo
@@ -53,23 +53,42 @@ public class Matriz {
                 lee.close();
                 
                 
-                //TOKENIZAR DATOS
-                ArrayList<String> lista2 = new ArrayList<>(); //un renglon
-                matriz = new int[lista.size()][lista.size()];
-                for (int i = 0; i < lista.size(); i++) { 
+                //TOKENIZAR DATOS PARA TSP
+                if(n == 0){
+                    ArrayList<String> lista2 = new ArrayList<>(); //un renglon
+                    matriz = new int[lista.size()][lista.size()];
+                    for (int i = 0; i < lista.size(); i++) { 
 
-                    StringTokenizer tokens = new StringTokenizer(lista.get(i), " "); //va separando los renglones guardado en la lista, por los espacios
+                        StringTokenizer tokens = new StringTokenizer(lista.get(i), " "); //va separando los renglones guardado en la lista, por los espacios
 
-                    while (tokens.hasMoreTokens()) { //mientras existan tokens (renglones)
-                        lista2.add(tokens.nextToken()); //guarda cada dato del renglo en la lista2
+                        while (tokens.hasMoreTokens()) { //mientras existan tokens (renglones)
+                            lista2.add(tokens.nextToken()); //guarda cada dato del renglo en la lista2
+                        }
+
+                        for (int x = 0; x < lista2.size(); x++) { 
+                            matriz[i][x] = Integer.parseInt(lista2.get(x));
+                        }
+                        lista2.clear();
                     }
-                    
-                    for (int x = 0; x < lista2.size(); x++) { 
-                        matriz[i][x] = Integer.parseInt(lista2.get(x));
-                    }
-                    lista2.clear();
                 }
-          
+                else{
+                    //TOKENIZAR DATOS PARA SP
+                    ArrayList<String> lista2 = new ArrayList<>(); //un renglon
+                    matriz = new int[lista.size()][3];
+                    for (int i = 0; i < lista.size(); i++) { 
+
+                        StringTokenizer tokens = new StringTokenizer(lista.get(i), " "); //va separando los renglones guardado en la lista, por los espacios
+
+                        while (tokens.hasMoreTokens()) { //mientras existan tokens (renglones)
+                            lista2.add(tokens.nextToken()); //guarda cada dato del renglo en la lista2
+                        }
+
+                        for (int x = 0; x < 3; x++) { 
+                            matriz[i][x] = Integer.parseInt(lista2.get(x));
+                        }
+                        lista2.clear();
+                    }
+                }
             }
             
         }catch (IOException ex) {

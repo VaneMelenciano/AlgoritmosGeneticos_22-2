@@ -147,35 +147,21 @@ public final class GeneticoTSP extends Genetico{
            //crear una población nueva   
            for(int j=0; j<getTamanioPoblacion()-cantidad; j++){
                IndividuoTSP madre = Seleccion.seleccionTorneoTSP(poblacion);
-               
-               /*System.out.println("MADRE: ");
-               System.out.println(Arrays.toString(madre.getGenotipo()) + " " + madre.getFitness());*/
-               /**/
                IndividuoTSP padre = Seleccion.seleccionAleatoriaTSP(poblacion);
-               //System.out.println("PADRE: ");
-               //System.out.println(Arrays.toString(padre.getGenotipo()) + " " + padre.getFitness());
                //cruza
                IndividuoTSP hijo = Cruza.cruzaTSP(madre, padre);
-               /*System.out.println("HIJO: ");
-               System.out.println(Arrays.toString(hijo.getGenotipo()) + " " + hijo.getFitness());*/
-               /**/
                //evaluar la posibilidad de muta
                if(Muta.muta(getProbMuta())){
                    Muta.muta(hijo);
                }
                //agregar el hijo a la población Auxiliar
                pobAux.add(hijo);
+               //System.out.println("Mama: " + Arrays.toString(madre.getGenotipo()) + "  Papa: " + Arrays.toString(padre.getGenotipo()) + " " +padre.getFitness() + "    Hijo: " + Arrays.toString(hijo.getGenotipo()) + " " + hijo.getFitness());
            }
            //se tiene que acualizar la población
            actualizarPoblacion(pobAux);
            
            IndividuoTSP mejor = Seleccion.seleccionTorneoTSP(this.poblacion);
-           //System.out.println("\nGeneración :"+(i+1) + "\n  mejor individuo: ");
-           /*System.out.println("\n  Mejor individuo: ");
-           for(int k=0; k<mejor.getGenotipo().length-1; k++){
-               System.out.print(mejor.getGenotipo()[k] + ", ");
-            }System.out.print(mejor.getGenotipo()[mejor.getGenotipo().length-1]);
-            System.out.println("\n\tFitness: "+mejor.getFitness()+"\n");*/
             
             //AGREGAR MEJOR INDIVIDUO A TXT
             matrizRes[i][0] = "g" + i;
