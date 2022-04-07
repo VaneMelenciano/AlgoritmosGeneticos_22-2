@@ -25,6 +25,7 @@ public class mainSB {
         double probM = 0.05;
         GeneticoSB gen = new GeneticoSB(tamanio, numGen, probM, Matriz.matriz.length);
         gen.evolucionar();
+        
     }
         
 }

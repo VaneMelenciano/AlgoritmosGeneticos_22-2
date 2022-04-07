@@ -25,7 +25,6 @@ public class GeneticoSB extends Genetico{
     public GeneticoSB(int t, int num, double p, int n){ //tamaño de poblacion, numGenereaciones, probabilidad de muta, tamaño de instancias de prueba
         super(t, num, p, n);
     }
-    @Override
     public void evolucionar(float porcentaje){
         
     }

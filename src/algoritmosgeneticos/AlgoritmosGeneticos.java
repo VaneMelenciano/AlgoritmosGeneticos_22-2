@@ -117,7 +117,8 @@ public class AlgoritmosGeneticos {
         int cuI = 18; //cuidad inical
         Matriz.matriz = Matriz.leerArchivo(0);
         GeneticoTSP gs = new GeneticoTSP(tamanioPob, numG, posMuta);
-        gs.evolucionar(0.15F);
+        //gs.evolucionar(0.15F);
+        
         //ArrayList<IndividuoTSP> original = (ArrayList<IndividuoTSP>) gs.poblacionTSP.clone();
         //int porcentaje = 50;
         //ArrayList<IndividuoTSP> nuevo = Muestreo.torneo((ArrayList<IndividuoTSP>) original.clone(), 50);

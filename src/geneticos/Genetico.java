@@ -11,14 +11,15 @@ import java.util.ArrayList;
  *
  * @author Vanessa
  */
-public class Genetico {
+public class Genetico implements Runnable{
     private int tamanioPoblacion;
     private int numGeneraciones;
     private double probMuta; //probabilidad de muta
     public int n; //tamaño del tablero para Reinas
-
-    private int seleccionM, seleccionP; // 0: torneo, 1: aleatorios
-    private int muestreo; //tipo de muestreo-> 0: torneo, 1: aleatorio
+    private int seleM; //0 es aleatorio, 1 es torneo
+    private int seleP; //tipo de seleccion para padre y madre
+    private int mueT; //tipo de muestreo-> 0: aleatorio, 1: torneo
+    private float muestreo; //0.1 = 100% //tamaño de muestreo
     public Genetico(int t, int n, double p){ //para TSP y binario
         this.tamanioPoblacion=t;
         this.probMuta=p;
@@ -32,6 +33,18 @@ public class Genetico {
         this.n = cI;
         generarPoblacionInicial(cI);
     }
+    public Genetico(int t, int n, double p, int seleM, int seleP, int mueT, float mue){ //para TSP, binario y Reinas
+        //tamaño de pobleación, num Generaciones, cuidad inicial o tamaño de tabl, 
+        //prob Muta, seleccion para madre y padre, tipo de muestreo y tamaño de muestreo
+        this.tamanioPoblacion=t;
+        this.probMuta=p;
+        this.numGeneraciones=n;
+        this.seleM = seleM;
+        this.seleP = seleP;
+        this.mueT = mueT;
+        this.muestreo = mue;
+        generarPoblacionInicial();
+    }
     
     public void generarPoblacionInicial(){
         
@@ -42,9 +55,13 @@ public class Genetico {
     public void evolucionar(){
         
     }
-     public void evolucionar(float porcentaje){
+     /*public void evolucionar(float porcentaje){
          
-     }
+     }*/
+     @Override
+    public void run(){
+        evolucionar();
+    }
     /**
      * @return the tamanioPoblacion
      */
@@ -88,46 +105,59 @@ public class Genetico {
     }
 
     /**
-     * @return the seleccionM
+     * @return the seleM
      */
-    public int getSeleccionM() {
-        return seleccionM;
+    public int getSeleM() {
+        return seleM;
     }
 
     /**
-     * @param seleccionM the seleccionM to set
+     * @param seleM the seleM to set
      */
-    public void setSeleccionM(int seleccionM) {
-        this.seleccionM = seleccionM;
+    public void setSeleM(int seleM) {
+        this.seleM = seleM;
     }
 
     /**
-     * @return the seleccionP
+     * @return the seleP
      */
-    public int getSeleccionP() {
-        return seleccionP;
+    public int getSeleP() {
+        return seleP;
     }
 
     /**
-     * @param seleccionP the seleccionP to set
+     * @param seleP the seleP to set
      */
-    public void setSeleccionP(int seleccionP) {
-        this.seleccionP = seleccionP;
+    public void setSeleP(int seleP) {
+        this.seleP = seleP;
+    }
+
+    /**
+     * @return the mueT
+     */
+    public int getMueT() {
+        return mueT;
+    }
+
+    /**
+     * @param mueT the mueT to set
+     */
+    public void setMueT(int mueT) {
+        this.mueT = mueT;
     }
 
     /**
      * @return the muestreo
      */
-    public int getMuestreo() {
+    public float getMuestreo() {
         return muestreo;
     }
 
     /**
      * @param muestreo the muestreo to set
      */
-    public void setMuestreo(int muestreo) {
+    public void setMuestreo(float muestreo) {
         this.muestreo = muestreo;
     }
-    
     
 }

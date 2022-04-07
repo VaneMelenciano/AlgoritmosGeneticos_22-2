@@ -31,7 +31,6 @@ public class GeneticoReinas extends Genetico{
      *
      * @param porcentaje
      */
-    @Override
     public void evolucionar(float porcentaje){
         ArrayList<IndividuoReinas> pobAux;
         //una sola mascara para todo el proceso evolutivo
