@@ -5,6 +5,7 @@
  */
 package Hilo;
 
+import geneticos.GeneticoSB;
 import geneticos.GeneticoTSP;
 import objetos.Matriz;
 
@@ -13,14 +14,16 @@ import objetos.Matriz;
  * @author Vanessa
  */
 public class Parametros extends javax.swing.JFrame {
-    private GeneticoTSP genetico;
+    //private GeneticoTSP genetico;
+    private GeneticoSB genetico;
     /**
      * Creates new form Parametros
      */
     public Parametros() {
         initComponents();
-        Matriz.matriz=Matriz.leerArchivo(0); //0: TSP, 1: SB
-       genetico = new GeneticoTSP(500, 1000000, 0.15, 1, 0, 1, 0.20F);
+        Matriz.matriz=Matriz.leerArchivo(1); //0: TSP, 1: SB
+       genetico = new GeneticoSB(900, 1000000, 0.15, 1, 0, 1, 0.20F, 100);
+       //genetico = new GeneticoTSP(500, 1000000, 0.15, 1, 0, 1, 0.20F);
        
        //tamaño de pobleación, num Generaciones, cuidad inicial o tamaño de tabl, 
         //prob Muta, seleccion para madre y padre, tipo de muestreo y tamaño de muestreo

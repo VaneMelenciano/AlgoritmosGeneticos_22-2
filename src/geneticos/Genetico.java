@@ -15,7 +15,7 @@ public class Genetico implements Runnable{
     private int tamanioPoblacion;
     private int numGeneraciones;
     private double probMuta; //probabilidad de muta
-    public int n; //tamaño del tablero para Reinas
+    private int n; //tamaño del tablero para Reinas //Numero más grande en instancias de prueba para SAT
     private int seleM; //0 es aleatorio, 1 es torneo
     private int seleP; //tipo de seleccion para padre y madre
     private int mueT; //tipo de muestreo-> 0: aleatorio, 1: torneo
@@ -43,7 +43,20 @@ public class Genetico implements Runnable{
         this.seleP = seleP;
         this.mueT = mueT;
         this.muestreo = mue;
-        generarPoblacionInicial();
+        //generarPoblacionInicial();
+    }
+    public Genetico(int t, int n, double p, int seleM, int seleP, int mueT, float mue, int nn){ //para TSP, binario y Reinas
+        //tamaño de pobleación, num Generaciones, cuidad inicial o tamaño de tabl, 
+        //prob Muta, seleccion para madre y padre, tipo de muestreo y tamaño de muestreo
+        this.tamanioPoblacion=t;
+        this.probMuta=p;
+        this.numGeneraciones=n;
+        this.seleM = seleM;
+        this.seleP = seleP;
+        this.mueT = mueT;
+        this.muestreo = mue;
+        this.n=nn; //numero de instancias para SAT
+        //generarPoblacionInicial();
     }
     
     public void generarPoblacionInicial(){
@@ -158,6 +171,13 @@ public class Genetico implements Runnable{
      */
     public void setMuestreo(float muestreo) {
         this.muestreo = muestreo;
+    }
+
+    /**
+     * @return the n
+     */
+    public int getN() {
+        return n;
     }
     
 }

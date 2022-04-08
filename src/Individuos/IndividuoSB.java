@@ -30,8 +30,13 @@ public class IndividuoSB extends Individuo{
             boolean n = false; //si esa fila es verdadera o falsa
             for(int j=0; j<3; j++){ //columnas
                 int pos = Matriz.matriz[i][j];
-                int aux = getGenotipo()[Math.abs(pos)];
-                if(pos<0) aux = Math.abs(aux-1); //1 -1 = 0 // 0 -1 = -1 -> 1
+                //System.out.println("pos: " + pos);
+                int aux = getGenotipo()[Math.abs(pos)-1];
+                if(pos<0) {
+                    if (aux == 0){
+                        aux = 1;
+                } else aux = 0;
+                }//1 -1 = 0 // 0 -1 = -1 -> 1
                 
                 if(aux==1){
                     n = true;

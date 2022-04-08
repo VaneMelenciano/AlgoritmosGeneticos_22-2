@@ -38,7 +38,7 @@ public class GeneticoReinas extends Genetico{
         //someter a la poblacion a un proceso evolutivo
         IndividuoReinas madre = Seleccion.seleccionTorneoReinas(pob);
        for(int i=0; i<getNumGeneraciones(); i++){
-           int[] mascara = Herramientas.generarArregloBinario(this.n);
+           int[] mascara = Herramientas.generarArregloBinario(this.getN());
            
            System.out.println("\nGeneración :"+(i+1));
            pobAux = new ArrayList<>();

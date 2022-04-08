@@ -22,8 +22,9 @@ public class mainSB {
         //System.out.println(ir.getFitness());
         int tamanio = 5000;
         int numGen = 5000000;
-        double probM = 0.05;
-        GeneticoSB gen = new GeneticoSB(tamanio, numGen, probM, Matriz.matriz.length);
+        double probM = 0.2;
+        GeneticoSB gen = new GeneticoSB(tamanio, numGen, probM, 1, 1, 1, 0.20F, 100);
+        //GeneticoSB gen = new GeneticoSB(tamanio, numGen, probM, 100);
         gen.evolucionar();
         
     }

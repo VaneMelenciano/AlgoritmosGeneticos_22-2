@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import objetos.Cruza;
 import objetos.Herramientas;
+import objetos.Muestreo;
 import objetos.Muta;
 import objetos.Seleccion;
 
@@ -25,12 +26,22 @@ public class GeneticoSB extends Genetico{
     public GeneticoSB(int t, int num, double p, int n){ //tamaño de poblacion, numGenereaciones, probabilidad de muta, tamaño de instancias de prueba
         super(t, num, p, n);
     }
+    public GeneticoSB(int t, int num, double p, int n, int mueT, float mue){ //tamaño de poblacion, numGenereaciones, probabilidad de muta, tamaño de instancias de prueba
+        super(t, num, p, n);
+    }
+    public GeneticoSB(int t, int n, double p, int seleM, int seleP, int mueT, float mue, int nn){ //tamaño de poblacion, numGenereaciones, probabilidad de muta, tamaño de instancias de prueba
+        super(t, n, p, seleM, seleP, mueT, mue, nn);
+        this.poblacion = new ArrayList<>();
+        generarPoblacionInicial(getN());
+    }
     public void evolucionar(float porcentaje){
         
     }
 
     @Override
     public void evolucionar(){
+        //setMuestreo(0.30F); /**/
+        //setMueT(1);
         ArrayList<IndividuoSB> pobAux;
         //una sola mascara para todo el proceso evolutivo
         int[] mascara = Herramientas.generarArregloBinario(24);
@@ -39,11 +50,34 @@ public class GeneticoSB extends Genetico{
        for(int i=0; i<getNumGeneraciones(); i++){
            //crear una población nueva
            pobAux = new ArrayList<>();
+           ///MUESTREO
+                    //Torneo, aleatorio y 50/50
+                    
+             int cantidad = Math.round(getMuestreo()*this.poblacion.size());
+             System.out.println("Cantidad: " + cantidad + "  Muestreo: " + getMuestreo());
+             if(getMueT()==0){
+                 pobAux = Muestreo.aleatorioSB(this.poblacion, cantidad);
+                 System.out.println("Aleatorio: " + cantidad);
+             }
+             else if(getMueT()==1){
+                 pobAux = Muestreo.torneoSB(this.poblacion, cantidad);
+                 System.out.println("Torneo: " + cantidad);
+             }
+             
+             
            for(int j=0; j<getTamanioPoblacion(); j++){
                //muestreo y/o selección
-               //torneo
-               IndividuoSB madre = Seleccion.seleccionTorneoSB(this.poblacion);
-               IndividuoSB padre = Seleccion.seleccionAleatoriaSB(this.poblacion);
+               
+               
+               //IndividuoSB madre = Seleccion.seleccionTorneoSB(this.poblacion);
+               //IndividuoSB padre = Seleccion.seleccionAleatoriaSB(this.poblacion);
+               IndividuoSB madre = null;
+               if(getSeleM()==0)  madre = Seleccion.seleccionAleatoriaSB(poblacion);
+               else madre = Seleccion.seleccionTorneoSB(poblacion);
+               
+               IndividuoSB padre = null;
+               if(getSeleP()==0) padre = Seleccion.seleccionAleatoriaSB(poblacion);
+               else padre = Seleccion.seleccionTorneoSB(poblacion);
                //cruza
                IndividuoSB hijo = Cruza.cruzaMascara(madre, padre, mascara);
                //evaluar la posibilidad de muta
@@ -52,6 +86,8 @@ public class GeneticoSB extends Genetico{
                }
                //agregar el hijo a la población Auxiliar
                pobAux.add(hijo);
+               //System.out.println("Mama: " + madre.getFitness() +"  Papa: " + " " +padre.getFitness() + "    Hijo: " +" " + hijo.getFitness());
+           
            }
            //se tiene que acualizar la población
            actualizar(pobAux);
@@ -78,6 +114,11 @@ public class GeneticoSB extends Genetico{
             //System.out.println(this.poblacion.get(i).fitness);
         }
     }
+
+    /**
+     *
+     * @param n
+     */
     @Override
     public void generarPoblacionInicial(int n) {
         this.poblacion = new ArrayList<>();

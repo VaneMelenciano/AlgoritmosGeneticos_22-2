@@ -162,6 +162,6 @@ public class Cruza {
             System.out.print(h2.getGenotipo()[i]);
         System.out.println("\tFitness: " + h2.getFitness());*/
         
-        return (h1.getFitness()<h2.getFitness() ? h1 : h2);
+        return (h1.getFitness()>h2.getFitness() ? h1 : h2);
     }
 }

@@ -5,8 +5,10 @@
  */
 package objetos;
 
+import Individuos.IndividuoSB;
 import Individuos.IndividuoTSP;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Random;
 
@@ -19,13 +21,6 @@ public class Muestreo {
     //Ordenamiento
     private static ArrayList<IndividuoTSP> ordenar(ArrayList<IndividuoTSP> pob){
         pob.sort(Comparator.comparingInt(i -> i.getFitness()));
-        //ordena de menor a mayor los individuos según su fitness porque entre menor este numero, mejor camino
-        //Collections.sort(pob, new Comparator<IndividuoTSP>() {
-        //    @Override
-         //   public int compare(IndividuoTSP i1, IndividuoTSP i2) {
-         //       return new Integer(i1.getFitness()).compareTo(new Integer(i2.getFitness()));
-         //   }
-        //});
         return pob;
     }
     //TORNES -> LOS MEJORES N
@@ -63,6 +58,33 @@ public class Muestreo {
              Random r = new Random();
             int pos = r.nextInt(pob.size());
             nuevaPob.add(pob.get(pos));
+        }
+        return nuevaPob;
+    }
+    
+    /*SB*/
+    private static ArrayList<IndividuoSB> ordenarSB(ArrayList<IndividuoSB> pob){
+        pob.sort(Collections.reverseOrder(Comparator.comparingInt(i -> i.getFitness())));
+        return pob;
+    }
+    public static ArrayList<IndividuoSB> aleatorioSB(ArrayList<IndividuoSB> pob, int porcentaje){
+        //solo toma % de los mejores
+        ArrayList<IndividuoSB> nuevaPob = new ArrayList<IndividuoSB>();
+        //int cantidad = porcentaje*pob.size()/100;
+        for(int i=0; i<porcentaje; i++){
+             Random r = new Random();
+            int pos = r.nextInt(pob.size());
+            nuevaPob.add(pob.get(pos));
+        }
+        return nuevaPob;
+    }
+    public static ArrayList<IndividuoSB> torneoSB(ArrayList<IndividuoSB> pob, int porcentaje){
+        //solo toma % de los mejores
+        ArrayList<IndividuoSB> nuevaPob = new ArrayList<IndividuoSB>();
+        //int cantidad = porcentaje*pob.size()/100;
+        pob = ordenarSB((ArrayList<IndividuoSB>) pob.clone());
+        for(int i=0; i<porcentaje; i++){
+            nuevaPob.add(pob.get(i));
         }
         return nuevaPob;
     }
