@@ -5,9 +5,10 @@
  */
 package geneticos;
 
-import Individuos.IndividuoSB;
+import Individuos.IndividuoSAT;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
 import objetos.Cruza;
 import objetos.Herramientas;
 import objetos.Muestreo;
@@ -21,30 +22,27 @@ import objetos.Seleccion;
 
 //SALTISFACIBILIDAD BOOLEANA
 //Usamos la matriz para leer el archivo
-public class GeneticoSB extends Genetico{
-    private ArrayList<IndividuoSB> poblacion;
-    public GeneticoSB(int t, int num, double p, int n){ //tamaño de poblacion, numGenereaciones, probabilidad de muta, tamaño de instancias de prueba
+public class GeneticoSAT extends Genetico{
+    private ArrayList<IndividuoSAT> poblacion;
+    public GeneticoSAT(int t, int num, double p, int n){ //tamaño de poblacion, numGenereaciones, probabilidad de muta, tamaño de instancias de prueba
         super(t, num, p, n);
     }
-    public GeneticoSB(int t, int num, double p, int n, int mueT, float mue){ //tamaño de poblacion, numGenereaciones, probabilidad de muta, tamaño de instancias de prueba
+    public GeneticoSAT(int t, int num, double p, int n, int mueT, float mue){ //tamaño de poblacion, numGenereaciones, probabilidad de muta, tamaño de instancias de prueba
         super(t, num, p, n);
     }
-    public GeneticoSB(int t, int n, double p, int seleM, int seleP, int mueT, float mue, int nn){ //tamaño de poblacion, numGenereaciones, probabilidad de muta, tamaño de instancias de prueba
+    public GeneticoSAT(int t, int n, double p, int seleM, int seleP, int mueT, float mue, int nn){ //tamaño de poblacion, numGenereaciones, probabilidad de muta, tamaño de instancias de prueba
         super(t, n, p, seleM, seleP, mueT, mue, nn);
         this.poblacion = new ArrayList<>();
-        generarPoblacionInicial(getN());
-    }
-    public void evolucionar(float porcentaje){
-        
+        generarPoblacionInicial();
     }
 
     @Override
     public void evolucionar(){
         //setMuestreo(0.30F); /**/
         //setMueT(1);
-        ArrayList<IndividuoSB> pobAux;
+        ArrayList<IndividuoSAT> pobAux;
         //una sola mascara para todo el proceso evolutivo
-        int[] mascara = Herramientas.generarArregloBinario(24);
+        int[] mascara = Herramientas.generarArregloBinario(getN());
         //someter a la poblacion a un proceso evolutivo
         int mejorRes = 0;
        for(int i=0; i<getNumGeneraciones(); i++){
@@ -56,30 +54,29 @@ public class GeneticoSB extends Genetico{
              int cantidad = Math.round(getMuestreo()*this.poblacion.size());
              System.out.println("Cantidad: " + cantidad + "  Muestreo: " + getMuestreo());
              if(getMueT()==0){
-                 pobAux = Muestreo.aleatorioSB(this.poblacion, cantidad);
+                 pobAux = Muestreo.aleatorioSAT(this.poblacion, cantidad);
                  System.out.println("Aleatorio: " + cantidad);
              }
              else if(getMueT()==1){
-                 pobAux = Muestreo.torneoSB(this.poblacion, cantidad);
+                 pobAux = Muestreo.torneoSAT(this.poblacion, cantidad);
                  System.out.println("Torneo: " + cantidad);
              }
+              
              
-             
-           for(int j=0; j<getTamanioPoblacion(); j++){
-               //muestreo y/o selección
+           for(int j=0; j<getTamanioPoblacion()-cantidad; j++){
+               //selección
                
+               IndividuoSAT madre = null;
+               if(getSeleM()==0)  madre = Seleccion.seleccionAleatoriaSAT(poblacion);
+               else madre = Seleccion.seleccionTorneoSAT(poblacion);
                
-               //IndividuoSB madre = Seleccion.seleccionTorneoSB(this.poblacion);
-               //IndividuoSB padre = Seleccion.seleccionAleatoriaSB(this.poblacion);
-               IndividuoSB madre = null;
-               if(getSeleM()==0)  madre = Seleccion.seleccionAleatoriaSB(poblacion);
-               else madre = Seleccion.seleccionTorneoSB(poblacion);
-               
-               IndividuoSB padre = null;
-               if(getSeleP()==0) padre = Seleccion.seleccionAleatoriaSB(poblacion);
-               else padre = Seleccion.seleccionTorneoSB(poblacion);
+               IndividuoSAT padre = null;
+               if(getSeleP()==0){
+                   padre = Seleccion.seleccionAleatoriaSAT(poblacion);
+               }
+               else padre = Seleccion.seleccionTorneoSAT(poblacion);
                //cruza
-               IndividuoSB hijo = Cruza.cruzaMascara(madre, padre, mascara);
+               IndividuoSAT hijo = Cruza.cruzaMascara(madre, padre, mascara);
                //evaluar la posibilidad de muta
                if(Muta.muta(getProbMuta())){
                    Muta.muta(hijo);
@@ -92,9 +89,11 @@ public class GeneticoSB extends Genetico{
            //se tiene que acualizar la población
            actualizar(pobAux);
            //VER CUAL ES EL MEJOR RESULTADO ENTRE TODAS LAS GENERACIONES
-           IndividuoSB mejor = Seleccion.seleccionTorneoSB(this.poblacion);
+           IndividuoSAT mejor = Seleccion.seleccionTorneoSAT(this.poblacion);
            System.out.println("Generacion: " + i + " Fitness: " + mejor.getFitness()+ "  Mejor resultado: "+ Arrays.toString(mejor.getGenotipo()));
-            
+           
+           
+           
             /*if(i==0){
                 mejorRes = mejor.getFitness();
                 System.out.println("Generacion: " + i + " Fitness: " + mejor.getFitness()+ "  Mejor resultado: "+ Arrays.toString(mejor.getGenotipo()));
@@ -105,11 +104,11 @@ public class GeneticoSB extends Genetico{
             }*/
        }
     }
-    private void actualizar(ArrayList<IndividuoSB> pobAux) {
+    private void actualizar(ArrayList<IndividuoSAT> pobAux) {
          this.poblacion = new ArrayList<>();
         for(int i=0; i<pobAux.size(); i++){
             //System.out.println(pobAux.get(i).fitness);
-            this.poblacion.add(new IndividuoSB(pobAux.get(i).getGenotipo()));
+            this.poblacion.add(new IndividuoSAT(pobAux.get(i).getGenotipo()));
             //this.poblacion.get(i).actualizar();
             //System.out.println(this.poblacion.get(i).fitness);
         }
@@ -120,11 +119,10 @@ public class GeneticoSB extends Genetico{
      * @param n
      */
     @Override
-    public void generarPoblacionInicial(int n) {
+    public void generarPoblacionInicial() {
         this.poblacion = new ArrayList<>();
         //se genere de manera aleatoria
         for(int i=0; i<getTamanioPoblacion(); i++)
-            this.poblacion.add(new IndividuoSB(n));
-        
+            this.poblacion.add(new IndividuoSAT(getN()));
     }
 }

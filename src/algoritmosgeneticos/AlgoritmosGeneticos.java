@@ -16,6 +16,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import objetos.Herramientas;
 import Individuos.IndividuoTSP;
+import geneticos.GeneticoSAT;
 import java.util.Arrays;
 import objetos.Muestreo;
 
@@ -116,7 +117,8 @@ public class AlgoritmosGeneticos {
         double posMuta = 0.07; //posibilidad de muta
         int cuI = 18; //cuidad inical
         Matriz.matriz = Matriz.leerArchivo(0);
-        GeneticoTSP gs = new GeneticoTSP(tamanioPob, numG, posMuta);
+        //System.out.println(Matriz.matriz.length);
+        GeneticoSAT gs = new GeneticoSAT(900, 1000000, 0.15, 1, 0, 1, 0.20F, 100);
         //gs.evolucionar(0.15F);
         
         //ArrayList<IndividuoTSP> original = (ArrayList<IndividuoTSP>) gs.poblacionTSP.clone();

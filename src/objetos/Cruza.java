@@ -7,7 +7,7 @@ package objetos;
 
 import Individuos.IndividuoBinario;
 import Individuos.IndividuoReinas;
-import Individuos.IndividuoSB;
+import Individuos.IndividuoSAT;
 import Individuos.IndividuoTSP;
 import java.util.LinkedHashSet;
 
@@ -137,7 +137,7 @@ public class Cruza {
         
         return (h1.getFitness()<h2.getFitness() ? h1 : h2);
     }
-    public static IndividuoSB cruzaMascara(IndividuoSB m, IndividuoSB p, int[] mascara){
+    public static IndividuoSAT cruzaMascara(IndividuoSAT m, IndividuoSAT p, int[] mascara){
         int[] g1 = new int[m.getGenotipo().length];    
         int[] g2 = new int[m.getGenotipo().length];    
         //recorriendo la mascara
@@ -151,8 +151,8 @@ public class Cruza {
                 g2[i]=m.getGenotipo()[i];
             }
         }
-        IndividuoSB h1 = new IndividuoSB(g1);
-        IndividuoSB h2 = new IndividuoSB(g2);
+        IndividuoSAT h1 = new IndividuoSAT(g1);
+        IndividuoSAT h2 = new IndividuoSAT(g2);
         
         /*System.out.println("\nIndividuo 1");
         for(int i=0; i<h1.getGenotipo().length; i++)

@@ -7,7 +7,7 @@ package objetos;
 
 import Individuos.IndividuoBinario;
 import Individuos.IndividuoReinas;
-import Individuos.IndividuoSB;
+import Individuos.IndividuoSAT;
 import Individuos.IndividuoTSP;
 import java.util.Random;
 
@@ -23,7 +23,7 @@ public class Muta {
         i.getGenotipo()[pos] = (i.getGenotipo()[pos]==0) ? 1 : 0; //si es 0, lo pone en 1 y viseversa
         i.actualizar(); //actualiza el firtness y genotipo del individuo
     }
-    public static void muta(IndividuoSB i){
+    public static void muta(IndividuoSAT i){
         //int[] gen = i.getGenotipo().clone();
         Random r = new Random();
         int pos = r.nextInt(i.getGenotipo().length); //elige una posición entre el genotipo del individuo, al azar

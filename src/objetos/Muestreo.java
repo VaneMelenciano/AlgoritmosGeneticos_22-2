@@ -5,7 +5,7 @@
  */
 package objetos;
 
-import Individuos.IndividuoSB;
+import Individuos.IndividuoSAT;
 import Individuos.IndividuoTSP;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -62,14 +62,14 @@ public class Muestreo {
         return nuevaPob;
     }
     
-    /*SB*/
-    private static ArrayList<IndividuoSB> ordenarSB(ArrayList<IndividuoSB> pob){
+    /*SAT*/
+    private static ArrayList<IndividuoSAT> ordenarSAT(ArrayList<IndividuoSAT> pob){
         pob.sort(Collections.reverseOrder(Comparator.comparingInt(i -> i.getFitness())));
         return pob;
     }
-    public static ArrayList<IndividuoSB> aleatorioSB(ArrayList<IndividuoSB> pob, int porcentaje){
+    public static ArrayList<IndividuoSAT> aleatorioSAT(ArrayList<IndividuoSAT> pob, int porcentaje){
         //solo toma % de los mejores
-        ArrayList<IndividuoSB> nuevaPob = new ArrayList<IndividuoSB>();
+        ArrayList<IndividuoSAT> nuevaPob = new ArrayList<IndividuoSAT>();
         //int cantidad = porcentaje*pob.size()/100;
         for(int i=0; i<porcentaje; i++){
              Random r = new Random();
@@ -78,11 +78,11 @@ public class Muestreo {
         }
         return nuevaPob;
     }
-    public static ArrayList<IndividuoSB> torneoSB(ArrayList<IndividuoSB> pob, int porcentaje){
+    public static ArrayList<IndividuoSAT> torneoSAT(ArrayList<IndividuoSAT> pob, int porcentaje){
         //solo toma % de los mejores
-        ArrayList<IndividuoSB> nuevaPob = new ArrayList<IndividuoSB>();
+        ArrayList<IndividuoSAT> nuevaPob = new ArrayList<IndividuoSAT>();
         //int cantidad = porcentaje*pob.size()/100;
-        pob = ordenarSB((ArrayList<IndividuoSB>) pob.clone());
+        pob = ordenarSAT((ArrayList<IndividuoSAT>) pob.clone());
         for(int i=0; i<porcentaje; i++){
             nuevaPob.add(pob.get(i));
         }

@@ -5,6 +5,7 @@
  */
 package Individuos;
 
+import java.util.Arrays;
 import objetos.Herramientas;
 import objetos.Matriz;
 
@@ -14,14 +15,18 @@ import objetos.Matriz;
  */
 
 //SATISFACIBILIDAD BOOLEANA
-public class IndividuoSB extends Individuo{
-    public IndividuoSB(int n){ //n es el tamaño de la matriz (num de filas)
+public class IndividuoSAT extends Individuo{
+    public IndividuoSAT(int n){ //n es el numero máximo en la matriz (100)
         setGenotipo(Herramientas.generarArregloBinario(n));
         actualizar();
+        /**/
+        //System.out.println(getFitness() + "  " + getGenotipo().length + " " +Arrays.toString(getGenotipo()));
     }
     //ceación aleatoria
-    public IndividuoSB(int[] gen){
-        super(gen);
+    public IndividuoSAT(int[] gen){
+        //super(gen);
+        setGenotipo(gen.clone());
+        actualizar();
     }
 
     private void calcularFitness() {
@@ -35,8 +40,8 @@ public class IndividuoSB extends Individuo{
                 if(pos<0) {
                     if (aux == 0){
                         aux = 1;
-                } else aux = 0;
-                }//1 -1 = 0 // 0 -1 = -1 -> 1
+                    } else aux = 0;
+                }
                 
                 if(aux==1){
                     n = true;

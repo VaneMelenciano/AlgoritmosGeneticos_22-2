@@ -7,7 +7,7 @@ package objetos;
 
 import Individuos.IndividuoBinario;
 import Individuos.IndividuoReinas;
-import Individuos.IndividuoSB;
+import Individuos.IndividuoSAT;
 import Individuos.IndividuoTSP;
 import java.util.ArrayList;
 import java.util.Random;
@@ -27,14 +27,14 @@ public class Seleccion {
        }
        return (new IndividuoBinario(mejor.getGenotipo()));
     }
-    public static IndividuoSB seleccionTorneoSB(ArrayList<IndividuoSB> poblacion){
+    public static IndividuoSAT seleccionTorneoSAT(ArrayList<IndividuoSAT> poblacion){
        //recorrer la poblacción
-       IndividuoSB mejor = poblacion.get(0);
-       for(IndividuoSB i: poblacion){
+       IndividuoSAT mejor = poblacion.get(0);
+       for(IndividuoSAT i: poblacion){
            if(i.getFitness()>mejor.getFitness()) //maximizando
                mejor = i;
        }
-       return (new IndividuoSB(mejor.getGenotipo()));
+       return (new IndividuoSAT(mejor.getGenotipo()));
     }
     public static IndividuoTSP seleccionTorneoTSP(ArrayList<IndividuoTSP> poblacion){
        //recorrer la poblacción
@@ -73,10 +73,12 @@ public class Seleccion {
        int pos = r.nextInt(poblacion.size());
        return new IndividuoReinas(poblacion.get(pos).getGenotipo());
     }
-    public static IndividuoSB seleccionAleatoriaSB(ArrayList<IndividuoSB> poblacion){
+    private static Random r = new Random();
+    public static IndividuoSAT seleccionAleatoriaSAT(ArrayList<IndividuoSAT> poblacion){
        //recorrer la poblacción
-       Random r = new Random();
+       r = new Random(System.currentTimeMillis());
        int pos = r.nextInt(poblacion.size());
-       return new IndividuoSB(poblacion.get(pos).getGenotipo());
+       //System.out.println("\t " + pos);
+       return new IndividuoSAT(poblacion.get(pos).getGenotipo());
     }
 }
