@@ -6,7 +6,12 @@
 package geneticosParalelos;
 
 import Hilo.Parametros;
+import geneticos.GeneticoBinario;
+import geneticos.GeneticoReinas;
 import geneticos.GeneticoSAT;
+import geneticos.GeneticoTSP;
+import java.util.ArrayList;
+import java.util.Arrays;
 import objetos.Matriz;
 
 /**
@@ -15,10 +20,23 @@ import objetos.Matriz;
  */
 public class Gestor extends javax.swing.JFrame {
     private int numeroGenetico=0;
+    private boolean bandera = false;
+    private ArrayList<GeneticoSAT> geneticosSAT;
+    private ArrayList<GeneticoTSP> geneticosTSP;
+    private ArrayList<GeneticoBinario> geneticosBinario;
+    private ArrayList<GeneticoReinas> geneticosReinas;
+    private ArrayList<Parametros> parametros;
+    private int seleccion;
+    //Binario=0, Reinas=1, SAT=2, TSP=3
     /**
      * Creates new form Gestor
      */
     public Gestor() {
+        this.geneticosSAT = new ArrayList<GeneticoSAT>();
+        this.geneticosTSP = new ArrayList<GeneticoTSP>();
+        this.geneticosBinario = new ArrayList<GeneticoBinario>();
+        this.geneticosReinas = new ArrayList<GeneticoReinas>();
+        this.parametros = new ArrayList<Parametros>();
         initComponents();
     }
 
@@ -34,6 +52,16 @@ public class Gestor extends javax.swing.JFrame {
         crearNuevoGeneticoBtn = new javax.swing.JButton();
         tipoGenetico = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        geneticoCambiarParametros1 = new javax.swing.JComboBox<>();
+        geneticoCambiarParametros2 = new javax.swing.JComboBox<>();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        geneticoCambiarMejor1 = new javax.swing.JComboBox<>();
+        geneticoCambiarMejor2 = new javax.swing.JComboBox<>();
+        btnIntercambiarParametros = new javax.swing.JButton();
+        btnIntercambiarMejor = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -54,32 +82,115 @@ public class Gestor extends javax.swing.JFrame {
 
         jLabel1.setText("Crear nuevo genético");
 
+        jLabel2.setText("Cambiar parámetros entre genéticos");
+
+        geneticoCambiarParametros1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Genético" }));
+
+        geneticoCambiarParametros2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Genético" }));
+
+        jLabel3.setText("a");
+
+        jLabel4.setText("Cambiar mejor individuo entre geneticos");
+
+        geneticoCambiarMejor1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Genético" }));
+
+        geneticoCambiarMejor2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Genético" }));
+
+        btnIntercambiarParametros.setText("Cambiar");
+        btnIntercambiarParametros.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIntercambiarParametrosActionPerformed(evt);
+            }
+        });
+
+        btnIntercambiarMejor.setText("Cambiar");
+        btnIntercambiarMejor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIntercambiarMejorActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setText("a");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(83, 83, 83)
-                        .addComponent(tipoGenetico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(91, 91, 91)
-                        .addComponent(crearNuevoGeneticoBtn))
+                        .addGap(4, 4, 4)
+                        .addComponent(geneticoCambiarParametros1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(geneticoCambiarParametros2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(137, 137, 137)
-                        .addComponent(jLabel1)))
-                .addContainerGap(109, Short.MAX_VALUE))
+                        .addGap(14, 14, 14)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(geneticoCambiarMejor1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel5)
+                        .addGap(46, 46, 46)
+                        .addComponent(geneticoCambiarMejor2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addComponent(tipoGenetico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(crearNuevoGeneticoBtn)
+                        .addGap(29, 29, 29))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(37, 37, 37))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(btnIntercambiarParametros)
+                                .addGap(91, 91, 91))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(btnIntercambiarMejor)
+                                .addGap(88, 88, 88))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(116, 116, 116)
+                                .addComponent(jLabel3))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(62, 62, 62)
+                                .addComponent(jLabel1)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(60, 60, 60))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(41, 41, 41)
+                .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(41, 41, 41)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tipoGenetico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(crearNuevoGeneticoBtn))
-                .addContainerGap(181, Short.MAX_VALUE))
+                    .addComponent(crearNuevoGeneticoBtn)
+                    .addComponent(tipoGenetico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(27, 27, 27)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(geneticoCambiarParametros2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(geneticoCambiarParametros1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnIntercambiarParametros)
+                .addGap(24, 24, 24)
+                .addComponent(jLabel4)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(geneticoCambiarMejor1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5)
+                    .addComponent(geneticoCambiarMejor2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(btnIntercambiarMejor)
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         pack();
@@ -91,25 +202,82 @@ public class Gestor extends javax.swing.JFrame {
 
     private void crearNuevoGeneticoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearNuevoGeneticoBtnActionPerformed
         //PRESIONAR EL BOTON
-        if(this.tipoGenetico.getSelectedIndex()==0){ //Binario
+        if(this.bandera==false){
+            seleccion = this.tipoGenetico.getSelectedIndex();
+            bandera=true;
+            String aux = this.tipoGenetico.getItemAt(seleccion);
+            this.tipoGenetico.removeAllItems();
+            this.tipoGenetico.addItem(aux);
+        }
+        
+        if(seleccion==0){ //Binario
             
-        } else if(this.tipoGenetico.getSelectedIndex()==1){ //Reinas
+        } else if(seleccion==1){ //Reinas
             
-        } else if(this.tipoGenetico.getSelectedIndex()==2){ //SAT
+        } else if(seleccion==2){ //SAT
             Matriz.matriz=Matriz.leerArchivo(1); //0: TSP, 1: SB
-            
-            String titulo= ("Genetico " + this.numeroGenetico);
+            String titulo= ("Genetico SAT " + this.numeroGenetico);
             Consola c = new Consola(titulo);
-            GeneticoSAT genetico = new GeneticoSAT(900, 100000000, 0, 0, 0, 0, 0, 100, c);
-            
-            Parametros p = new Parametros(genetico, titulo);
+            this.geneticosSAT.add(this.numeroGenetico, new GeneticoSAT(900, 100000000, 0, 0, 0, 0, 0, 100, c));
+            //tamaño de pobleación, num Generaciones, cuidad inicial o tamaño de tabl, 
+            //prob Muta, seleccion para madre y padre, tipo de muestreo y tamaño de muestreo
+            this.parametros.add(this.numeroGenetico, new Parametros(this.geneticosSAT.get(this.numeroGenetico), titulo));
+            agregarItems(titulo);
+            this.parametros.get(this.numeroGenetico).setVisible(true);
             this.numeroGenetico++;
-            p.setVisible(true);
-            
         }else{ //TSP
             
         }
     }//GEN-LAST:event_crearNuevoGeneticoBtnActionPerformed
+
+    private void agregarItems(String titulo) {
+        this.geneticoCambiarMejor1.addItem(titulo);
+        this.geneticoCambiarMejor2.addItem(titulo);
+        this.geneticoCambiarParametros1.addItem(titulo);
+        this.geneticoCambiarParametros2.addItem(titulo);
+    }
+    private void btnIntercambiarParametrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIntercambiarParametrosActionPerformed
+        //CAMBIAR PARAMETROS ENTRE GENETICOS
+        int seleccion1 = this.geneticoCambiarParametros1.getSelectedIndex()-1;
+        int seleccion2 = this.geneticoCambiarParametros2.getSelectedIndex()-1;
+        //A seleccion2 le mandamos lo de seleccion1
+        if(seleccion1 != seleccion2){
+            switch(seleccion){ //tipo de genetico
+                case 0:
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    GeneticoSAT aux = this.geneticosSAT.get(seleccion1);
+                    this.geneticosSAT.get(seleccion2).cambiarParametros(aux.getTamanioPoblacion(), aux.getProbabilidadMuta(), aux.getSeleccionMadre(), aux.getSeleccionPadre(), aux.getTipoMuestreo(), aux.getPorcentajeMuestreo());
+                    this.parametros.get(seleccion2).actualizarValores(); //actualizar valores en el JFrame de parametros de ese genetico
+                        break;
+                default :
+                    break;
+            }
+        }
+    }//GEN-LAST:event_btnIntercambiarParametrosActionPerformed
+
+    private void btnIntercambiarMejorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIntercambiarMejorActionPerformed
+        //MANDAT MEJOR INDIVISUO DE UN GENETICO A OTRO
+        int seleccion1 = this.geneticoCambiarMejor1.getSelectedIndex()-1;
+        int seleccion2 = this.geneticoCambiarMejor2.getSelectedIndex()-1;
+        //A seleccion2 le mandamos lo de seleccion1
+        if(seleccion1 != seleccion2){
+            switch(seleccion){ //tipo de genetico
+                case 0:
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    GeneticoSAT aux = this.geneticosSAT.get(seleccion1);
+                    this.geneticosSAT.get(seleccion2).setMejorIndividuo(aux.getMejorIndividuo());
+                            break;
+                default :
+                    break;
+            }
+        }
+    }//GEN-LAST:event_btnIntercambiarMejorActionPerformed
 
     /**
      * @param args the command line arguments
@@ -147,8 +315,19 @@ public class Gestor extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnIntercambiarMejor;
+    private javax.swing.JButton btnIntercambiarParametros;
     private javax.swing.JButton crearNuevoGeneticoBtn;
+    private javax.swing.JComboBox<String> geneticoCambiarMejor1;
+    private javax.swing.JComboBox<String> geneticoCambiarMejor2;
+    private javax.swing.JComboBox<String> geneticoCambiarParametros1;
+    private javax.swing.JComboBox<String> geneticoCambiarParametros2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JComboBox<String> tipoGenetico;
     // End of variables declaration//GEN-END:variables
+
 }

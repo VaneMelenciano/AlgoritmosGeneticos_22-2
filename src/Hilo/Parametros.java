@@ -21,6 +21,8 @@ public class Parametros extends javax.swing.JFrame {
     private GeneticoBinario geneticoBinario;
     private GeneticoReinas geneticoReinas;
     private GeneticoTSP geneticoTSP;
+    private int seleccion; 
+    //Binario=0, Reinas=1, SAT=2, TSP=3
     /**
      * Creates new form Parametros
      */
@@ -29,6 +31,7 @@ public class Parametros extends javax.swing.JFrame {
         initComponents();
         Matriz.matriz=Matriz.leerArchivo(1); //0: TSP, 1: SB
        geneticoSAT = new GeneticoSAT(900, 100000000, 0, 0, 0, 0, 0, 100);
+       this.seleccion=2;
        //genetico = new GeneticoSAT(900, 1000000, 0.15, 1, 0, 1, 0.20F, 100);
        //genetico = new GeneticoTSP(500, 1000000, 0.15, 1, 0, 1, 0.20F);
        
@@ -42,9 +45,37 @@ public class Parametros extends javax.swing.JFrame {
         super.setTitle(titulo);
         initComponents();
         this.geneticoSAT = genetico;
-       //genetico = new GeneticoSAT(900, 1000000, 0.15, 1, 0, 1, 0.20F, 100);
-       //genetico = new GeneticoTSP(500, 1000000, 0.15, 1, 0, 1, 0.20F);
-       
+        this.seleccion=2;
+       //tamaño de pobleación, num Generaciones, cuidad inicial o tamaño de tabl, 
+        //prob Muta, seleccion para madre y padre, tipo de muestreo y tamaño de muestreo
+       Thread hilo = new Thread(genetico);
+       hilo.start();
+    }
+    public Parametros(GeneticoBinario genetico, String titulo) {
+        super.setTitle(titulo);
+        initComponents();
+        this.geneticoBinario = genetico;
+        this.seleccion=0;
+       //tamaño de pobleación, num Generaciones, cuidad inicial o tamaño de tabl, 
+        //prob Muta, seleccion para madre y padre, tipo de muestreo y tamaño de muestreo
+       Thread hilo = new Thread(genetico);
+       hilo.start();
+    }
+    public Parametros(GeneticoTSP genetico, String titulo) {
+        super.setTitle(titulo);
+        initComponents();
+        this.geneticoTSP = genetico;
+        this.seleccion=3;
+       //tamaño de pobleación, num Generaciones, cuidad inicial o tamaño de tabl, 
+        //prob Muta, seleccion para madre y padre, tipo de muestreo y tamaño de muestreo
+       Thread hilo = new Thread(genetico);
+       hilo.start();
+    }
+    public Parametros(GeneticoReinas genetico, String titulo) {
+        super.setTitle(titulo);
+        initComponents();
+        this.geneticoReinas = genetico;
+        this.seleccion=1;
        //tamaño de pobleación, num Generaciones, cuidad inicial o tamaño de tabl, 
         //prob Muta, seleccion para madre y padre, tipo de muestreo y tamaño de muestreo
        Thread hilo = new Thread(genetico);
@@ -67,13 +98,13 @@ public class Parametros extends javax.swing.JFrame {
         textSel = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        pMuta = new javax.swing.JTextField();
-        tPob = new javax.swing.JTextField();
-        tSelM = new javax.swing.JComboBox<>();
+        probabilidadMuta = new javax.swing.JTextField();
+        tamanioPoblacion = new javax.swing.JTextField();
+        seleccionMadre = new javax.swing.JComboBox<>();
         textSel1 = new javax.swing.JLabel();
-        tSelP = new javax.swing.JComboBox<>();
-        pMueP = new javax.swing.JTextField();
-        tMue = new javax.swing.JComboBox<>();
+        seleccionPadre = new javax.swing.JComboBox<>();
+        tamanioMuestreo = new javax.swing.JTextField();
+        tipoMuestreo = new javax.swing.JComboBox<>();
         cambiar = new javax.swing.JButton();
 
         jTextArea1.setColumns(20);
@@ -90,40 +121,40 @@ public class Parametros extends javax.swing.JFrame {
 
         jLabel1.setText("Tipo de muestreo:");
 
-        jLabel2.setText("Porcentaje de muetreo:");
+        jLabel2.setText("Porcentaje de muestreo:");
 
-        tPob.addActionListener(new java.awt.event.ActionListener() {
+        tamanioPoblacion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tPobActionPerformed(evt);
+                tamanioPoblacionActionPerformed(evt);
             }
         });
 
-        tSelM.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Aleatorio", "Torneo", "Selección" }));
-        tSelM.setSelectedIndex(2);
-        tSelM.setToolTipText("");
-        tSelM.addActionListener(new java.awt.event.ActionListener() {
+        seleccionMadre.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Aleatorio", "Torneo", "Selección" }));
+        seleccionMadre.setSelectedIndex(2);
+        seleccionMadre.setToolTipText("");
+        seleccionMadre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tSelMActionPerformed(evt);
+                seleccionMadreActionPerformed(evt);
             }
         });
 
         textSel1.setText("Tipo de selección padre:");
 
-        tSelP.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Aleatorio", "Torneo", "Selección" }));
-        tSelP.setSelectedIndex(2);
-        tSelP.setToolTipText("");
-        tSelP.addActionListener(new java.awt.event.ActionListener() {
+        seleccionPadre.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Aleatorio", "Torneo", "Selección" }));
+        seleccionPadre.setSelectedIndex(2);
+        seleccionPadre.setToolTipText("");
+        seleccionPadre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tSelPActionPerformed(evt);
+                seleccionPadreActionPerformed(evt);
             }
         });
 
-        tMue.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Aleatorio", "Torneo", "Selección" }));
-        tMue.setSelectedIndex(2);
-        tMue.setToolTipText("");
-        tMue.addActionListener(new java.awt.event.ActionListener() {
+        tipoMuestreo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Aleatorio", "Torneo", "Selección" }));
+        tipoMuestreo.setSelectedIndex(2);
+        tipoMuestreo.setToolTipText("");
+        tipoMuestreo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tMueActionPerformed(evt);
+                tipoMuestreoActionPerformed(evt);
             }
         });
 
@@ -139,38 +170,33 @@ public class Parametros extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(textMutaP)
-                                    .addComponent(textPoblacion)
-                                    .addComponent(textSel))
-                                .addGap(27, 27, 27)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(tPob, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)
-                                    .addComponent(pMuta)
-                                    .addComponent(tSelM, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(textSel1)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jLabel2))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(27, 27, 27)
-                                        .addComponent(tSelP, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(tMue, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(pMueP, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(98, 98, 98)
-                        .addComponent(cambiar)))
-                .addContainerGap(18, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(textMutaP)
+                            .addComponent(textPoblacion)
+                            .addComponent(textSel))
+                        .addGap(27, 27, 27)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(seleccionMadre, javax.swing.GroupLayout.Alignment.TRAILING, 0, 113, Short.MAX_VALUE)
+                            .addComponent(probabilidadMuta, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(tamanioPoblacion, javax.swing.GroupLayout.Alignment.TRAILING)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(textSel1)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(seleccionPadre, 0, 113, Short.MAX_VALUE)
+                            .addComponent(tipoMuestreo, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(tamanioMuestreo, javax.swing.GroupLayout.Alignment.TRAILING))))
+                .addContainerGap(24, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(cambiar)
+                .addGap(106, 106, 106))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -178,82 +204,149 @@ public class Parametros extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(textPoblacion)
-                    .addComponent(tPob))
+                    .addComponent(tamanioPoblacion))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(textMutaP)
-                    .addComponent(pMuta))
+                    .addComponent(probabilidadMuta))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(textSel)
-                    .addComponent(tSelM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(seleccionMadre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(textSel1)
-                    .addComponent(tSelP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(seleccionPadre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(21, 21, 21)
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addComponent(tMue, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(tipoMuestreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
-                    .addComponent(pMueP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(tamanioMuestreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(33, 33, 33)
                 .addComponent(cambiar)
-                .addGap(54, 54, 54))
+                .addGap(39, 39, 39))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tPobActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tPobActionPerformed
+    private void tamanioPoblacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tamanioPoblacionActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_tPobActionPerformed
+    }//GEN-LAST:event_tamanioPoblacionActionPerformed
 
-    private void tSelMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tSelMActionPerformed
+    private void seleccionMadreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seleccionMadreActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_tSelMActionPerformed
+    }//GEN-LAST:event_seleccionMadreActionPerformed
 
-    private void tSelPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tSelPActionPerformed
+    private void seleccionPadreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seleccionPadreActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_tSelPActionPerformed
+    }//GEN-LAST:event_seleccionPadreActionPerformed
 
-    private void tMueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tMueActionPerformed
+    private void tipoMuestreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tipoMuestreoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_tMueActionPerformed
+    }//GEN-LAST:event_tipoMuestreoActionPerformed
 
+    public void actualizarValores(){
+        //Binario=0, Reinas=1, SAT=2, TSP=3
+        switch(this.seleccion){
+               case 0:
+                   break;
+               case 1:
+                   break;
+               case 2: 
+                   this.tamanioPoblacion.setText(String.valueOf(this.geneticoSAT.getTamanioPoblacion()));
+                   this.probabilidadMuta.setText(String.valueOf(this.geneticoSAT.getProbabilidadMuta()));
+                   this.seleccionMadre.setSelectedIndex(this.geneticoSAT.getSeleccionMadre());
+                   this.seleccionPadre.setSelectedIndex(this.geneticoSAT.getSeleccionPadre());
+                   this.tipoMuestreo.setSelectedIndex(this.geneticoSAT.getTipoMuestreo());
+                   this.tamanioMuestreo.setText(String.valueOf(this.geneticoSAT.getPorcentajeMuestreo()));
+                   break;
+               default:
+                   break;
+           }
+    }
     private void cambiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cambiarActionPerformed
-       //Tamaño de población
+       //Binario=0, Reinas=1, SAT=2, TSP=3
+
+        //Tamaño de población
        /*if(this.tPob.getText().length()!=0){
            int poblacion = Integer.parseInt(this.tPob.getText());
            this.genetico.setTamanioPoblacion(poblacion);
            this.genetico.generarPoblacionInicial();
        }*/
        //Probabilidad de muta
-       if(this.pMuta.getText().length()!=0){
-           double muta = Double.parseDouble(this.pMuta.getText()); //pMuta
-           this.geneticoSAT.setProbMuta(muta);
+       if(this.probabilidadMuta.getText().length()!=0){
+           double muta = Double.parseDouble(this.probabilidadMuta.getText()); //pMuta
+           switch(this.seleccion){
+               case 0:
+                   break;
+               case 1:
+                   break;
+               case 2: this.geneticoSAT.setProbabilidadMuta(muta);
+                   break;
+               default:
+                   break;
+           }
+           
        }
-       //Tipo de seleccion madre tSelM
-       if(this.tSelM.getSelectedIndex()!=2){
-           this.geneticoSAT.setSeleM(this.tSelM.getSelectedIndex());
+       //Tipo de seleccion madre
+       if(this.seleccionMadre.getSelectedIndex()!=2){
+           switch(this.seleccion){
+               case 0:
+                   break;
+               case 1:
+                   break;
+               case 2: this.geneticoSAT.setSeleccionMadre(this.seleccionMadre.getSelectedIndex());
+                   break;
+               default:
+                   break;
+           }
        }
-       //Tipo de seleccion apdre tSelP
-       if(this.tSelP.getSelectedIndex()!=2){
-           this.geneticoSAT.setSeleP(this.tSelP.getSelectedIndex());
+       //Tipo de seleccion padre
+       if(this.seleccionPadre.getSelectedIndex()!=2){
+           switch(this.seleccion){
+               case 0:
+                   break;
+               case 1:
+                   break;
+               case 2:this.geneticoSAT.setSeleccionPadre(this.seleccionPadre.getSelectedIndex());
+                   break;
+               default:
+                   break;
+           }
        }
-       //Tipo de muestreo tMue
-       if(this.tMue.getSelectedIndex()!=2){
-           this.geneticoSAT.setMueT(this.tMue.getSelectedIndex());
+       //Tipo de muestreo
+       if(this.tipoMuestreo.getSelectedIndex()!=2){
+           switch(this.seleccion){
+               case 0:
+                   break;
+               case 1:
+                   break;
+               case 2:this.geneticoSAT.setTipoMuestreo(this.tipoMuestreo.getSelectedIndex());
+                   break;
+               default:
+                   break;
+           }
        }
-       //Porcentaje de muestreo pMueP
-       if(this.pMueP.getText().length()!=0){
-           float por = Float.parseFloat(this.pMueP.getText());
-           this.geneticoSAT.setMuestreo(por);
+       //Porcentaje de muestreo
+       if(this.tamanioMuestreo.getText().length()!=0){
+           float por = Float.parseFloat(this.tamanioMuestreo.getText());
+           switch(this.seleccion){
+               case 0:
+                   break;
+               case 1:
+                   break;
+               case 2:this.geneticoSAT.setPorcentajeMuestreo(por);
+                   break;
+               default:
+                   break;
+           }
        }
     }//GEN-LAST:event_cambiarActionPerformed
 
@@ -298,15 +391,15 @@ public class Parametros extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField pMueP;
-    private javax.swing.JTextField pMuta;
-    private javax.swing.JComboBox<String> tMue;
-    private javax.swing.JTextField tPob;
-    private javax.swing.JComboBox<String> tSelM;
-    private javax.swing.JComboBox<String> tSelP;
+    private javax.swing.JTextField probabilidadMuta;
+    private javax.swing.JComboBox<String> seleccionMadre;
+    private javax.swing.JComboBox<String> seleccionPadre;
+    private javax.swing.JTextField tamanioMuestreo;
+    private javax.swing.JTextField tamanioPoblacion;
     private javax.swing.JLabel textMutaP;
     private javax.swing.JLabel textPoblacion;
     private javax.swing.JLabel textSel;
     private javax.swing.JLabel textSel1;
+    private javax.swing.JComboBox<String> tipoMuestreo;
     // End of variables declaration//GEN-END:variables
 }

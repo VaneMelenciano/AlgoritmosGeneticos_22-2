@@ -38,22 +38,22 @@ public final class GeneticoTSP extends Genetico{
     //int t, int n, double p, int seleM, int seleP, int mueT, float mue
     @Override
     public void evolucionar(){
-        String [][] matrizRes = new String[getNumGeneraciones()+1][this.poblacion.get(0).getGenotipo().length+2];
+        String [][] matrizRes = new String[getNumeroGeneraciones()+1][this.poblacion.get(0).getGenotipo().length+2];
         ArrayList<IndividuoTSP> pobAux;
         
         //someter a la poblacion a un proceso evolutivo
         int mejorRes=0, genRes=0;
-       for(int i=0; i<getNumGeneraciones(); i++){
+       for(int i=0; i<getNumeroGeneraciones(); i++){
            pobAux = new ArrayList<>();
            //crear una población nueva
            ///MUESTREO
                     //Torneo, aleatorio y 50/50
-           int cantidad = Math.round(getMuestreo()*this.poblacion.size());
-            if(getMueT()==0){
+           int cantidad = Math.round(getPorcentajeMuestreo()*this.poblacion.size());
+            if(getTipoMuestreo()==0){
                 pobAux = Muestreo.aleatorio(this.poblacion, cantidad);
                 //System.out.println("Aleatorio: " + cantidad);
             }
-            else if(getMueT()==1){
+            else if(getTipoMuestreo()==1){
                 pobAux = Muestreo.torneo(this.poblacion, cantidad);
                 //System.out.println("Torneo: " + cantidad);
             }
@@ -62,17 +62,17 @@ public final class GeneticoTSP extends Genetico{
            //crear una población nueva   
            for(int j=0; j<getTamanioPoblacion()-cantidad; j++){
                IndividuoTSP madre = null;
-               if(getSeleM()==0)  madre = Seleccion.seleccionAleatoriaTSP(poblacion);
+               if(getSeleccionMadre()==0)  madre = Seleccion.seleccionAleatoriaTSP(poblacion);
                else madre = Seleccion.seleccionTorneoTSP(poblacion);
                
                IndividuoTSP padre = null;
-               if(getSeleP()==0) padre = Seleccion.seleccionAleatoriaTSP(poblacion);
+               if(getSeleccionPadre()==0) padre = Seleccion.seleccionAleatoriaTSP(poblacion);
                else padre = Seleccion.seleccionTorneoTSP(poblacion);
                
                //cruza
                IndividuoTSP hijo = Cruza.cruzaTSP(madre, padre);
                //evaluar la posibilidad de muta
-               if(Muta.muta(getProbMuta())){
+               if(Muta.muta(getProbabilidadMuta())){
                    Muta.muta(hijo);
                }
                //agregar el hijo a la población Auxiliar
@@ -104,12 +104,12 @@ public final class GeneticoTSP extends Genetico{
             System.out.println("Generacion: " + i + " Fitness: " + mejor.getFitness()+ "  Mejor resultado: "+ Arrays.toString(mejor.getGenotipo()));
        }
        //GUARDAR EN TXT MEJORES RESULTADOS
-       matrizRes[getNumGeneraciones()][0] = "Mejor resultado:";
-       matrizRes[getNumGeneraciones()][1] = "\t" + mejorRes;
-       matrizRes[getNumGeneraciones()][2] = "\tGeneracion:";
-       matrizRes[getNumGeneraciones()][3] = "\t" + genRes;
+       matrizRes[getNumeroGeneraciones()][0] = "Mejor resultado:";
+       matrizRes[getNumeroGeneraciones()][1] = "\t" + mejorRes;
+       matrizRes[getNumeroGeneraciones()][2] = "\tGeneracion:";
+       matrizRes[getNumeroGeneraciones()][3] = "\t" + genRes;
       
-       for(int i=4; i<this.poblacion.get(0).getGenotipo().length+1; i++) matrizRes[getNumGeneraciones()][i] = "";
+       for(int i=4; i<this.poblacion.get(0).getGenotipo().length+1; i++) matrizRes[getNumeroGeneraciones()][i] = "";
        //Matriz.guardarArchivo(matrizRes);
     }
     

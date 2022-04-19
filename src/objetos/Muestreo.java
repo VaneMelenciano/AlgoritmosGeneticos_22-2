@@ -67,23 +67,23 @@ public class Muestreo {
         pob.sort(Collections.reverseOrder(Comparator.comparingInt(i -> i.getFitness())));
         return pob;
     }
-    public static ArrayList<IndividuoSAT> aleatorioSAT(ArrayList<IndividuoSAT> pob, int porcentaje){
+    public static ArrayList<IndividuoSAT> aleatorioSAT(ArrayList<IndividuoSAT> pob, int cantidad){
         //solo toma % de los mejores
         ArrayList<IndividuoSAT> nuevaPob = new ArrayList<IndividuoSAT>();
         //int cantidad = porcentaje*pob.size()/100;
-        for(int i=0; i<porcentaje; i++){
+        for(int i=0; i<cantidad; i++){
              Random r = new Random();
             int pos = r.nextInt(pob.size());
             nuevaPob.add(pob.get(pos));
         }
         return nuevaPob;
     }
-    public static ArrayList<IndividuoSAT> torneoSAT(ArrayList<IndividuoSAT> pob, int porcentaje){
+    public static ArrayList<IndividuoSAT> torneoSAT(ArrayList<IndividuoSAT> pob, int cantidad){
         //solo toma % de los mejores
         ArrayList<IndividuoSAT> nuevaPob = new ArrayList<IndividuoSAT>();
         //int cantidad = porcentaje*pob.size()/100;
         pob = ordenarSAT((ArrayList<IndividuoSAT>) pob.clone());
-        for(int i=0; i<porcentaje; i++){
+        for(int i=0; i<cantidad; i++){
             nuevaPob.add(pob.get(i));
         }
         return nuevaPob;

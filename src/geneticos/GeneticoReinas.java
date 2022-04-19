@@ -20,7 +20,7 @@ import objetos.Seleccion;
  * @author Vanessa
  */
 public class GeneticoReinas extends Genetico{
-    private ArrayList<IndividuoReinas> pob;
+    private ArrayList<IndividuoReinas> poblacion;
     
     public GeneticoReinas(int t, int num, double p, int n){ //24, 20, 0.2
         super(t, num, p, n);
@@ -36,14 +36,14 @@ public class GeneticoReinas extends Genetico{
         //una sola mascara para todo el proceso evolutivo
         //int[] mascara = Herramientas.generarArreglo(this.n);
         //someter a la poblacion a un proceso evolutivo
-        IndividuoReinas madre = Seleccion.seleccionTorneoReinas(pob);
-       for(int i=0; i<getNumGeneraciones(); i++){
+        IndividuoReinas madre = Seleccion.seleccionTorneoReinas(poblacion);
+       for(int i=0; i<getNumeroGeneraciones(); i++){
            int[] mascara = Herramientas.generarArregloBinario(this.getN());
            
            System.out.println("\nGeneración :"+(i+1));
            pobAux = new ArrayList<>();
            
-           int cantidad = Math.round(porcentaje*this.pob.size());
+           int cantidad = Math.round(porcentaje*this.poblacion.size());
            //MUESTREO
            //pobAux = cambiarIndividuo(Muestreo.torneo(this.poblacion, cantidad));
            //pobAux = cambiarIndividuo(Muestreo.aleatorio(this.poblacion, cantidad));
@@ -57,7 +57,7 @@ public class GeneticoReinas extends Genetico{
                //torneo
                //IndividuoReinas madre = new IndividuoReinas(Seleccion.torneoMenor(poblacion));//(IndividuoReinas) Seleccion.torneo(poblacion);
                //IndividuoReinas madre = Seleccion.torneoMenorR(pob);//(IndividuoReinas) Seleccion.torneo(poblacion);
-               IndividuoReinas padre = Seleccion.seleccionAleatoriaReinas(this.pob);//(IndividuoReinas) Seleccion.aleatoria(poblacion);    
+               IndividuoReinas padre = Seleccion.seleccionAleatoriaReinas(this.poblacion);//(IndividuoReinas) Seleccion.aleatoria(poblacion);    
             //int pos = r.nextInt(pob.size());
             //IndividuoReinas padre = new IndividuoReinas(pob.get(pos).getGenotipo());
        
@@ -67,7 +67,7 @@ public class GeneticoReinas extends Genetico{
                IndividuoReinas hijo = Cruza.cruzaMascara(madre, padre, mascara); //CHECAR
                //evaluar la posibilidad de muta
               
-               if(Muta.muta(getProbMuta())){
+               if(Muta.muta(getProbabilidadMuta())){
                    Muta.muta(hijo); //CHECAR
                }
                //agregar el hijo a la población Auxiliar
@@ -77,7 +77,7 @@ public class GeneticoReinas extends Genetico{
            }
            //se tiene que acualizar la población
            actualizar(pobAux);
-           IndividuoReinas mejor = Seleccion.seleccionTorneoReinas(this.pob);
+           IndividuoReinas mejor = Seleccion.seleccionTorneoReinas(this.poblacion);
            System.out.print("\n\tFitness: "+mejor.getFitness() + "  Genotipo: " + Arrays.toString(mejor.getGenotipo())); //con 24, el mayor puede ser -> 16,777,215
            System.out.println();//}
            madre = mejor;
@@ -90,9 +90,9 @@ public class GeneticoReinas extends Genetico{
      */
     @Override
     public void generarPoblacionInicial(int n) {
-        this.pob = new ArrayList<>();
+        this.poblacion = new ArrayList<>();
         for(int i=0; i<getTamanioPoblacion(); i++){
-            this.pob.add(new IndividuoReinas(n));
+            this.poblacion.add(new IndividuoReinas(n));
         }
              
 
@@ -100,10 +100,10 @@ public class GeneticoReinas extends Genetico{
     }
 
     private void actualizar(ArrayList<IndividuoReinas> pobAux) {
-         this.pob = new ArrayList<>();
+         this.poblacion = new ArrayList<>();
         for(int i=0; i<pobAux.size(); i++){
             //System.out.println(pobAux.get(i).fitness);
-            this.pob.add(new IndividuoReinas(pobAux.get(i).getGenotipo()));
+            this.poblacion.add(new IndividuoReinas(pobAux.get(i).getGenotipo()));
             //this.poblacion.get(i).actualizar();
             //System.out.println(this.poblacion.get(i).fitness);
         }

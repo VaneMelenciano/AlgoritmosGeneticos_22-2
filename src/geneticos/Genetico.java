@@ -15,66 +15,86 @@ import java.util.ArrayList;
 public class Genetico implements Runnable{
     public Consola consola;
     private int tamanioPoblacion;
-    private int numGeneraciones;
-    private double probMuta; //probabilidad de muta
+    private int numeroGeneraciones;
+    private double probabilidadMuta; //probabilidad de muta
     private int n; //tamaño del tablero para Reinas //Numero más grande en instancias de prueba para SAT
-    private int seleM; //0 es aleatorio, 1 es torneo
-    private int seleP; //tipo de seleccion para padre y madre
-    private int mueT; //tipo de muestreo-> 0: aleatorio, 1: torneo
-    private float muestreo; //0.1 = 100% //tamaño de muestreo
+    private int seleccionMadre; //0 es aleatorio, 1 es torneo
+    private int seleccionPadre; //tipo de seleccion para padre y madre
+    private int tipoMuestreo; //tipo de porcentajeMuestreo-> 0: aleatorio, 1: torneo
+    private float porcentajeMuestreo; //0.1 = 100% //tamaño de porcentajeMuestreo
+    private boolean insertarMejorIndividuo;
+    private boolean usarGeneticosParalelos;
+    
     public Genetico(int t, int n, double p){ //para TSP y binario
         this.tamanioPoblacion=t;
-        this.probMuta=p;
-        this.numGeneraciones=n;
+        this.probabilidadMuta=p;
+        this.numeroGeneraciones=n;
+        this.insertarMejorIndividuo=false;
+        this.usarGeneticosParalelos=false;
         generarPoblacionInicial();
     }
     public Genetico(int t, int n, double p, int cI){ //para TSP, binario y Reinas
         this.tamanioPoblacion=t;
-        this.probMuta=p;
-        this.numGeneraciones=n;
+        this.probabilidadMuta=p;
+        this.numeroGeneraciones=n;
         this.n = cI;
+        this.insertarMejorIndividuo=false;
+        this.usarGeneticosParalelos=false;
         generarPoblacionInicial(cI);
     }
     public Genetico(int t, int n, double p, int seleM, int seleP, int mueT, float mue){ //para TSP, binario y Reinas
         //tamaño de pobleación, num Generaciones, cuidad inicial o tamaño de tabl, 
-        //prob Muta, seleccion para madre y padre, tipo de muestreo y tamaño de muestreo
+        //prob Muta, seleccion para madre y padre, tipo de porcentajeMuestreo y tamaño de porcentajeMuestreo
         this.tamanioPoblacion=t;
-        this.probMuta=p;
-        this.numGeneraciones=n;
-        this.seleM = seleM;
-        this.seleP = seleP;
-        this.mueT = mueT;
-        this.muestreo = mue;
+        this.probabilidadMuta=p;
+        this.numeroGeneraciones=n;
+        this.seleccionMadre = seleM;
+        this.seleccionPadre = seleP;
+        this.tipoMuestreo = mueT;
+        this.porcentajeMuestreo = mue;
+        this.insertarMejorIndividuo=false;
+        this.usarGeneticosParalelos=false;
         //generarPoblacionInicial();
     }
     public Genetico(int t, int n, double p, int seleM, int seleP, int mueT, float mue, int nn){ //para TSP, binario y Reinas
         //tamaño de pobleación, num Generaciones, cuidad inicial o tamaño de tabl, 
-        //prob Muta, seleccion para madre y padre, tipo de muestreo y tamaño de muestreo
+        //prob Muta, seleccion para madre y padre, tipo de porcentajeMuestreo y tamaño de porcentajeMuestreo
         this.tamanioPoblacion=t;
-        this.probMuta=p;
-        this.numGeneraciones=n;
-        this.seleM = seleM;
-        this.seleP = seleP;
-        this.mueT = mueT;
-        this.muestreo = mue;
+        this.probabilidadMuta=p;
+        this.numeroGeneraciones=n;
+        this.seleccionMadre = seleM;
+        this.seleccionPadre = seleP;
+        this.tipoMuestreo = mueT;
+        this.porcentajeMuestreo = mue;
+        this.insertarMejorIndividuo=false;
         this.n=nn; //numero de instancias para SAT
+        this.usarGeneticosParalelos=false;
         //generarPoblacionInicial();
     }
-    public Genetico(int t, int n, double p, int seleM, int seleP, int mueT, float mue, int nn, Consola consola){ //para TSP, binario y Reinas
+    public Genetico(int tamanioPoblacion, int numeroGeneraciones, double probabilidadMuta, int seleM, int seleP, int mueT, float mue, int nn, Consola consola){ //para TSP, binario y Reinas
         //tamaño de pobleación, num Generaciones, cuidad inicial o tamaño de tabl, 
-        //prob Muta, seleccion para madre y padre, tipo de muestreo y tamaño de muestreo
-        this.tamanioPoblacion=t;
-        this.probMuta=p;
-        this.numGeneraciones=n;
-        this.seleM = seleM;
-        this.seleP = seleP;
-        this.mueT = mueT;
-        this.muestreo = mue;
+        //prob Muta, seleccion para madre y padre, tipo de porcentajeMuestreo y tamaño de porcentajeMuestreo
+        this.tamanioPoblacion=tamanioPoblacion;
+        this.probabilidadMuta=probabilidadMuta;
+        this.numeroGeneraciones=numeroGeneraciones;
+        this.seleccionMadre = seleM;
+        this.seleccionPadre = seleP;
+        this.tipoMuestreo = mueT;
+        this.porcentajeMuestreo = mue;
         this.n=nn; //numero de instancias para SAT
         this.consola=consola;
+        this.insertarMejorIndividuo=false;
+        this.usarGeneticosParalelos=true;
         //generarPoblacionInicial();
     }
-    
+    public void cambiarParametros(int tamanioPoblacion, double probabilidadMuta, int seleccionM, int seleccionP, int tipoMuestreo, float muestreo){
+       //this.tamanioPoblacion = tamanioPoblacion;
+       this.probabilidadMuta = probabilidadMuta;
+       this.seleccionMadre = seleccionM;
+       this.seleccionPadre = seleccionP;
+       this.tipoMuestreo = tipoMuestreo;
+       this.porcentajeMuestreo = muestreo;
+    }
     public void generarPoblacionInicial(){
         
     }
@@ -89,7 +109,7 @@ public class Genetico implements Runnable{
      }*/
      @Override
     public void run(){
-        this.consola.setVisible(true);
+        if(this.getUsarGeneticosParalelos())this.consola.setVisible(true);
         evolucionar();
     }
     /**
@@ -107,87 +127,87 @@ public class Genetico implements Runnable{
     }
 
     /**
-     * @return the numGeneraciones
+     * @return the numeroGeneraciones
      */
-    public int getNumGeneraciones() {
-        return numGeneraciones;
+    public int getNumeroGeneraciones() {
+        return numeroGeneraciones;
     }
 
     /**
-     * @param numGeneraciones the numGeneraciones to set
+     * @param numeroGeneraciones the numeroGeneraciones to set
      */
-    public void setNumGeneraciones(int numGeneraciones) {
-        this.numGeneraciones = numGeneraciones;
+    public void setNumeroGeneraciones(int numeroGeneraciones) {
+        this.numeroGeneraciones = numeroGeneraciones;
     }
 
     /**
-     * @return the probMuta
+     * @return the probabilidadMuta
      */
-    public double getProbMuta() {
-        return probMuta;
+    public double getProbabilidadMuta() {
+        return probabilidadMuta;
     }
 
     /**
-     * @param probMuta the probMuta to set
+     * @param probabilidadMuta the probabilidadMuta to set
      */
-    public void setProbMuta(double probMuta) {
-        this.probMuta = probMuta;
+    public void setProbabilidadMuta(double probabilidadMuta) {
+        this.probabilidadMuta = probabilidadMuta;
     }
 
     /**
-     * @return the seleM
+     * @return the seleccionMadre
      */
-    public int getSeleM() {
-        return seleM;
+    public int getSeleccionMadre() {
+        return seleccionMadre;
     }
 
     /**
-     * @param seleM the seleM to set
+     * @param seleccionMadre the seleccionMadre to set
      */
-    public void setSeleM(int seleM) {
-        this.seleM = seleM;
+    public void setSeleccionMadre(int seleccionMadre) {
+        this.seleccionMadre = seleccionMadre;
     }
 
     /**
-     * @return the seleP
+     * @return the seleccionPadre
      */
-    public int getSeleP() {
-        return seleP;
+    public int getSeleccionPadre() {
+        return seleccionPadre;
     }
 
     /**
-     * @param seleP the seleP to set
+     * @param seleccionPadre the seleccionPadre to set
      */
-    public void setSeleP(int seleP) {
-        this.seleP = seleP;
+    public void setSeleccionPadre(int seleccionPadre) {
+        this.seleccionPadre = seleccionPadre;
     }
 
     /**
-     * @return the mueT
+     * @return the tipoMuestreo
      */
-    public int getMueT() {
-        return mueT;
+    public int getTipoMuestreo() {
+        return tipoMuestreo;
     }
 
     /**
-     * @param mueT the mueT to set
+     * @param tipoMuestreo the tipoMuestreo to set
      */
-    public void setMueT(int mueT) {
-        this.mueT = mueT;
+    public void setTipoMuestreo(int tipoMuestreo) {
+        this.tipoMuestreo = tipoMuestreo;
     }
 
     /**
-     * @return the muestreo
+     * @return the porcentajeMuestreo
      */
-    public float getMuestreo() {
-        return muestreo;
+    public float getPorcentajeMuestreo() {
+        return porcentajeMuestreo;
     }
 
     /**
-     * @param muestreo the muestreo to set
+     * @param porcentajeMuestreo the porcentajeMuestreo to set
      */
-    public void setMuestreo(float muestreo) {
-        this.muestreo = muestreo;
+    public void setPorcentajeMuestreo(float porcentajeMuestreo) {
+        this.porcentajeMuestreo = porcentajeMuestreo;
     }
 
     /**
@@ -196,5 +216,34 @@ public class Genetico implements Runnable{
     public int getN() {
         return n;
     }
+
+    /**
+     * @return the insertarMejorIndividuo
+     */
+    public boolean getInsertarMejorIndividuo() {
+        return insertarMejorIndividuo;
+    }
+
+    /**
+     * @param insertarMejorIndividuo the insertarMejorIndividuo to set
+     */
+    public void setInsertarMejorIndividuo(boolean insertarMejorIndividuo) {
+        this.insertarMejorIndividuo = insertarMejorIndividuo;
+    }
+
+    /**
+     * @return the usarGeneticosParalelos
+     */
+    public boolean getUsarGeneticosParalelos() {
+        return usarGeneticosParalelos;
+    }
+
+    /**
+     * @param usarGeneticosParalelos the usarGeneticosParalelos to set
+     */
+    public void setUsarGeneticosParalelos(boolean usarGeneticosParalelos) {
+        this.usarGeneticosParalelos = usarGeneticosParalelos;
+    }
+    
     
 }

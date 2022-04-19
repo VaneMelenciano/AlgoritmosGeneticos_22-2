@@ -30,7 +30,7 @@ public class GeneticoBinario extends Genetico{
         //una sola mascara para todo el proceso evolutivo
         int[] mascara = Herramientas.generarArregloBinario(24);
         //someter a la poblacion a un proceso evolutivo
-       for(int i=0; i<getNumGeneraciones(); i++){
+       for(int i=0; i<getNumeroGeneraciones(); i++){
            //crear una población nueva
            pobAux = new ArrayList<>();
            for(int j=0; j<getTamanioPoblacion(); j++){
@@ -41,7 +41,7 @@ public class GeneticoBinario extends Genetico{
                //cruza
                IndividuoBinario hijo = Cruza.cruzaMascara(madre, padre, mascara);
                //evaluar la posibilidad de muta
-               if(Muta.muta(getProbMuta())){
+               if(Muta.muta(getProbabilidadMuta())){
                    Muta.muta(hijo);
                }
                //agregar el hijo a la población Auxiliar
