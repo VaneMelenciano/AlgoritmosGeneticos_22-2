@@ -6,6 +6,7 @@
 package geneticos;
 
 import Individuos.IndividuoSAT;
+import geneticosParalelos.Consola;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
@@ -35,6 +36,11 @@ public class GeneticoSAT extends Genetico{
         this.poblacion = new ArrayList<>();
         generarPoblacionInicial();
     }
+    public GeneticoSAT(int t, int n, double p, int seleM, int seleP, int mueT, float mue, int nn, Consola c){ //tamaño de poblacion, numGenereaciones, probabilidad de muta, tamaño de instancias de prueba
+        super(t, n, p, seleM, seleP, mueT, mue, nn, c);
+        this.poblacion = new ArrayList<>();
+        generarPoblacionInicial();
+    }
 
     @Override
     public void evolucionar(){
@@ -52,14 +58,14 @@ public class GeneticoSAT extends Genetico{
                     //Torneo, aleatorio y 50/50
                     
              int cantidad = Math.round(getMuestreo()*this.poblacion.size());
-             System.out.println("Cantidad: " + cantidad + "  Muestreo: " + getMuestreo());
+             //System.out.println("Cantidad: " + cantidad + "  Muestreo: " + getMuestreo());
              if(getMueT()==0){
                  pobAux = Muestreo.aleatorioSAT(this.poblacion, cantidad);
-                 System.out.println("Aleatorio: " + cantidad);
+                 //System.out.println("Aleatorio: " + cantidad);
              }
              else if(getMueT()==1){
                  pobAux = Muestreo.torneoSAT(this.poblacion, cantidad);
-                 System.out.println("Torneo: " + cantidad);
+                 //System.out.println("Torneo: " + cantidad);
              }
               
              
@@ -90,8 +96,9 @@ public class GeneticoSAT extends Genetico{
            actualizar(pobAux);
            //VER CUAL ES EL MEJOR RESULTADO ENTRE TODAS LAS GENERACIONES
            IndividuoSAT mejor = Seleccion.seleccionTorneoSAT(this.poblacion);
-           System.out.println("Generacion: " + i + " Fitness: " + mejor.getFitness()+ "  Mejor resultado: "+ Arrays.toString(mejor.getGenotipo()));
-           
+           //System.out.println("Generacion: " + i + " Fitness: " + mejor.getFitness()+ "  Mejor resultado: "+ Arrays.toString(mejor.getGenotipo()));
+           String texto = "Generacion: " + i + " Fitness: " + mejor.getFitness()+ "  Mejor resultado: "+ Arrays.toString(mejor.getGenotipo() )+ "\n";
+           this.consola.setTexto(texto);
            
            
             /*if(i==0){

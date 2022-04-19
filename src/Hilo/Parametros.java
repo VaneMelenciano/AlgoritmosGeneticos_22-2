@@ -5,6 +5,8 @@
  */
 package Hilo;
 
+import geneticos.GeneticoBinario;
+import geneticos.GeneticoReinas;
 import geneticos.GeneticoSAT;
 import geneticos.GeneticoTSP;
 import objetos.Matriz;
@@ -15,14 +17,31 @@ import objetos.Matriz;
  */
 public class Parametros extends javax.swing.JFrame {
     //private GeneticoTSP genetico;
-    private GeneticoSAT genetico;
+    private GeneticoSAT geneticoSAT;
+    private GeneticoBinario geneticoBinario;
+    private GeneticoReinas geneticoReinas;
+    private GeneticoTSP geneticoTSP;
     /**
      * Creates new form Parametros
      */
     public Parametros() {
+        
         initComponents();
         Matriz.matriz=Matriz.leerArchivo(1); //0: TSP, 1: SB
-       genetico = new GeneticoSAT(900, 10000000, 0, 0, 0, 0, 0, 100);
+       geneticoSAT = new GeneticoSAT(900, 100000000, 0, 0, 0, 0, 0, 100);
+       //genetico = new GeneticoSAT(900, 1000000, 0.15, 1, 0, 1, 0.20F, 100);
+       //genetico = new GeneticoTSP(500, 1000000, 0.15, 1, 0, 1, 0.20F);
+       
+       //tamaño de pobleación, num Generaciones, cuidad inicial o tamaño de tabl, 
+        //prob Muta, seleccion para madre y padre, tipo de muestreo y tamaño de muestreo
+       Thread hilo = new Thread(geneticoSAT);
+       hilo.start();
+       
+    }
+    public Parametros(GeneticoSAT genetico, String titulo) {
+        super.setTitle(titulo);
+        initComponents();
+        this.geneticoSAT = genetico;
        //genetico = new GeneticoSAT(900, 1000000, 0.15, 1, 0, 1, 0.20F, 100);
        //genetico = new GeneticoTSP(500, 1000000, 0.15, 1, 0, 1, 0.20F);
        
@@ -120,37 +139,38 @@ public class Parametros extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(textMutaP)
-                            .addComponent(textPoblacion)
-                            .addComponent(textSel))
-                        .addGap(27, 27, 27)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(tPob, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)
-                            .addComponent(pMuta)
-                            .addComponent(tSelM, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(textSel1)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(textMutaP)
+                                    .addComponent(textPoblacion)
+                                    .addComponent(textSel))
                                 .addGap(27, 27, 27)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(tPob, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)
+                                    .addComponent(pMuta)
+                                    .addComponent(tSelM, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(tSelP, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(textSel1)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel2))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(cambiar)
-                                        .addGap(0, 0, Short.MAX_VALUE))))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(tMue, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(pMueP, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addContainerGap(132, Short.MAX_VALUE))
+                                        .addGap(27, 27, 27)
+                                        .addComponent(tSelP, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(tMue, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(pMueP, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(98, 98, 98)
+                        .addComponent(cambiar)))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -159,7 +179,7 @@ public class Parametros extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(textPoblacion)
                     .addComponent(tPob))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 13, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(textMutaP)
                     .addComponent(pMuta))
@@ -182,9 +202,9 @@ public class Parametros extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
                     .addComponent(pMueP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(cambiar)
-                .addGap(26, 26, 26))
+                .addGap(54, 54, 54))
         );
 
         pack();
@@ -216,24 +236,24 @@ public class Parametros extends javax.swing.JFrame {
        //Probabilidad de muta
        if(this.pMuta.getText().length()!=0){
            double muta = Double.parseDouble(this.pMuta.getText()); //pMuta
-           this.genetico.setProbMuta(muta);
+           this.geneticoSAT.setProbMuta(muta);
        }
        //Tipo de seleccion madre tSelM
        if(this.tSelM.getSelectedIndex()!=2){
-           this.genetico.setSeleM(this.tSelM.getSelectedIndex());
+           this.geneticoSAT.setSeleM(this.tSelM.getSelectedIndex());
        }
        //Tipo de seleccion apdre tSelP
        if(this.tSelP.getSelectedIndex()!=2){
-           this.genetico.setSeleP(this.tSelP.getSelectedIndex());
+           this.geneticoSAT.setSeleP(this.tSelP.getSelectedIndex());
        }
        //Tipo de muestreo tMue
        if(this.tMue.getSelectedIndex()!=2){
-           this.genetico.setMueT(this.tMue.getSelectedIndex());
+           this.geneticoSAT.setMueT(this.tMue.getSelectedIndex());
        }
        //Porcentaje de muestreo pMueP
        if(this.pMueP.getText().length()!=0){
            float por = Float.parseFloat(this.pMueP.getText());
-           this.genetico.setMuestreo(por);
+           this.geneticoSAT.setMuestreo(por);
        }
     }//GEN-LAST:event_cambiarActionPerformed
 

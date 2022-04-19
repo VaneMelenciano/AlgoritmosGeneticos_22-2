@@ -5,6 +5,7 @@
  */
 package geneticos;
 
+import geneticosParalelos.Consola;
 import java.util.ArrayList;
 
 /**
@@ -12,6 +13,7 @@ import java.util.ArrayList;
  * @author Vanessa
  */
 public class Genetico implements Runnable{
+    public Consola consola;
     private int tamanioPoblacion;
     private int numGeneraciones;
     private double probMuta; //probabilidad de muta
@@ -58,6 +60,20 @@ public class Genetico implements Runnable{
         this.n=nn; //numero de instancias para SAT
         //generarPoblacionInicial();
     }
+    public Genetico(int t, int n, double p, int seleM, int seleP, int mueT, float mue, int nn, Consola consola){ //para TSP, binario y Reinas
+        //tamaño de pobleación, num Generaciones, cuidad inicial o tamaño de tabl, 
+        //prob Muta, seleccion para madre y padre, tipo de muestreo y tamaño de muestreo
+        this.tamanioPoblacion=t;
+        this.probMuta=p;
+        this.numGeneraciones=n;
+        this.seleM = seleM;
+        this.seleP = seleP;
+        this.mueT = mueT;
+        this.muestreo = mue;
+        this.n=nn; //numero de instancias para SAT
+        this.consola=consola;
+        //generarPoblacionInicial();
+    }
     
     public void generarPoblacionInicial(){
         
@@ -73,6 +89,7 @@ public class Genetico implements Runnable{
      }*/
      @Override
     public void run(){
+        this.consola.setVisible(true);
         evolucionar();
     }
     /**
