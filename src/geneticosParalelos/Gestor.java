@@ -226,7 +226,15 @@ public class Gestor extends javax.swing.JFrame {
             this.parametros.get(this.numeroGenetico).setVisible(true);
             this.numeroGenetico++;
         }else{ //TSP
-            
+            Matriz.matriz=Matriz.leerArchivo(0); //0: TSP, 1: SB
+            String titulo= ("Genetico TSP " + this.numeroGenetico);
+            Consola c = new Consola(titulo);
+            this.geneticosTSP.add(this.numeroGenetico, new GeneticoTSP(500, 100000000, 0, 0, 0, 0, 0, c));
+            //int tamanioPoblacion, int numeroGeneraciones, double probabilidadMuta, int seleM, int seleP, int tipoMuestreo, float muestreo, Consola consola
+            this.parametros.add(this.numeroGenetico, new Parametros(this.geneticosTSP.get(this.numeroGenetico), titulo));
+            agregarItems(titulo);
+            this.parametros.get(this.numeroGenetico).setVisible(true);
+            this.numeroGenetico++;
         }
     }//GEN-LAST:event_crearNuevoGeneticoBtnActionPerformed
 
@@ -236,16 +244,26 @@ public class Gestor extends javax.swing.JFrame {
         this.geneticoCambiarParametros1.addItem(titulo);
         this.geneticoCambiarParametros2.addItem(titulo);
     }
+    
     private void btnIntercambiarParametrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIntercambiarParametrosActionPerformed
         //CAMBIAR PARAMETROS ENTRE GENETICOS
+        //Binario=0, Reinas=1, SAT=2, TSP=3
         int seleccion1 = this.geneticoCambiarParametros1.getSelectedIndex()-1;
         int seleccion2 = this.geneticoCambiarParametros2.getSelectedIndex()-1;
         //A seleccion2 le mandamos lo de seleccion1
         if(seleccion1 != seleccion2){
             switch(seleccion){ //tipo de genetico
                 case 0:
+                    GeneticoBinario aux3 = this.geneticosBinario.get(seleccion1);
+                    this.geneticosBinario.get(seleccion2).cambiarParametros(aux3.getTamanioPoblacion(), aux3.getProbabilidadMuta(), aux3.getSeleccionMadre(), aux3.getSeleccionPadre(), aux3.getTipoMuestreo(), aux3.getPorcentajeMuestreo());
+                    this.parametros.get(seleccion2).actualizarValores(); //actualizar valores en el JFrame de parametros de ese genetico
+                    
                     break;
                 case 1:
+                    GeneticoReinas aux2 = this.geneticosReinas.get(seleccion1);
+                    this.geneticosReinas.get(seleccion2).cambiarParametros(aux2.getTamanioPoblacion(), aux2.getProbabilidadMuta(), aux2.getSeleccionMadre(), aux2.getSeleccionPadre(), aux2.getTipoMuestreo(), aux2.getPorcentajeMuestreo());
+                    this.parametros.get(seleccion2).actualizarValores(); //actualizar valores en el JFrame de parametros de ese genetico
+                    
                     break;
                 case 2:
                     GeneticoSAT aux = this.geneticosSAT.get(seleccion1);
@@ -253,27 +271,40 @@ public class Gestor extends javax.swing.JFrame {
                     this.parametros.get(seleccion2).actualizarValores(); //actualizar valores en el JFrame de parametros de ese genetico
                         break;
                 default :
-                    break;
+                    GeneticoTSP aux1 = this.geneticosTSP.get(seleccion1);
+                    this.geneticosTSP.get(seleccion2).cambiarParametros(aux1.getTamanioPoblacion(), aux1.getProbabilidadMuta(), aux1.getSeleccionMadre(), aux1.getSeleccionPadre(), aux1.getTipoMuestreo(), aux1.getPorcentajeMuestreo());
+                    this.parametros.get(seleccion2).actualizarValores(); //actualizar valores en el JFrame de parametros de ese genetico
+                        break;
             }
         }
     }//GEN-LAST:event_btnIntercambiarParametrosActionPerformed
 
     private void btnIntercambiarMejorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIntercambiarMejorActionPerformed
         //MANDAT MEJOR INDIVISUO DE UN GENETICO A OTRO
+        //Binario=0, Reinas=1, SAT=2, TSP=3
         int seleccion1 = this.geneticoCambiarMejor1.getSelectedIndex()-1;
         int seleccion2 = this.geneticoCambiarMejor2.getSelectedIndex()-1;
         //A seleccion2 le mandamos lo de seleccion1
         if(seleccion1 != seleccion2){
             switch(seleccion){ //tipo de genetico
                 case 0:
+                    GeneticoBinario aux1 = this.geneticosBinario.get(seleccion1);
+                    //this.geneticosBinario.get(seleccion2).setMejorIndividuo(aux1.getMejorIndividuo());
+                    
                     break;
                 case 1:
+                    GeneticoReinas aux2 = this.geneticosReinas.get(seleccion1);
+                    //this.geneticosReinas.get(seleccion2).setMejorIndividuo(aux2.getMejorIndividuo());
+                    
                     break;
                 case 2:
-                    GeneticoSAT aux = this.geneticosSAT.get(seleccion1);
-                    this.geneticosSAT.get(seleccion2).setMejorIndividuo(aux.getMejorIndividuo());
+                    GeneticoSAT aux3 = this.geneticosSAT.get(seleccion1);
+                    this.geneticosSAT.get(seleccion2).setMejorIndividuo(aux3.getMejorIndividuo());
                             break;
                 default :
+                    GeneticoTSP aux4 = this.geneticosTSP.get(seleccion1);
+                    this.geneticosTSP.get(seleccion2).setMejorIndividuo(aux4.getMejorIndividuo());
+                    
                     break;
             }
         }

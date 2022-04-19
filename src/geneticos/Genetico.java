@@ -42,30 +42,30 @@ public class Genetico implements Runnable{
         this.usarGeneticosParalelos=false;
         generarPoblacionInicial(cI);
     }
-    public Genetico(int t, int n, double p, int seleM, int seleP, int mueT, float mue){ //para TSP, binario y Reinas
+    public Genetico(int tamanioPoblacion, int numeroGeneraciones, double probabilidadMuta, int seleM, int seleP, int tipoMuestreo, float muestreo){ //para TSP, binario y Reinas
         //tamaño de pobleación, num Generaciones, cuidad inicial o tamaño de tabl, 
         //prob Muta, seleccion para madre y padre, tipo de porcentajeMuestreo y tamaño de porcentajeMuestreo
-        this.tamanioPoblacion=t;
-        this.probabilidadMuta=p;
-        this.numeroGeneraciones=n;
+        this.tamanioPoblacion=tamanioPoblacion;
+        this.probabilidadMuta=probabilidadMuta;
+        this.numeroGeneraciones=numeroGeneraciones;
         this.seleccionMadre = seleM;
         this.seleccionPadre = seleP;
-        this.tipoMuestreo = mueT;
-        this.porcentajeMuestreo = mue;
+        this.tipoMuestreo = tipoMuestreo;
+        this.porcentajeMuestreo = muestreo;
         this.insertarMejorIndividuo=false;
         this.usarGeneticosParalelos=false;
         //generarPoblacionInicial();
     }
-    public Genetico(int t, int n, double p, int seleM, int seleP, int mueT, float mue, int nn){ //para TSP, binario y Reinas
+    public Genetico(int tamanioPoblacion, int numeroGeneraciones, double probabilidadMuta, int seleM, int seleP, int tipoMuestreo, float muestreo, int nn){ //para TSP, binario y Reinas
         //tamaño de pobleación, num Generaciones, cuidad inicial o tamaño de tabl, 
         //prob Muta, seleccion para madre y padre, tipo de porcentajeMuestreo y tamaño de porcentajeMuestreo
-        this.tamanioPoblacion=t;
-        this.probabilidadMuta=p;
-        this.numeroGeneraciones=n;
+        this.tamanioPoblacion=tamanioPoblacion;
+        this.probabilidadMuta=probabilidadMuta;
+        this.numeroGeneraciones=numeroGeneraciones;
         this.seleccionMadre = seleM;
         this.seleccionPadre = seleP;
-        this.tipoMuestreo = mueT;
-        this.porcentajeMuestreo = mue;
+        this.tipoMuestreo = tipoMuestreo;
+        this.porcentajeMuestreo = muestreo;
         this.insertarMejorIndividuo=false;
         this.n=nn; //numero de instancias para SAT
         this.usarGeneticosParalelos=false;
@@ -82,6 +82,21 @@ public class Genetico implements Runnable{
         this.tipoMuestreo = mueT;
         this.porcentajeMuestreo = mue;
         this.n=nn; //numero de instancias para SAT
+        this.consola=consola;
+        this.insertarMejorIndividuo=false;
+        this.usarGeneticosParalelos=true;
+        //generarPoblacionInicial();
+    }
+    public Genetico(int tamanioPoblacion, int numeroGeneraciones, double probabilidadMuta, int seleM, int seleP, int tipoMuestreo, float muestreo, Consola consola){ //para TSP, binario y Reinas
+        //tamaño de pobleación, num Generaciones, cuidad inicial o tamaño de tabl, 
+        //prob Muta, seleccion para madre y padre, tipo de porcentajeMuestreo y tamaño de porcentajeMuestreo
+        this.tamanioPoblacion=tamanioPoblacion;
+        this.probabilidadMuta=probabilidadMuta;
+        this.numeroGeneraciones=numeroGeneraciones;
+        this.seleccionMadre = seleM;
+        this.seleccionPadre = seleP;
+        this.tipoMuestreo = tipoMuestreo;
+        this.porcentajeMuestreo = muestreo;
         this.consola=consola;
         this.insertarMejorIndividuo=false;
         this.usarGeneticosParalelos=true;

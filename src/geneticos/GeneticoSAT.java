@@ -25,7 +25,7 @@ import objetos.Seleccion;
 //Usamos la matriz para leer el archivo
 public class GeneticoSAT extends Genetico{
     private ArrayList<IndividuoSAT> poblacion;
-    private IndividuoSAT mejorIndividuo; //cuando se recibe un individuo
+    private IndividuoSAT mejorIndividuo;
     private IndividuoSAT nuevoMejorIndividuo; //cuando se recibe un individuo
     
     public GeneticoSAT(int t, int num, double p, int n){ //tamaño de poblacion, numGenereaciones, probabilidad de muta, tamaño de instancias de prueba

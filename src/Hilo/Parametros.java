@@ -32,11 +32,6 @@ public class Parametros extends javax.swing.JFrame {
         Matriz.matriz=Matriz.leerArchivo(1); //0: TSP, 1: SB
        geneticoSAT = new GeneticoSAT(900, 100000000, 0, 0, 0, 0, 0, 100);
        this.seleccion=2;
-       //genetico = new GeneticoSAT(900, 1000000, 0.15, 1, 0, 1, 0.20F, 100);
-       //genetico = new GeneticoTSP(500, 1000000, 0.15, 1, 0, 1, 0.20F);
-       
-       //tamaño de pobleación, num Generaciones, cuidad inicial o tamaño de tabl, 
-        //prob Muta, seleccion para madre y padre, tipo de muestreo y tamaño de muestreo
        Thread hilo = new Thread(geneticoSAT);
        hilo.start();
        
@@ -46,8 +41,6 @@ public class Parametros extends javax.swing.JFrame {
         initComponents();
         this.geneticoSAT = genetico;
         this.seleccion=2;
-       //tamaño de pobleación, num Generaciones, cuidad inicial o tamaño de tabl, 
-        //prob Muta, seleccion para madre y padre, tipo de muestreo y tamaño de muestreo
        Thread hilo = new Thread(genetico);
        hilo.start();
     }
@@ -56,8 +49,6 @@ public class Parametros extends javax.swing.JFrame {
         initComponents();
         this.geneticoBinario = genetico;
         this.seleccion=0;
-       //tamaño de pobleación, num Generaciones, cuidad inicial o tamaño de tabl, 
-        //prob Muta, seleccion para madre y padre, tipo de muestreo y tamaño de muestreo
        Thread hilo = new Thread(genetico);
        hilo.start();
     }
@@ -66,8 +57,6 @@ public class Parametros extends javax.swing.JFrame {
         initComponents();
         this.geneticoTSP = genetico;
         this.seleccion=3;
-       //tamaño de pobleación, num Generaciones, cuidad inicial o tamaño de tabl, 
-        //prob Muta, seleccion para madre y padre, tipo de muestreo y tamaño de muestreo
        Thread hilo = new Thread(genetico);
        hilo.start();
     }
@@ -76,8 +65,6 @@ public class Parametros extends javax.swing.JFrame {
         initComponents();
         this.geneticoReinas = genetico;
         this.seleccion=1;
-       //tamaño de pobleación, num Generaciones, cuidad inicial o tamaño de tabl, 
-        //prob Muta, seleccion para madre y padre, tipo de muestreo y tamaño de muestreo
        Thread hilo = new Thread(genetico);
        hilo.start();
     }
@@ -256,8 +243,20 @@ public class Parametros extends javax.swing.JFrame {
         //Binario=0, Reinas=1, SAT=2, TSP=3
         switch(this.seleccion){
                case 0:
+                   this.tamanioPoblacion.setText(String.valueOf(this.geneticoBinario.getTamanioPoblacion()));
+                   this.probabilidadMuta.setText(String.valueOf(this.geneticoBinario.getProbabilidadMuta()));
+                   this.seleccionMadre.setSelectedIndex(this.geneticoBinario.getSeleccionMadre());
+                   this.seleccionPadre.setSelectedIndex(this.geneticoBinario.getSeleccionPadre());
+                   this.tipoMuestreo.setSelectedIndex(this.geneticoBinario.getTipoMuestreo());
+                   this.tamanioMuestreo.setText(String.valueOf(this.geneticoBinario.getPorcentajeMuestreo()));
                    break;
                case 1:
+                   this.tamanioPoblacion.setText(String.valueOf(this.geneticoReinas.getTamanioPoblacion()));
+                   this.probabilidadMuta.setText(String.valueOf(this.geneticoReinas.getProbabilidadMuta()));
+                   this.seleccionMadre.setSelectedIndex(this.geneticoReinas.getSeleccionMadre());
+                   this.seleccionPadre.setSelectedIndex(this.geneticoReinas.getSeleccionPadre());
+                   this.tipoMuestreo.setSelectedIndex(this.geneticoReinas.getTipoMuestreo());
+                   this.tamanioMuestreo.setText(String.valueOf(this.geneticoReinas.getPorcentajeMuestreo()));
                    break;
                case 2: 
                    this.tamanioPoblacion.setText(String.valueOf(this.geneticoSAT.getTamanioPoblacion()));
@@ -268,9 +267,16 @@ public class Parametros extends javax.swing.JFrame {
                    this.tamanioMuestreo.setText(String.valueOf(this.geneticoSAT.getPorcentajeMuestreo()));
                    break;
                default:
+                   this.tamanioPoblacion.setText(String.valueOf(this.geneticoTSP.getTamanioPoblacion()));
+                   this.probabilidadMuta.setText(String.valueOf(this.geneticoTSP.getProbabilidadMuta()));
+                   this.seleccionMadre.setSelectedIndex(this.geneticoTSP.getSeleccionMadre());
+                   this.seleccionPadre.setSelectedIndex(this.geneticoTSP.getSeleccionPadre());
+                   this.tipoMuestreo.setSelectedIndex(this.geneticoTSP.getTipoMuestreo());
+                   this.tamanioMuestreo.setText(String.valueOf(this.geneticoTSP.getPorcentajeMuestreo()));
                    break;
            }
     }
+    
     private void cambiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cambiarActionPerformed
        //Binario=0, Reinas=1, SAT=2, TSP=3
 
@@ -282,71 +288,23 @@ public class Parametros extends javax.swing.JFrame {
        }*/
        //Probabilidad de muta
        if(this.probabilidadMuta.getText().length()!=0){
-           double muta = Double.parseDouble(this.probabilidadMuta.getText()); //pMuta
-           switch(this.seleccion){
-               case 0:
-                   break;
-               case 1:
-                   break;
-               case 2: this.geneticoSAT.setProbabilidadMuta(muta);
-                   break;
-               default:
-                   break;
-           }
-           
+           cambiarProbabilidadMuta(); 
        }
        //Tipo de seleccion madre
        if(this.seleccionMadre.getSelectedIndex()!=2){
-           switch(this.seleccion){
-               case 0:
-                   break;
-               case 1:
-                   break;
-               case 2: this.geneticoSAT.setSeleccionMadre(this.seleccionMadre.getSelectedIndex());
-                   break;
-               default:
-                   break;
-           }
+           cambiarSeleccionMadre();
        }
        //Tipo de seleccion padre
        if(this.seleccionPadre.getSelectedIndex()!=2){
-           switch(this.seleccion){
-               case 0:
-                   break;
-               case 1:
-                   break;
-               case 2:this.geneticoSAT.setSeleccionPadre(this.seleccionPadre.getSelectedIndex());
-                   break;
-               default:
-                   break;
-           }
+           cambiarSeleccionPadre();
        }
        //Tipo de muestreo
        if(this.tipoMuestreo.getSelectedIndex()!=2){
-           switch(this.seleccion){
-               case 0:
-                   break;
-               case 1:
-                   break;
-               case 2:this.geneticoSAT.setTipoMuestreo(this.tipoMuestreo.getSelectedIndex());
-                   break;
-               default:
-                   break;
-           }
+           cambiarTipoMuestreo();
        }
        //Porcentaje de muestreo
        if(this.tamanioMuestreo.getText().length()!=0){
-           float por = Float.parseFloat(this.tamanioMuestreo.getText());
-           switch(this.seleccion){
-               case 0:
-                   break;
-               case 1:
-                   break;
-               case 2:this.geneticoSAT.setPorcentajeMuestreo(por);
-                   break;
-               default:
-                   break;
-           }
+           cambiarTamanioMuestreo();
        }
     }//GEN-LAST:event_cambiarActionPerformed
 
@@ -402,4 +360,73 @@ public class Parametros extends javax.swing.JFrame {
     private javax.swing.JLabel textSel1;
     private javax.swing.JComboBox<String> tipoMuestreo;
     // End of variables declaration//GEN-END:variables
+
+    private void cambiarSeleccionMadre() {
+        switch(this.seleccion){
+               case 0: this.geneticoBinario.setSeleccionMadre(this.seleccionMadre.getSelectedIndex());
+                   break;
+               case 1: this.geneticoReinas.setSeleccionMadre(this.seleccionMadre.getSelectedIndex());
+                   break;
+               case 2: this.geneticoSAT.setSeleccionMadre(this.seleccionMadre.getSelectedIndex());
+                   break;
+               default: this.geneticoTSP.setSeleccionMadre(this.seleccionMadre.getSelectedIndex());
+                   break;
+           }
+    }
+    
+    private void cambiarProbabilidadMuta() {
+        double muta = Double.parseDouble(this.probabilidadMuta.getText()); //pMuta
+           switch(this.seleccion){
+               case 0: this.geneticoBinario.setProbabilidadMuta(muta);
+                   break;
+               case 1: this.geneticoReinas.setProbabilidadMuta(muta);
+                   break;
+               case 2: this.geneticoSAT.setProbabilidadMuta(muta);
+                   break;
+               default: this.geneticoTSP.setProbabilidadMuta(muta);
+                   break;
+           }
+    }
+
+    private void cambiarSeleccionPadre() {
+           switch(this.seleccion){
+               case 0: this.geneticoBinario.setSeleccionPadre(this.seleccionPadre.getSelectedIndex());
+                   break;
+               case 1: this.geneticoReinas.setSeleccionPadre(this.seleccionPadre.getSelectedIndex());
+                   break;
+               case 2:this.geneticoSAT.setSeleccionPadre(this.seleccionPadre.getSelectedIndex());
+                   break;
+               default: this.geneticoTSP.setSeleccionPadre(this.seleccionPadre.getSelectedIndex());
+                   break;
+           }
+    }
+
+    private void cambiarTipoMuestreo() {
+        switch(this.seleccion){
+               case 0: this.geneticoBinario.setTipoMuestreo(this.seleccionPadre.getSelectedIndex());
+                   break;
+               case 1: this.geneticoReinas.setTipoMuestreo(this.seleccionPadre.getSelectedIndex());
+                   break;
+               case 2:this.geneticoSAT.setTipoMuestreo(this.tipoMuestreo.getSelectedIndex());
+                   break;
+               default: this.geneticoTSP.setTipoMuestreo(this.seleccionPadre.getSelectedIndex());
+                   break;
+           }
+    }
+
+    private void cambiarTamanioMuestreo() {
+        float por = Float.parseFloat(this.tamanioMuestreo.getText());
+           switch(this.seleccion){
+               case 0: this.geneticoBinario.setPorcentajeMuestreo(por);
+                   break;
+               case 1: this.geneticoReinas.setPorcentajeMuestreo(por);
+                   break;
+               case 2:this.geneticoSAT.setPorcentajeMuestreo(por);
+                   break;
+               default: this.geneticoTSP.setPorcentajeMuestreo(por);
+                   break;
+           }
+    }
+
+    
 }
