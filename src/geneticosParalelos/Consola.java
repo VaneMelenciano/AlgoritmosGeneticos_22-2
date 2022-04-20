@@ -21,6 +21,7 @@ public class Consola extends javax.swing.JFrame {
     }
     public void setTexto(String texto){
         this.areaConsola.setText(this.areaConsola.getText() + texto);
+        this.areaConsola.setCaretPosition(this.areaConsola.getDocument().getLength());
     }
 
     /**
