@@ -7,11 +7,13 @@ package geneticos;
 
 import Individuos.Individuo;
 import Individuos.IndividuoReinas;
+import geneticosParalelos.Consola;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 import objetos.Cruza;
 import objetos.Herramientas;
+import objetos.Muestreo;
 import objetos.Muta;
 import objetos.Seleccion;
 
@@ -21,48 +23,57 @@ import objetos.Seleccion;
  */
 public class GeneticoReinas extends Genetico{
     private ArrayList<IndividuoReinas> poblacion;
+    private IndividuoReinas mejorIndividuo;
+    private IndividuoReinas nuevoMejorIndividuo; //cuando se recibe un individuo
     
     public GeneticoReinas(int t, int num, double p, int n){ //24, 20, 0.2
         super(t, num, p, n);
     }
-    //Random r = new Random();
+    //
+    public GeneticoReinas(int tamanioPoblacion, int numeroGeneraciones, double probabilidadMuta, int seleM, int seleP, int tipoMuestreo, float muestreo, int tamanioTablero, Consola consola){ //24, 20, 0.2
+        super(tamanioPoblacion, numeroGeneraciones, probabilidadMuta, seleM, seleP, tipoMuestreo, muestreo, tamanioTablero, consola);
+        this.poblacion = new ArrayList<>();
+        generarPoblacionInicial();
+    }
     
-    /**
-     *
-     * @param porcentaje
-     */
-    public void evolucionar(float porcentaje){
+ 
+    @Override
+    public void evolucionar(){
         ArrayList<IndividuoReinas> pobAux;
         //una sola mascara para todo el proceso evolutivo
         //int[] mascara = Herramientas.generarArreglo(this.n);
         //someter a la poblacion a un proceso evolutivo
-        IndividuoReinas madre = Seleccion.seleccionTorneoReinas(poblacion);
        for(int i=0; i<getNumeroGeneraciones(); i++){
            int[] mascara = Herramientas.generarArregloBinario(this.getN());
            
-           System.out.println("\nGeneración :"+(i+1));
            pobAux = new ArrayList<>();
+          //MUESTREO 
+           int cantidadMuestreo = Math.round(getPorcentajeMuestreo()*this.poblacion.size());
            
-           int cantidad = Math.round(porcentaje*this.poblacion.size());
-           //MUESTREO
-           //pobAux = cambiarIndividuo(Muestreo.torneo(this.poblacion, cantidad));
-           //pobAux = cambiarIndividuo(Muestreo.aleatorio(this.poblacion, cantidad));
-            //IndividuoReinas madre = Seleccion.torneoMenorR(pob);//(IndividuoReinas) Seleccion.torneo(poblacion);
-            /*if(i%2==0){
-                   r = new Random(System.currentTimeMillis());
-               }  */
+            if(getTipoMuestreo()==0){
+                 pobAux = Muestreo.aleatorioReinas(this.poblacion, cantidadMuestreo);
+             }
+             else if(getTipoMuestreo()==1){
+                 pobAux = Muestreo.torneoReinas(this.poblacion, cantidadMuestreo);
+             }
+             
+              if(getInsertarMejorIndividuo()==true){ //INSERTAR MEJOR INDIVIDUO DE OTRO GENETICO
+                  pobAux.add(nuevoMejorIndividuo); cantidadMuestreo++;
+                    setInsertarMejorIndividuo(false); 
+                    System.out.println(this.nuevoMejorIndividuo.getFitness() + " " + Arrays.toString(this.nuevoMejorIndividuo.getGenotipo()));
+              }
            for(int j=0; j<getTamanioPoblacion(); j++){
-           //for(int j=0; j<getTamanioPoblacion()-cantidad; j++){
-               //muestreo y/o selección
-               //torneo
-               //IndividuoReinas madre = new IndividuoReinas(Seleccion.torneoMenor(poblacion));//(IndividuoReinas) Seleccion.torneo(poblacion);
-               //IndividuoReinas madre = Seleccion.torneoMenorR(pob);//(IndividuoReinas) Seleccion.torneo(poblacion);
-               IndividuoReinas padre = Seleccion.seleccionAleatoriaReinas(this.poblacion);//(IndividuoReinas) Seleccion.aleatoria(poblacion);    
-            //int pos = r.nextInt(pob.size());
-            //IndividuoReinas padre = new IndividuoReinas(pob.get(pos).getGenotipo());
-       
-
-
+               //seleccion
+               IndividuoReinas madre = null;
+               if(getSeleccionMadre()==0)  madre = Seleccion.seleccionAleatoriaReinas(poblacion);
+               else madre = Seleccion.seleccionTorneoReinas(poblacion);
+               
+               IndividuoReinas padre = null;
+               if(getSeleccionPadre()==0){
+                   padre = Seleccion.seleccionAleatoriaReinas(poblacion);
+               }
+               else padre = Seleccion.seleccionTorneoReinas(poblacion);
+               
                 //cruza
                IndividuoReinas hijo = Cruza.cruzaMascara(madre, padre, mascara); //CHECAR
                //evaluar la posibilidad de muta
@@ -72,15 +83,21 @@ public class GeneticoReinas extends Genetico{
                }
                //agregar el hijo a la población Auxiliar
                pobAux.add(hijo);
-               System.out.println("Mama: " + Arrays.toString(madre.getGenotipo()) + "  Papa: " + Arrays.toString(padre.getGenotipo()) + " " +padre.getFitness() + "    Hijo: " + Arrays.toString(hijo.getGenotipo()) + " " + hijo.getFitness());
- 
+               
            }
            //se tiene que acualizar la población
            actualizar(pobAux);
            IndividuoReinas mejor = Seleccion.seleccionTorneoReinas(this.poblacion);
-           System.out.print("\n\tFitness: "+mejor.getFitness() + "  Genotipo: " + Arrays.toString(mejor.getGenotipo())); //con 24, el mayor puede ser -> 16,777,215
+          this.mejorIndividuo = mejor;
+           if(this.getUsarGeneticosParalelos()){
+                String texto = "Generacion: " + i + " Fitness: " + mejor.getFitness()+ "  Mejor resultado: "+ Arrays.toString(mejor.getGenotipo() )+ "\n";
+                this.consola.setTexto(texto);
+           }else{
+               System.out.println("Generacion: " + i + " Fitness: " + mejor.getFitness()+ "  Mejor resultado: "+ Arrays.toString(mejor.getGenotipo()));
+           }
+           /*System.out.print("\n\tFitness: "+mejor.getFitness() + "  Genotipo: " + Arrays.toString(mejor.getGenotipo())); //con 24, el mayor puede ser -> 16,777,215
            System.out.println();//}
-           madre = mejor;
+           madre = mejor;*/
        }
     }
 
@@ -89,14 +106,12 @@ public class GeneticoReinas extends Genetico{
      * @param n
      */
     @Override
-    public void generarPoblacionInicial(int n) {
+    public void generarPoblacionInicial() {
         this.poblacion = new ArrayList<>();
         for(int i=0; i<getTamanioPoblacion(); i++){
-            this.poblacion.add(new IndividuoReinas(n));
+            this.poblacion.add(new IndividuoReinas(getN()));
         }
-             
-
-//throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.mejorIndividuo=this.poblacion.get(0);
     }
 
     private void actualizar(ArrayList<IndividuoReinas> pobAux) {
@@ -107,5 +122,17 @@ public class GeneticoReinas extends Genetico{
             //this.poblacion.get(i).actualizar();
             //System.out.println(this.poblacion.get(i).fitness);
         }
+    }
+    public IndividuoReinas getMejorIndividuo() {
+        return mejorIndividuo;
+    }
+
+    /**
+     * @param mejorIndividuo the mejorIndividuo to set
+     */
+    public void setMejorIndividuo(IndividuoReinas mejorIndividuo) {
+        this.nuevoMejorIndividuo = mejorIndividuo;
+        this.nuevoMejorIndividuo.actualizar();
+        this.setInsertarMejorIndividuo(true);           
     }
 }

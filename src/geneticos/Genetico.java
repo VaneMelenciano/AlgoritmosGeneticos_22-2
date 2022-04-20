@@ -110,6 +110,7 @@ public class Genetico implements Runnable{
        this.tipoMuestreo = tipoMuestreo;
        this.porcentajeMuestreo = muestreo;
     }
+    
     public void generarPoblacionInicial(){
         
     }

@@ -51,7 +51,7 @@ public final class GeneticoTSP extends Genetico{
         ArrayList<IndividuoTSP> pobAux;
         
         //someter a la poblacion a un proceso evolutivo
-        int mejorRes=0, genRes=0;
+        //int mejorRes=0, genRes=0;
        for(int i=0; i<getNumeroGeneraciones(); i++){
            pobAux = new ArrayList<>();
            //crear una población nueva

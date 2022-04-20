@@ -20,7 +20,7 @@ import objetos.Matriz;
  */
 public class Gestor extends javax.swing.JFrame {
     private int numeroGenetico=0;
-    private boolean bandera = false;
+    private boolean banderaPrimerGenetico = false;
     private ArrayList<GeneticoSAT> geneticosSAT;
     private ArrayList<GeneticoTSP> geneticosTSP;
     private ArrayList<GeneticoBinario> geneticosBinario;
@@ -59,8 +59,8 @@ public class Gestor extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         geneticoCambiarMejor1 = new javax.swing.JComboBox<>();
         geneticoCambiarMejor2 = new javax.swing.JComboBox<>();
-        btnIntercambiarParametros = new javax.swing.JButton();
-        btnIntercambiarMejor = new javax.swing.JButton();
+        btnCambiarParametros = new javax.swing.JButton();
+        btnCambiarMejor = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -96,17 +96,17 @@ public class Gestor extends javax.swing.JFrame {
 
         geneticoCambiarMejor2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Genético" }));
 
-        btnIntercambiarParametros.setText("Cambiar");
-        btnIntercambiarParametros.addActionListener(new java.awt.event.ActionListener() {
+        btnCambiarParametros.setText("Cambiar");
+        btnCambiarParametros.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnIntercambiarParametrosActionPerformed(evt);
+                btnCambiarParametrosActionPerformed(evt);
             }
         });
 
-        btnIntercambiarMejor.setText("Cambiar");
-        btnIntercambiarMejor.addActionListener(new java.awt.event.ActionListener() {
+        btnCambiarMejor.setText("Cambiar");
+        btnCambiarMejor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnIntercambiarMejorActionPerformed(evt);
+                btnCambiarMejorActionPerformed(evt);
             }
         });
 
@@ -143,10 +143,10 @@ public class Gestor extends javax.swing.JFrame {
                                 .addComponent(jLabel2)
                                 .addGap(37, 37, 37))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(btnIntercambiarParametros)
+                                .addComponent(btnCambiarParametros)
                                 .addGap(91, 91, 91))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(btnIntercambiarMejor)
+                                .addComponent(btnCambiarMejor)
                                 .addGap(88, 88, 88))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -179,7 +179,7 @@ public class Gestor extends javax.swing.JFrame {
                     .addComponent(geneticoCambiarParametros1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnIntercambiarParametros)
+                .addComponent(btnCambiarParametros)
                 .addGap(24, 24, 24)
                 .addComponent(jLabel4)
                 .addGap(18, 18, 18)
@@ -188,7 +188,7 @@ public class Gestor extends javax.swing.JFrame {
                     .addComponent(jLabel5)
                     .addComponent(geneticoCambiarMejor2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(btnIntercambiarMejor)
+                .addComponent(btnCambiarMejor)
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
@@ -201,39 +201,26 @@ public class Gestor extends javax.swing.JFrame {
 
     private void crearNuevoGeneticoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearNuevoGeneticoBtnActionPerformed
         //PRESIONAR EL BOTON
-        if(this.bandera==false){
+        if(this.banderaPrimerGenetico==false){ //Solo la primera vez que se seleccione un genético
             seleccion = this.tipoGenetico.getSelectedIndex();
-            bandera=true;
+            banderaPrimerGenetico=true;
             String aux = this.tipoGenetico.getItemAt(seleccion);
             this.tipoGenetico.removeAllItems();
             this.tipoGenetico.addItem(aux);
         }
-        
-        if(seleccion==0){ //Binario
-            
-        } else if(seleccion==1){ //Reinas
-            
-        } else if(seleccion==2){ //SAT
-            Matriz.matriz=Matriz.leerArchivo(1); //0: TSP, 1: SB
-            String titulo= ("Genetico SAT " + this.numeroGenetico);
-            Consola c = new Consola(titulo);
-            this.geneticosSAT.add(this.numeroGenetico, new GeneticoSAT(900, 100000000, 0, 0, 0, 0, 0, 100, c));
-            //tamaño de pobleación, num Generaciones, cuidad inicial o tamaño de tabl, 
-            //prob Muta, seleccion para madre y padre, tipo de muestreo y tamaño de muestreo
-            this.parametros.add(this.numeroGenetico, new Parametros(this.geneticosSAT.get(this.numeroGenetico), titulo));
-            agregarItems(titulo);
-            this.parametros.get(this.numeroGenetico).setVisible(true);
-            this.numeroGenetico++;
-        }else{ //TSP
-            Matriz.matriz=Matriz.leerArchivo(0); //0: TSP, 1: SB
-            String titulo= ("Genetico TSP " + this.numeroGenetico);
-            Consola c = new Consola(titulo);
-            this.geneticosTSP.add(this.numeroGenetico, new GeneticoTSP(500, 100000000, 0, 0, 0, 0, 0, c));
-            //int tamanioPoblacion, int numeroGeneraciones, double probabilidadMuta, int seleM, int seleP, int tipoMuestreo, float muestreo, Consola consola
-            this.parametros.add(this.numeroGenetico, new Parametros(this.geneticosTSP.get(this.numeroGenetico), titulo));
-            agregarItems(titulo);
-            this.parametros.get(this.numeroGenetico).setVisible(true);
-            this.numeroGenetico++;
+        switch(seleccion){ //tipo de genetico
+            case 0:
+                nuevoGeneticoBinario();
+                break;
+            case 1:
+                nuevoGeneticoReinas();
+                break;
+            case 2:
+                nuevoGeneticoSAT();
+                break;
+            default :
+                nuevoGeneticoTSP();
+                break;
         }
     }//GEN-LAST:event_crearNuevoGeneticoBtnActionPerformed
 
@@ -244,7 +231,7 @@ public class Gestor extends javax.swing.JFrame {
         this.geneticoCambiarParametros2.addItem(titulo);
     }
     
-    private void btnIntercambiarParametrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIntercambiarParametrosActionPerformed
+    private void btnCambiarParametrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCambiarParametrosActionPerformed
         //CAMBIAR PARAMETROS ENTRE GENETICOS
         //Binario=0, Reinas=1, SAT=2, TSP=3
         int seleccion1 = this.geneticoCambiarParametros1.getSelectedIndex()-1;
@@ -276,9 +263,9 @@ public class Gestor extends javax.swing.JFrame {
                         break;
             }
         }
-    }//GEN-LAST:event_btnIntercambiarParametrosActionPerformed
+    }//GEN-LAST:event_btnCambiarParametrosActionPerformed
 
-    private void btnIntercambiarMejorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIntercambiarMejorActionPerformed
+    private void btnCambiarMejorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCambiarMejorActionPerformed
         //MANDAT MEJOR INDIVISUO DE UN GENETICO A OTRO
         //Binario=0, Reinas=1, SAT=2, TSP=3
         int seleccion1 = this.geneticoCambiarMejor1.getSelectedIndex()-1;
@@ -288,18 +275,16 @@ public class Gestor extends javax.swing.JFrame {
             switch(seleccion){ //tipo de genetico
                 case 0:
                     GeneticoBinario aux1 = this.geneticosBinario.get(seleccion1);
-                    //this.geneticosBinario.get(seleccion2).setMejorIndividuo(aux1.getMejorIndividuo());
-                    
+                    this.geneticosBinario.get(seleccion2).setMejorIndividuo(aux1.getMejorIndividuo());
                     break;
                 case 1:
                     GeneticoReinas aux2 = this.geneticosReinas.get(seleccion1);
-                    //this.geneticosReinas.get(seleccion2).setMejorIndividuo(aux2.getMejorIndividuo());
-                    
+                    this.geneticosReinas.get(seleccion2).setMejorIndividuo(aux2.getMejorIndividuo());
                     break;
                 case 2:
                     GeneticoSAT aux3 = this.geneticosSAT.get(seleccion1);
                     this.geneticosSAT.get(seleccion2).setMejorIndividuo(aux3.getMejorIndividuo());
-                            break;
+                    break;
                 default :
                     GeneticoTSP aux4 = this.geneticosTSP.get(seleccion1);
                     this.geneticosTSP.get(seleccion2).setMejorIndividuo(aux4.getMejorIndividuo());
@@ -307,7 +292,7 @@ public class Gestor extends javax.swing.JFrame {
                     break;
             }
         }
-    }//GEN-LAST:event_btnIntercambiarMejorActionPerformed
+    }//GEN-LAST:event_btnCambiarMejorActionPerformed
 
     /**
      * @param args the command line arguments
@@ -345,8 +330,8 @@ public class Gestor extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnIntercambiarMejor;
-    private javax.swing.JButton btnIntercambiarParametros;
+    private javax.swing.JButton btnCambiarMejor;
+    private javax.swing.JButton btnCambiarParametros;
     private javax.swing.JButton crearNuevoGeneticoBtn;
     private javax.swing.JComboBox<String> geneticoCambiarMejor1;
     private javax.swing.JComboBox<String> geneticoCambiarMejor2;
@@ -359,5 +344,53 @@ public class Gestor extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JComboBox<String> tipoGenetico;
     // End of variables declaration//GEN-END:variables
+
+    private void nuevoGeneticoBinario() {
+        String titulo= ("Genetico Binario " + this.numeroGenetico);
+        Consola c = new Consola(titulo);
+        this.geneticosBinario.add(this.numeroGenetico, new GeneticoBinario(10000, 100000000, 0, 0, 0, 0, 0, c));
+        //(tamanioPoblacion, numeroGeneraciones, probabilidadMuta, seleM, seleP, tipoMuestreo, muestreo, consola);
+        this.parametros.add(this.numeroGenetico, new Parametros(this.geneticosBinario.get(this.numeroGenetico), titulo));
+        agregarItems(titulo);
+        this.parametros.get(this.numeroGenetico).setVisible(true);
+        this.numeroGenetico++;
+    }
+
+    private void nuevoGeneticoReinas() {
+        String titulo= ("Genetico Reinas " + this.numeroGenetico);
+        Consola c = new Consola(titulo);
+        int tamanioTablero=8;
+        this.geneticosReinas.add(this.numeroGenetico, new GeneticoReinas(10000, 100000000, 0, 0, 0, 0, 0, tamanioTablero, c));
+        //(tamanioPoblacion, numeroGeneraciones, probabilidadMuta, seleM, seleP, tipoMuestreo, muestreo, consola);
+        this.parametros.add(this.numeroGenetico, new Parametros(this.geneticosReinas.get(this.numeroGenetico), titulo));
+        agregarItems(titulo);
+        this.parametros.get(this.numeroGenetico).setVisible(true);
+        this.numeroGenetico++;
+    }
+
+    private void nuevoGeneticoSAT() {
+        Matriz.matriz=Matriz.leerArchivo(1); //0: TSP, 1: SB
+        String titulo= ("Genetico SAT " + this.numeroGenetico);
+        Consola c = new Consola(titulo);
+        this.geneticosSAT.add(this.numeroGenetico, new GeneticoSAT(900, 100000000, 0, 0, 0, 0, 0, 100, c));
+        //tamaño de pobleación, num Generaciones, cuidad inicial o tamaño de tabl, 
+        //prob Muta, seleccion para madre y padre, tipo de muestreo y tamaño de muestreo
+        this.parametros.add(this.numeroGenetico, new Parametros(this.geneticosSAT.get(this.numeroGenetico), titulo));
+        agregarItems(titulo);
+        this.parametros.get(this.numeroGenetico).setVisible(true);
+        this.numeroGenetico++;
+    }
+
+    private void nuevoGeneticoTSP() {
+        Matriz.matriz=Matriz.leerArchivo(0); //0: TSP, 1: SB
+        String titulo= ("Genetico TSP " + this.numeroGenetico);
+        Consola c = new Consola(titulo);
+        this.geneticosTSP.add(this.numeroGenetico, new GeneticoTSP(500, 100000000, 0, 0, 0, 0, 0, c));
+        //int tamanioPoblacion, int numeroGeneraciones, double probabilidadMuta, int seleM, int seleP, int tipoMuestreo, float muestreo, Consola consola
+        this.parametros.add(this.numeroGenetico, new Parametros(this.geneticosTSP.get(this.numeroGenetico), titulo));
+        agregarItems(titulo);
+        this.parametros.get(this.numeroGenetico).setVisible(true);
+        this.numeroGenetico++;
+    }
 
 }

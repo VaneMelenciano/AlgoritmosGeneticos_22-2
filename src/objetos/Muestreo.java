@@ -5,6 +5,8 @@
  */
 package objetos;
 
+import Individuos.IndividuoBinario;
+import Individuos.IndividuoReinas;
 import Individuos.IndividuoSAT;
 import Individuos.IndividuoTSP;
 import java.util.ArrayList;
@@ -88,4 +90,59 @@ public class Muestreo {
         }
         return nuevaPob;
     }
+    
+    /*BINARIO*/
+    private static ArrayList<IndividuoBinario> ordenarBinario(ArrayList<IndividuoBinario> pob){
+        pob.sort(Collections.reverseOrder(Comparator.comparingInt(i -> i.getFitness())));
+        return pob;
+    }
+    public static ArrayList<IndividuoBinario> aleatorioBinario(ArrayList<IndividuoBinario> pob, int cantidad){
+        //solo toma % de los mejores
+        ArrayList<IndividuoBinario> nuevaPob = new ArrayList<IndividuoBinario>();
+        //int cantidad = porcentaje*pob.size()/100;
+        for(int i=0; i<cantidad; i++){
+             Random r = new Random();
+            int pos = r.nextInt(pob.size());
+            nuevaPob.add(pob.get(pos));
+        }
+        return nuevaPob;
+    }
+    public static ArrayList<IndividuoBinario> torneoBinario(ArrayList<IndividuoBinario> pob, int cantidad){
+        //solo toma % de los mejores
+        ArrayList<IndividuoBinario> nuevaPob = new ArrayList<IndividuoBinario>();
+        //int cantidad = porcentaje*pob.size()/100;
+        pob = ordenarBinario((ArrayList<IndividuoBinario>) pob.clone());
+        for(int i=0; i<cantidad; i++){
+            nuevaPob.add(pob.get(i));
+        }
+        return nuevaPob;
+    }
+    
+    /*REINAS*/
+    private static ArrayList<IndividuoReinas> ordenarReinas(ArrayList<IndividuoReinas> pob){
+        pob.sort(Collections.reverseOrder(Comparator.comparingInt(i -> i.getFitness())));
+        return pob;
+    }
+    public static ArrayList<IndividuoReinas> aleatorioReinas(ArrayList<IndividuoReinas> pob, int cantidad){
+        //solo toma % de los mejores
+        ArrayList<IndividuoReinas> nuevaPob = new ArrayList<IndividuoReinas>();
+        //int cantidad = porcentaje*pob.size()/100;
+        for(int i=0; i<cantidad; i++){
+             Random r = new Random();
+            int pos = r.nextInt(pob.size());
+            nuevaPob.add(pob.get(pos));
+        }
+        return nuevaPob;
+    }
+    public static ArrayList<IndividuoReinas> torneoReinas(ArrayList<IndividuoReinas> pob, int cantidad){
+        //solo toma % de los mejores
+        ArrayList<IndividuoReinas> nuevaPob = new ArrayList<IndividuoReinas>();
+        //int cantidad = porcentaje*pob.size()/100;
+        pob = ordenarReinas((ArrayList<IndividuoReinas>) pob.clone());
+        for(int i=0; i<cantidad; i++){
+            nuevaPob.add(pob.get(i));
+        }
+        return nuevaPob;
+    }
+    
 }

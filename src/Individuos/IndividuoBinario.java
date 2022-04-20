@@ -12,21 +12,7 @@ import objetos.Matriz;
  * @author Vanessa
  */
 public class IndividuoBinario extends Individuo{
-    //private int[] getGenotipo();
     private int fenotipo;
-    //private int fenotipo, fitness;
-    
-    //aleatoria
-    /*public IndividuoBinario(){
-        setGenotipo(Herramientas.generarArregloBinario(24));
-        actualizar();
-    }
-    //ceación aleatoria
-    public IndividuoBinario(int[] gen){
-        setGenotipo(gen.clone());
-        //hacer los calculos de fenotipo/fitness
-        actualizar();
-    }*/
     
     public IndividuoBinario(){
         setGenotipo(Herramientas.generarArregloBinario(24));
@@ -37,13 +23,23 @@ public class IndividuoBinario extends Individuo{
         super(gen);
     }
 
-    private void calcularFitness() {
-      setFitness(2*(getFenotipo()));
+    public void calcularFenotipo() {
+        //hacer un corrimiento del arreglo y pasar a entero los bits
+        for(int i=0, j=getGenotipo().length-1; i<getGenotipo().length && j>=0; i++, j--){
+            if(getGenotipo()[i]==1){ //si es 0 no tiene caso
+                this.fenotipo+=Math.pow(2, j);
+            }
+        }
+    }
+
+    public void calcularFitness() {
+      setFitness(2*this.fenotipo);
     }
 
     @Override
     public void actualizar() {
         calcularFitness();
+        calcularFenotipo();
     }
 
     /**

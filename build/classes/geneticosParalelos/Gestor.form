@@ -54,11 +54,11 @@
                               <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
-                              <Component id="btnIntercambiarParametros" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnCambiarParametros" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="91" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
-                              <Component id="btnIntercambiarMejor" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnCambiarMejor" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="88" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -104,7 +104,7 @@
                   <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="btnIntercambiarParametros" min="-2" max="-2" attributes="0"/>
+              <Component id="btnCambiarParametros" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
               <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -114,7 +114,7 @@
                   <Component id="geneticoCambiarMejor2" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="btnIntercambiarMejor" min="-2" max="-2" attributes="0"/>
+              <Component id="btnCambiarMejor" min="-2" max="-2" attributes="0"/>
               <EmptySpace pref="19" max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -217,20 +217,20 @@
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
     </Component>
-    <Component class="javax.swing.JButton" name="btnIntercambiarParametros">
+    <Component class="javax.swing.JButton" name="btnCambiarParametros">
       <Properties>
         <Property name="text" type="java.lang.String" value="Cambiar"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnIntercambiarParametrosActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCambiarParametrosActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="btnIntercambiarMejor">
+    <Component class="javax.swing.JButton" name="btnCambiarMejor">
       <Properties>
         <Property name="text" type="java.lang.String" value="Cambiar"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnIntercambiarMejorActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCambiarMejorActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel5">
