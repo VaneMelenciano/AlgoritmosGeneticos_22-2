@@ -103,7 +103,7 @@ public class Genetico implements Runnable{
         //generarPoblacionInicial();
     }
     public void cambiarParametros(int tamanioPoblacion, double probabilidadMuta, int seleccionM, int seleccionP, int tipoMuestreo, float muestreo){
-       //this.tamanioPoblacion = tamanioPoblacion;
+       this.tamanioPoblacion = tamanioPoblacion;
        this.probabilidadMuta = probabilidadMuta;
        this.seleccionMadre = seleccionM;
        this.seleccionPadre = seleccionP;

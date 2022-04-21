@@ -213,6 +213,47 @@ public class Matriz {
             }
     }
     
+    public static void guardarArchivo(String datos, String nombre){ //nombre con base en hora de creación
+        //String matriz = datos;
+        FileWriter flwriter = null;
+            try {
+                    //crea el flujo para escribir en el archivo
+                    //SimpleDateFormat ff = new SimpleDateFormat("yyyy-MM-dd-hh-mm-ss");
+                    SimpleDateFormat ff1 = new SimpleDateFormat("yyyy-MM-dd");
+                    SimpleDateFormat ff2 = new SimpleDateFormat("hh-mm-ss");
+                    Date d = new Date();
+                    String time1 = ff1.format(d);
+                    String time2 = ff2.format(d);
+                    String name = nombre + "_" + time1 + "_" +time2; 
+                    
+                    flwriter = new FileWriter(".././Pruebas/" + name + ".txt");
+                    //flwriter = new FileWriter(".././matriz.txt");
+                    //crea un buffer o flujo intermedio antes de escribir directamente en el archivo
+                    BufferedWriter bfwriter = new BufferedWriter(flwriter);
+                    
+                    bfwriter.write(datos);
+                    /*for(int i=0; i<matriz.length; i++){
+                        for(String j : matriz[i]){
+                           bfwriter.write(j + " "); 
+                        }
+                        bfwriter.write("\n");
+                    }*/
+                    //cierra el buffer intermedio
+                    bfwriter.close();
+
+            } catch (IOException e) {
+                    e.printStackTrace();
+            } finally {
+                    if (flwriter != null) {
+                            try {//cierra el flujo principal
+                                    flwriter.close();
+                            } catch (IOException e) {
+                                    e.printStackTrace();
+                            }
+                    }
+            }
+    }
+    
     public static int[][] matrizAleatoria(int n, int min, int max){
         Random r = new Random();
         int[][] matriz = new int[n][n];

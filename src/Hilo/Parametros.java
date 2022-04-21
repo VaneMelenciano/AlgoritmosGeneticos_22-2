@@ -281,11 +281,9 @@ public class Parametros extends javax.swing.JFrame {
        //Binario=0, Reinas=1, SAT=2, TSP=3
 
         //Tamaño de población
-       /*if(this.tPob.getText().length()!=0){
-           int poblacion = Integer.parseInt(this.tPob.getText());
-           this.genetico.setTamanioPoblacion(poblacion);
-           this.genetico.generarPoblacionInicial();
-       }*/
+       if(this.tamanioPoblacion.getText().length()!=0){
+           cambiarTamanioPoblacio();
+       }
        //Probabilidad de muta
        if(this.probabilidadMuta.getText().length()!=0){
            cambiarProbabilidadMuta(); 
@@ -426,6 +424,20 @@ public class Parametros extends javax.swing.JFrame {
                default: this.geneticoTSP.setPorcentajeMuestreo(por);
                    break;
            }
+    }
+
+    private void cambiarTamanioPoblacio() {
+        int poblacion = Integer.parseInt(this.tamanioPoblacion.getText());
+           switch(this.seleccion){
+               case 0: this.geneticoBinario.setTamanioPoblacion(poblacion);
+                   break;
+               case 1: this.geneticoReinas.setTamanioPoblacion(poblacion);
+                   break;
+               case 2:this.geneticoSAT.setTamanioPoblacion(poblacion);
+                   break;
+               default: this.geneticoTSP.setTamanioPoblacion(poblacion);
+                   break;
+           } 
     }
 
     
