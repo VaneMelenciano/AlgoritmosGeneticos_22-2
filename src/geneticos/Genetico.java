@@ -31,7 +31,7 @@ public class Genetico implements Runnable{
         this.numeroGeneraciones=n;
         this.insertarMejorIndividuo=false;
         this.usarGeneticosParalelos=false;
-        generarPoblacionInicial();
+        //generarPoblacionInicial();
     }
     public Genetico(int t, int n, double p, int cI){ //para TSP, binario y Reinas
         this.tamanioPoblacion=t;

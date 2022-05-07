@@ -13,6 +13,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.Random;
@@ -26,6 +27,7 @@ import javax.swing.JOptionPane;
  */
 public class Matriz {
     public static int[][] matriz;
+    public static float[][] matrizElevaciones;
     
     public static int[][] leerArchivo(int n){
         String aux, texto;
@@ -173,6 +175,39 @@ public class Matriz {
             }
     }
     
+    public static void guardarArchivo(float[][] m, String name){ //recibe nombre como parametro
+        float matriz[][] = m;
+        FileWriter flwriter = null;
+            try {
+                    //crea el flujo para escribir en el archivo
+                    
+                    flwriter = new FileWriter(".././" + name + ".txt");
+                    //flwriter = new FileWriter(".././matriz.txt");
+                    //crea un buffer o flujo intermedio antes de escribir directamente en el archivo
+                    BufferedWriter bfwriter = new BufferedWriter(flwriter);
+                    
+                    for(int i=0; i<matriz.length; i++){
+                        for(float j : matriz[i]){
+                           bfwriter.write(Float.valueOf(j) + " "); 
+                        }
+                        bfwriter.write("\n");
+                    }
+                    //cierra el buffer intermedio
+                    bfwriter.close();
+
+            } catch (IOException e) {
+                    e.printStackTrace();
+            } finally {
+                    if (flwriter != null) {
+                            try {//cierra el flujo principal
+                                    flwriter.close();
+                            } catch (IOException e) {
+                                    e.printStackTrace();
+                            }
+                    }
+            }
+    }
+    
     public static void guardarArchivo(String[][] m){ //nombre con base en hora de creación
         String matriz[][] = m;
         FileWriter flwriter = null;
@@ -254,7 +289,7 @@ public class Matriz {
             }
     }
     
-    public static int[][] matrizAleatoria(int n, int min, int max){
+    public static int[][] matrizAleatoriaTSP(int n, int min, int max){ //Para TSP
         Random r = new Random();
         int[][] matriz = new int[n][n];
         for(int i=0; i<n; i++){
@@ -272,6 +307,35 @@ public class Matriz {
         return matriz;
     }
     
+    public static float[][] matrizElevacionesPendienteTSP(int[][] matrizDistancias, double[] alturas){ //Para TSP
+        float[][] matriz = new float[matrizDistancias.length][matrizDistancias.length];
+        for(int i=0; i<matrizDistancias.length; i++){
+            for(int j=0; j<=i; j++){
+                if(i==j) matriz[i][j]=0;
+                else{
+                    float aux = (float) ((alturas[i]-alturas[j])/matrizDistancias[i][j]);
+                    matriz[i][j] = aux;
+                    matriz[j][i] = (-1)*aux;
+                }
+            }
+        }
+        return matriz;
+    }
+    public static float[][] matrizElevacionesAngulosTSP(int[][] matrizDistancias, double[] alturas){ //Para TSP
+        float[][] matriz = new float[matrizDistancias.length][matrizDistancias.length];
+        for(int i=0; i<matrizDistancias.length; i++){
+            for(int j=0; j<=i; j++){
+                if(i==j) matriz[i][j]=0;
+                else{
+                    float aux = (float) Math.atan((alturas[i]-alturas[j])/matrizDistancias[i][j]);
+                    matriz[i][j] = aux;
+                    matriz[j][i] = (-1)*aux;
+                }
+            }
+        }
+        return matriz;
+    }
+    
     public static void imprimirMatriz(int[][] matriz){
        for(int i=0; i<matriz.length; i++){
             for(int j : matriz[i]){
@@ -279,5 +343,10 @@ public class Matriz {
             }
             System.out.println();
         } 
+    }
+    public static void imprimirMatriz(float[][] matriz){
+        for(int i=0; i<matriz.length; i++){
+            System.out.println(Arrays.toString(matriz[i]));
+        }
     }
 }

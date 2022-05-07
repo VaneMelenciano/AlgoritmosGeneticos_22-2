@@ -26,10 +26,23 @@ public final class GeneticoTSP extends Genetico{
     private IndividuoTSP mejorIndividuo;
     private IndividuoTSP nuevoMejorIndividuo; //cuando se recibe un individuo
     
-    public GeneticoTSP(int t, int n, double p){
-        super(t, n, p);
+    private float porcentajeDistancia = 0;
+    private float porcentajeElevacion = 0;
+    
+    private boolean banderUsarElevaciones = false;
+    
+    public GeneticoTSP(int tamanioPoblacion, int numeroGeneraciones, double probabilidadMuta, float porcentajeDistancia, float porcentajeElevacion){
+        super(tamanioPoblacion, numeroGeneraciones, probabilidadMuta);
         this.poblacion = new ArrayList<>();
+        this.porcentajeDistancia=porcentajeDistancia;
+        this.porcentajeElevacion=porcentajeElevacion;
+        this.banderUsarElevaciones=true;
         generarPoblacionInicial();
+    }
+    
+    public GeneticoTSP(int tamanioPoblacion, int numeroGeneraciones, double probabilidadMuta){
+        super(tamanioPoblacion, numeroGeneraciones, probabilidadMuta);
+        this.poblacion = new ArrayList<>();
     }
     public GeneticoTSP(int tamanioPoblacion, int numeroGeneraciones, double probabilidadMuta, int seleM, int seleP, int mueT, float mue){
         super(tamanioPoblacion, numeroGeneraciones, probabilidadMuta, seleM, seleP, mueT, mue);
@@ -47,16 +60,13 @@ public final class GeneticoTSP extends Genetico{
     
     @Override
     public void evolucionar(){
-        //String [][] matrizRes = new String[getNumeroGeneraciones()+1][this.poblacion.get(0).getGenotipo().length+2];
         ArrayList<IndividuoTSP> pobAux;
         
         //someter a la poblacion a un proceso evolutivo
         //int mejorRes=0, genRes=0;
-       for(int i=0; i<getNumeroGeneraciones(); i++){
+       for(int generacion=0; generacion<getNumeroGeneraciones(); generacion++){
            pobAux = new ArrayList<>();
-           //crear una población nueva
            ///MUESTREO
-                    //Torneo, aleatorio y 50/50
            int cantidadMuestreo = Math.round(getPorcentajeMuestreo()*this.poblacion.size());
             if(getTipoMuestreo()==0){
                 pobAux = Muestreo.aleatorio(this.poblacion, cantidadMuestreo);
@@ -64,13 +74,13 @@ public final class GeneticoTSP extends Genetico{
             else if(getTipoMuestreo()==1){
                 pobAux = Muestreo.torneo(this.poblacion, cantidadMuestreo);
             }
-           if(getInsertarMejorIndividuo()==true){ //INSERTAR MEJOR INDIVIDUO DE OTRO GENETICO
+            if(getInsertarMejorIndividuo()==true){ //INSERTAR MEJOR INDIVIDUO DE OTRO GENETICO
                   pobAux.add(nuevoMejorIndividuo); cantidadMuestreo++;
                     setInsertarMejorIndividuo(false); 
                     System.out.println(this.nuevoMejorIndividuo.getFitness() + " " + Arrays.toString(this.nuevoMejorIndividuo.getGenotipo()));
               }
            //crear una población nueva   
-           for(int j=0; j<getTamanioPoblacion()-cantidadMuestreo; j++){
+           for(int poblacionNueva=0; poblacionNueva<getTamanioPoblacion()-cantidadMuestreo; poblacionNueva++){
                IndividuoTSP madre = null;
                if(getSeleccionMadre()==0)  madre = Seleccion.seleccionAleatoriaTSP(poblacion);
                else madre = Seleccion.seleccionTorneoTSP(poblacion);
@@ -81,7 +91,9 @@ public final class GeneticoTSP extends Genetico{
                
                //cruza
                IndividuoTSP hijo = Cruza.cruzaTSP(madre, padre);
-               //evaluar la posibilidad de muta
+               if(this.banderUsarElevaciones) hijo.setPorcentajes(porcentajeDistancia, porcentajeElevacion);
+               
+                //evaluar la posibilidad de muta
                if(Muta.muta(getProbabilidadMuta())){
                    Muta.muta(hijo);
                }
@@ -93,42 +105,16 @@ public final class GeneticoTSP extends Genetico{
            actualizarPoblacion(pobAux);
            
            IndividuoTSP mejor = Seleccion.seleccionTorneoTSP(this.poblacion);
+           
            this.mejorIndividuo = mejor;
+           
            if(this.getUsarGeneticosParalelos()){
-                String texto = "Generacion: " + i + " Fitness: " + mejor.getFitness()+ "  Mejor resultado: "+ Arrays.toString(mejor.getGenotipo() )+ "\n";
+                String texto = "Generacion: " + generacion + " Fitness: " + mejor.getFitness()+ "  Mejor resultado: "+ Arrays.toString(mejor.getGenotipo() )+ "\n";
                 this.consola.setTexto(texto);
            }else{
-               System.out.println("Generacion: " + i + " Fitness: " + mejor.getFitness()+ "  Mejor resultado: "+ Arrays.toString(mejor.getGenotipo()));
+               System.out.println("Generacion: " + generacion + " Fitness: " + mejor.getFitness()+ "  Mejor resultado: "+ Arrays.toString(mejor.getGenotipo()));
            }
-           
-            //AGREGAR MEJOR INDIVIDUO A TXT
-            /*matrizRes[i][0] = "g" + i;
-            for(int k=0; k<mejor.getGenotipo().length ; k++){
-               matrizRes[i][k+1] = "\t" +mejor.getGenotipo()[k] + "\t"; //imprime camino de mejor individuo
-            } matrizRes[i][mejor.getGenotipo().length+1] = "" + mejor.getFitness(); */
-            
-            //VER CUAL ES EL MEJOR RESULTADO ENTRE TODAS LAS GENERACIONES
-            /*if(i==0){
-                mejorRes = mejor.getFitness();
-                genRes=i;
-                System.out.println("Generacion: " + genRes + " Fitness: " + mejor.getFitness()+ "  Mejor resultado: "+ Arrays.toString(mejor.getGenotipo()));
-            } 
-            else if(mejorRes>mejor.getFitness()){
-                mejorRes = mejor.getFitness();
-                genRes=i;
-                System.out.println("Generacion: " + genRes + " Fitness: " + mejor.getFitness()+ "  Mejor resultado: "+ Arrays.toString(mejor.getGenotipo()));
-            }*/
-            
        }
-       //GUARDAR EN TXT MEJORES RESULTADOS
-       /*matrizRes[getNumeroGeneraciones()][0] = "Mejor resultado:";
-       matrizRes[getNumeroGeneraciones()][1] = "\t" + mejorRes;
-       matrizRes[getNumeroGeneraciones()][2] = "\tGeneracion:";
-       matrizRes[getNumeroGeneraciones()][3] = "\t" + genRes;
-      
-       for(int i=4; i<this.poblacion.get(0).getGenotipo().length+1; i++) matrizRes[getNumeroGeneraciones()][i] = "";
-       */
-        //Matriz.guardarArchivo(matrizRes);
     }
     
     @Override
@@ -138,7 +124,8 @@ public final class GeneticoTSP extends Genetico{
         Random r = new Random();
         int n = r.nextInt(Matriz.matriz.length);
         for(int i=0; i<getTamanioPoblacion(); i++)
-            this.poblacion.add(new IndividuoTSP(n, Matriz.matriz.length));
+            if(!this.banderUsarElevaciones)this.poblacion.add(new IndividuoTSP(n, Matriz.matriz.length));
+            else this.poblacion.add(new IndividuoTSP(n, Matriz.matriz.length, this.porcentajeDistancia, this.porcentajeElevacion));
         this.mejorIndividuo = this.poblacion.get(0);
         
     }
@@ -148,7 +135,9 @@ public final class GeneticoTSP extends Genetico{
         //System.out.println("POBLACIÓN INICIAL");
         //se genere de manera aleatoria
         for(int i=0; i<getTamanioPoblacion(); i++){
-            IndividuoTSP in = new IndividuoTSP(n, Matriz.matriz.length);
+             IndividuoTSP in = null;
+            if(!this.banderUsarElevaciones) in = new IndividuoTSP(n, Matriz.matriz.length);
+            else in = new IndividuoTSP(n, Matriz.matriz.length, this.porcentajeDistancia, this.porcentajeElevacion);
             this.poblacion.add(in);
             //VER EL INDIVIDUO
             //Herramientas.imprimirArreglo(in.getGenotipo());
@@ -159,7 +148,8 @@ public final class GeneticoTSP extends Genetico{
         this.poblacion = new ArrayList<>();
         //for(IndividuoTSP i : pobAux){
         pobAux.forEach(i -> {
-            this.poblacion.add(new IndividuoTSP(i.getGenotipo()));
+             if(!this.banderUsarElevaciones) this.poblacion.add(new IndividuoTSP(i.getGenotipo()));
+             else this.poblacion.add(new IndividuoTSP(i.getGenotipo(), this.porcentajeDistancia, this.porcentajeElevacion));
         });
     }
     /**
@@ -177,4 +167,35 @@ public final class GeneticoTSP extends Genetico{
         this.nuevoMejorIndividuo.actualizar();
         this.setInsertarMejorIndividuo(true);           
     }
+
+    /**
+     * @return the porcentajeDistancia
+     */
+    public float getPorcentajeDistancia() {
+        return porcentajeDistancia;
+    }
+
+    /**
+     * @param porcentajeDistancia the porcentajeDistancia to set
+     */
+    public void setPorcentajeDistancia(float porcentajeDistancia) {
+        this.porcentajeDistancia = porcentajeDistancia;
+        this.banderUsarElevaciones=true;
+    }
+
+    /**
+     * @return the porcentajeElevacion
+     */
+    public float getPorcentajeElevacion() {
+        return porcentajeElevacion;
+    }
+
+    /**
+     * @param porcentajeElevacion the porcentajeElevacion to set
+     */
+    public void setPorcentajeElevacion(float porcentajeElevacion) {
+        this.porcentajeElevacion = porcentajeElevacion;
+        this.banderUsarElevaciones=true;
+    }
+    
 }

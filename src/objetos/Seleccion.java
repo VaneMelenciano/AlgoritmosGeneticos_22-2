@@ -81,4 +81,14 @@ public class Seleccion {
        //System.out.println("\t " + pos);
        return new IndividuoSAT(poblacion.get(pos).getGenotipo());
     }
+    
+    //Ruleta
+    public static IndividuoTSP seleccionRuletaTSP(ArrayList<IndividuoTSP> poblacion){
+        poblacion = Muestreo.ordenar(poblacion);
+        r = new Random(System.currentTimeMillis());
+        int pos = r.nextInt(poblacion.size());
+        return new IndividuoTSP(poblacion.get(pos).getGenotipo());
+    }
+    
+    
 }

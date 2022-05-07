@@ -84,7 +84,7 @@ public class AlgoritmosGeneticos {
         
         //TSP
         
-        //Matriz.imprimirMatriz(Matriz.matrizAleatoria(6, 3, 99));
+        //Matriz.imprimirMatriz(Matriz.matrizAleatoriaTSP(6, 3, 99));
         //Herramientas.imprimirArreglo(Herramientas.generarArreglo(3, 9));
         
         /*Matriz.matriz = new int[][]{{0,34,6,12},
@@ -149,10 +149,10 @@ public class AlgoritmosGeneticos {
         //227
         
        
-        //Matriz.guardarArchivo( Matriz.matrizAleatoria(15, 15, 96), "Mtariz 15 cuidades min 15 max 96");
-        //Matriz.guardarArchivo( Matriz.matrizAleatoria(50, 20, 130), "Matriz 50 cuidades min 20 max 130");
-        //Matriz.guardarArchivo( Matriz.matrizAleatoria(100, 0, 50), "Matriz 100 cuidades min 0 max 50");
-        //Matriz.guardarArchivo( Matriz.matrizAleatoria(400, 15, 80), "Matriz 400 cuidades min 15 max 80");
+        //Matriz.guardarArchivo( Matriz.matrizAleatoriaTSP(15, 15, 96), "Mtariz 15 cuidades min 15 max 96");
+        //Matriz.guardarArchivo( Matriz.matrizAleatoriaTSP(50, 20, 130), "Matriz 50 cuidades min 20 max 130");
+        //Matriz.guardarArchivo( Matriz.matrizAleatoriaTSP(100, 0, 50), "Matriz 100 cuidades min 0 max 50");
+        //Matriz.guardarArchivo( Matriz.matrizAleatoriaTSP(400, 15, 80), "Matriz 400 cuidades min 15 max 80");
         
         //REINAS
         /*int[] ge = {3,3,1,0,0};
