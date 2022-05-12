@@ -32,13 +32,13 @@ public class ParametrosTSPmultiobjetivo extends javax.swing.JFrame {
         Matriz.matriz=Matriz.leerArchivo(0);
         double[] alturas = {0, 3, 2, 2.7, 1.6};
         System.out.println("\nMatriz de pendientes\n");
-        Matriz.imprimirMatriz(Matriz.matrizElevacionesPendienteTSP(Matriz.matriz, alturas));
-        Matriz.matrizElevaciones = Matriz.matrizElevacionesPendienteTSP(Matriz.matriz, alturas);
+        Matriz.matrizElevaciones = Matriz.matrizElevacionesAngulosTSP(alturas);
+        Matriz.matrizDesgaste = Matriz.matrizDesgasteTSP();
         int tamanioPoblacion = 900;
         int numeroGeneraciones = 500000;
         double probabilidadMuta = 0.09;
-        float porcentajeDistancia = 1F;
-        float porcentajeElevacion = 0F;
+        float porcentajeDistancia = 0.6F;
+        float porcentajeElevacion = 0.4F;
         geneticoTSP = new GeneticoTSP(tamanioPoblacion, numeroGeneraciones, probabilidadMuta, porcentajeDistancia, porcentajeElevacion);
        Thread hilo = new Thread(geneticoTSP);
        hilo.start();

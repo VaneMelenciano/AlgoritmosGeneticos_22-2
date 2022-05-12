@@ -11,7 +11,7 @@ import objetos.Herramientas;
  *
  * @author Vanessa
  */
-public class IndividuoReinas extends Individuo{
+public final class IndividuoReinas extends Individuo{
    //private int[] genotipo;
     //private int fenotipo, fitness;
     

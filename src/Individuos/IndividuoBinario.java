@@ -4,18 +4,22 @@
  * and open the template in the editor.
  */
 package Individuos;
+import geneticos.GeneticoBinario;
 import objetos.Herramientas;
-import objetos.Matriz;
 
 /**
  *
  * @author Vanessa
  */
-public class IndividuoBinario extends Individuo{
+public final class IndividuoBinario extends Individuo{
     private int fenotipo;
     
     public IndividuoBinario(){
         setGenotipo(Herramientas.generarArregloBinario(24));
+        actualizar();
+    }
+    public IndividuoBinario(int numeroAtributos){
+        setGenotipo(Herramientas.generarArregloBinario(numeroAtributos));
         actualizar();
     }
     //ceación aleatoria
@@ -33,7 +37,10 @@ public class IndividuoBinario extends Individuo{
     }
 
     public void calcularFitness() {
-      setFitness(2*this.fenotipo);
+      if(GeneticoBinario.banderaUsarClasificador){
+          setFitnessDecimal(GeneticoBinario.clasificador.clasificar(this.getGenotipo()));
+      }
+      else setFitness(2*this.fenotipo);
     }
 
     @Override

@@ -28,6 +28,7 @@ import javax.swing.JOptionPane;
 public class Matriz {
     public static int[][] matriz;
     public static float[][] matrizElevaciones;
+    public static float[][] matrizDesgaste;
     
     public static int[][] leerArchivo(int n){
         String aux, texto;
@@ -307,13 +308,23 @@ public class Matriz {
         return matriz;
     }
     
-    public static float[][] matrizElevacionesPendienteTSP(int[][] matrizDistancias, double[] alturas){ //Para TSP
-        float[][] matriz = new float[matrizDistancias.length][matrizDistancias.length];
-        for(int i=0; i<matrizDistancias.length; i++){
+    public static float[] alturasAleatoriasTSP(int n, int min, int max){
+        Random r = new Random();
+        float[] arreglo = new float[n];
+        for(int i=0; i<n; i++){
+                float num = r.nextFloat() * (max - min) + min;;// + min;
+                arreglo[i] = num; 
+        }
+        return arreglo;
+    }
+    
+    public static float[][] matrizElevacionesPendienteTSP(double[] alturas){ //Para TSP
+        float[][] matriz = new float[Matriz.matriz.length][Matriz.matriz.length];
+        for(int i=0; i<Matriz.matriz.length; i++){
             for(int j=0; j<=i; j++){
                 if(i==j) matriz[i][j]=0;
                 else{
-                    float aux = (float) ((alturas[i]-alturas[j])/matrizDistancias[i][j]);
+                    float aux = (float) ((alturas[i]-alturas[j])/Matriz.matriz[i][j]);
                     matriz[i][j] = aux;
                     matriz[j][i] = (-1)*aux;
                 }
@@ -321,15 +332,29 @@ public class Matriz {
         }
         return matriz;
     }
-    public static float[][] matrizElevacionesAngulosTSP(int[][] matrizDistancias, double[] alturas){ //Para TSP
-        float[][] matriz = new float[matrizDistancias.length][matrizDistancias.length];
-        for(int i=0; i<matrizDistancias.length; i++){
-            for(int j=0; j<=i; j++){
+    public static float[][] matrizElevacionesAngulosTSP(double[] alturas){ //Para TSP
+        float[][] matriz = new float[Matriz.matriz.length][Matriz.matriz.length];
+        for(int i=0; i<Matriz.matriz.length; i++){
+            for(int j=0; j<Matriz.matriz.length; j++){
                 if(i==j) matriz[i][j]=0;
                 else{
-                    float aux = (float) Math.atan((alturas[i]-alturas[j])/matrizDistancias[i][j]);
-                    matriz[i][j] = aux;
-                    matriz[j][i] = (-1)*aux;
+                    float pendiente = (float) (alturas[i]-alturas[j])/Matriz.matriz[i][j];
+                    float angulo = (float) (pendiente<0 ? Math.atan(pendiente)+180 : Math.atan(pendiente));
+                    matriz[i][j] = angulo;
+                }
+            }
+        }
+        return matriz;
+    }
+    public static float[][] matrizDesgasteTSP(){
+        float[][] matriz = new float[matrizElevaciones.length][matrizElevaciones.length];
+        for(int i=0; i<matrizElevaciones.length; i++){
+            for(int j=0; j<matrizElevaciones.length; j++){
+                if(i==j) matriz[i][j]=1;
+                else{
+                    //=SI(C11<90,(C11/90)+1,(C11-90)/90)
+                    if(matrizElevaciones[i][j]<90) matriz[i][j]= (matrizElevaciones[i][j]/90)+1;
+                    else matriz[i][j]= (matrizElevaciones[i][j]-90)/90;
                 }
             }
         }

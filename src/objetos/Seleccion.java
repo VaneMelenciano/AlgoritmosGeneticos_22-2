@@ -9,6 +9,7 @@ import Individuos.IndividuoBinario;
 import Individuos.IndividuoReinas;
 import Individuos.IndividuoSAT;
 import Individuos.IndividuoTSP;
+import geneticos.GeneticoBinario;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -21,9 +22,16 @@ public class Seleccion {
     public static IndividuoBinario seleccionTorneoBinario(ArrayList<IndividuoBinario> poblacion){
        //recorrer la poblacción
        IndividuoBinario mejor = poblacion.get(0);
-       for(IndividuoBinario i: poblacion){
-           if(i.getFitness()>mejor.getFitness()) //maximizando
-               mejor = i;
+       if(GeneticoBinario.banderaUsarClasificador){
+           for(IndividuoBinario i: poblacion){
+                if(i.getFitnessDecimal()>mejor.getFitnessDecimal()) //maximizando
+                    mejor = i;
+            } 
+       }else{
+            for(IndividuoBinario i: poblacion){
+                if(i.getFitness()>mejor.getFitness()) //maximizando
+                    mejor = i;
+            } 
        }
        return (new IndividuoBinario(mejor.getGenotipo()));
     }

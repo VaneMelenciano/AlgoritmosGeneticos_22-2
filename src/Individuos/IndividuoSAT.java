@@ -15,7 +15,7 @@ import objetos.Matriz;
  */
 
 //SATISFACIBILIDAD BOOLEANA
-public class IndividuoSAT extends Individuo{
+public final class IndividuoSAT extends Individuo{
     public IndividuoSAT(int n){ //n es el numero máximo en la matriz (100)
         setGenotipo(Herramientas.generarArregloBinario(n));
         actualizar();

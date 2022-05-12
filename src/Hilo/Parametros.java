@@ -28,13 +28,18 @@ public class Parametros extends javax.swing.JFrame {
      */
     public Parametros() {
         
-        initComponents();
+        /*initComponents();
         Matriz.matriz=Matriz.leerArchivo(1); //0: TSP, 1: SB
        geneticoSAT = new GeneticoSAT(900, 100000000, 0, 0, 0, 0, 0, 100);
        this.seleccion=2;
        Thread hilo = new Thread(geneticoSAT);
+       hilo.start();*/
+       initComponents();
+        //Matriz.matriz=Matriz.leerArchivo(1); //0: TSP, 1: SB
+       geneticoBinario = new GeneticoBinario(100, 50000, 0, 0, 0, 0, 0, true);
+       this.seleccion=0;
+       Thread hilo = new Thread(geneticoBinario);
        hilo.start();
-       
     }
     public Parametros(GeneticoSAT genetico, String titulo) {
         super.setTitle(titulo);

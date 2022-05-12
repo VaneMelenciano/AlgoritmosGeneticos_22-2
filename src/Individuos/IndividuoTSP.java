@@ -12,7 +12,7 @@ import objetos.Matriz;
  *
  * @author Vanessa
  */
-public class IndividuoTSP extends Individuo{
+public final class IndividuoTSP extends Individuo{
     private boolean banderUsarElevaciones = false;
     private float porcentajeDistancia;
     private float porcentajeElevacion;
@@ -41,17 +41,16 @@ public class IndividuoTSP extends Individuo{
         //hacer los calculos de fenotipo/fitness
         actualizar();
     }
-    
-    private void calcularFitness() {
+     private void calcularFitness() {
         if(this.banderUsarElevaciones){
-            float auxDistancia=0, auxElevacion=0;
+            float auxDistancia=0, auxDesgaste=0;
             for(int i=0; i<getGenotipo().length-1; i++){
                 auxDistancia += Matriz.matriz[getGenotipo()[i]][getGenotipo()[i+1]];
-                auxElevacion += Matriz.matrizElevaciones[getGenotipo()[i]][getGenotipo()[i+1]];
+                auxDesgaste += Matriz.matrizDesgaste[getGenotipo()[i]][getGenotipo()[i+1]];
             }
-              auxDistancia += (Matriz.matriz[getGenotipo()[getGenotipo().length-1]][getGenotipo()[getGenotipo()[0]]]);
-              auxElevacion += (Matriz.matrizElevaciones[getGenotipo()[getGenotipo().length-1]][getGenotipo()[getGenotipo()[0]]]);
-              int aux = Math.round((this.porcentajeDistancia*auxDistancia)+(this.porcentajeElevacion*auxElevacion));
+              auxDistancia += (Matriz.matriz[getGenotipo()[getGenotipo().length-1]][getGenotipo()[0]]);
+              auxDesgaste += (Matriz.matrizDesgaste[getGenotipo()[getGenotipo().length-1]][getGenotipo()[0]]);
+              int aux = Math.round((this.porcentajeDistancia*auxDistancia)+(this.porcentajeElevacion*auxDesgaste));
               this.setFitness(aux);
         }else{
           //genotipo es el arreglo aleatorio de la ruta
@@ -64,6 +63,28 @@ public class IndividuoTSP extends Individuo{
         }
         
     }
+    /*private void calcularFitness() {
+        if(this.banderUsarElevaciones){
+            float auxDistancia=0, auxElevacion=0;
+            for(int i=0; i<getGenotipo().length-1; i++){
+                auxDistancia += Matriz.matriz[getGenotipo()[i]][getGenotipo()[i+1]];
+                auxElevacion += Matriz.matrizElevaciones[getGenotipo()[i]][getGenotipo()[i+1]];
+            }
+              auxDistancia += (Matriz.matriz[getGenotipo()[getGenotipo().length-1]][getGenotipo()[0]]);
+              auxElevacion += (Matriz.matrizElevaciones[getGenotipo()[getGenotipo().length-1]][getGenotipo()[0]]);
+              int aux = Math.round((this.porcentajeDistancia*auxDistancia)+(this.porcentajeElevacion*auxElevacion));
+              this.setFitness(aux);
+        }else{
+          //genotipo es el arreglo aleatorio de la ruta
+          //recorrer el genotipo y consultar la matriz de distancias
+          for(int i=0; i<getGenotipo().length-1; i++){
+              setFitness( getFitness() + Matriz.matriz[getGenotipo()[i]][getGenotipo()[i+1]]);
+          }
+          //ultima ruta hacia la iniciar (de regreso)
+          setFitness( getFitness() + Matriz.matriz[getGenotipo()[getGenotipo().length-1]][getGenotipo()[0]]);
+        }
+        
+    }*/
 
     @Override
     public void actualizar() {

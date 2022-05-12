@@ -9,6 +9,7 @@ import Individuos.IndividuoBinario;
 import Individuos.IndividuoReinas;
 import Individuos.IndividuoSAT;
 import Individuos.IndividuoTSP;
+import geneticos.GeneticoBinario;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -96,6 +97,10 @@ public class Muestreo {
         pob.sort(Collections.reverseOrder(Comparator.comparingInt(i -> i.getFitness())));
         return pob;
     }
+    private static ArrayList<IndividuoBinario> ordenarBinarioDecimal(ArrayList<IndividuoBinario> pob){
+        pob.sort(Collections.reverseOrder(Comparator.comparingDouble(i -> i.getFitnessDecimal())));
+        return pob;
+    }
     public static ArrayList<IndividuoBinario> aleatorioBinario(ArrayList<IndividuoBinario> pob, int cantidad){
         //solo toma % de los mejores
         ArrayList<IndividuoBinario> nuevaPob = new ArrayList<IndividuoBinario>();
@@ -111,7 +116,9 @@ public class Muestreo {
         //solo toma % de los mejores
         ArrayList<IndividuoBinario> nuevaPob = new ArrayList<IndividuoBinario>();
         //int cantidad = porcentaje*pob.size()/100;
-        pob = ordenarBinario((ArrayList<IndividuoBinario>) pob.clone());
+        
+        if(GeneticoBinario.banderaUsarClasificador) pob = ordenarBinarioDecimal((ArrayList<IndividuoBinario>) pob.clone());
+        else pob = ordenarBinario((ArrayList<IndividuoBinario>) pob.clone());
         for(int i=0; i<cantidad; i++){
             nuevaPob.add(pob.get(i));
         }

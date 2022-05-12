@@ -9,6 +9,7 @@ import Individuos.IndividuoBinario;
 import Individuos.IndividuoReinas;
 import Individuos.IndividuoSAT;
 import Individuos.IndividuoTSP;
+import java.util.Arrays;
 import java.util.LinkedHashSet;
 
 /**
@@ -19,7 +20,7 @@ public class Cruza {
     //metodo de cruza con base a mascara, y retorna el mejor
     public static IndividuoBinario cruzaMascara(IndividuoBinario m, IndividuoBinario p, int[] mascara){
         int[] g1 = new int[m.getGenotipo().length];    
-        int[] g2 = new int[m.getGenotipo().length];    
+        int[] g2 = new int[m.getGenotipo().length]; 
         //recorriendo la mascara
         for(int i=0; i<mascara.length; i++){
             //copias genotipicas en los genes de los hijos

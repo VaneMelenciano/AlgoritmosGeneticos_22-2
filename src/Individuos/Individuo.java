@@ -14,6 +14,7 @@ import objetos.Herramientas;
 public class Individuo {
     private int[] genotipo;
     private int fitness;
+    private float fitnessDecimal;
 
     public Individuo(){ //para binario
         
@@ -42,6 +43,13 @@ public class Individuo {
     public int getFitness() {
         return fitness;
     }
+    
+    /**
+     * @return the fitness
+     */
+    public float getFitnessDecimal() {
+        return fitnessDecimal;
+    }
 
     /**
      * @param genotipo the genotipo to set
@@ -55,6 +63,13 @@ public class Individuo {
      */
     public void setFitness(int fitness) {
         this.fitness = fitness;
+    }
+    
+    /**
+     * @param fitness the fitness to set
+     */
+    public void setFitnessDecimal(float fitness) {
+        this.fitnessDecimal = fitness;
     }
     
 }

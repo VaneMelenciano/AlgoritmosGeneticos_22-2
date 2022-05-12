@@ -476,7 +476,8 @@ public class Gestor extends javax.swing.JFrame {
     private void nuevoGeneticoBinario() {
         String titulo= ("Genetico Binario " + this.numeroGenetico);
         Consola c = new Consola(titulo);
-        this.geneticosBinario.add(this.numeroGenetico, new GeneticoBinario(10000, 100000000, 0, 0, 0, 0, 0, c));
+        boolean usandoClasificador = true;
+        this.geneticosBinario.add(this.numeroGenetico, new GeneticoBinario(10000, 100000000, 0, 0, 0, 0, 0, c, usandoClasificador ));
         //(tamanioPoblacion, numeroGeneraciones, probabilidadMuta, seleM, seleP, tipoMuestreo, muestreo, consola);
         this.parametros.add(this.numeroGenetico, new Parametros(this.geneticosBinario.get(this.numeroGenetico), titulo));
         agregarItems(titulo);

@@ -22,16 +22,22 @@ public class mainTSP {
         //Matriz.guardarArchivo(Matriz.matrizAleatoriaTSP(5, 0, 6), "Matriz elevaciones 5 cuidades, min 0 max 6");
         
         /*EJEMPLO EXCEL*/
-        Matriz.matriz=Matriz.leerArchivo(0);
+        Matriz.matriz=Matriz.leerArchivo(0); //distancias
         double[] alturas = {0, 3, 2, 2.7, 1.6};
+        
         System.out.println("\nMatriz de pendientes\n");
-        Matriz.matrizElevaciones = Matriz.matrizElevacionesPendienteTSP(Matriz.matriz, alturas);
-        //Matriz.imprimirMatriz(Matriz.matrizElevacionesPendienteTSP(Matriz.matriz, alturas));
+        Matriz.imprimirMatriz(Matriz.matrizElevacionesPendienteTSP(alturas));
+        
         System.out.println("\nMatriz de angulos\n");
-        Matriz.matrizElevaciones = Matriz.matrizElevacionesPendienteTSP(Matriz.matriz, alturas);
-        //Matriz.matrizElevaciones = Matriz.matrizElevacionesAngulosTSP(Matriz.matriz, alturas);
+        Matriz.matrizElevaciones = Matriz.matrizElevacionesAngulosTSP(alturas);
         Matriz.guardarArchivo(Matriz.matrizElevaciones, "Mariz elevaciones 5 cuidades con angulo");
-        Matriz.imprimirMatriz(Matriz.matrizElevacionesAngulosTSP(Matriz.matriz, alturas));
+        Matriz.imprimirMatriz(Matriz.matrizElevaciones);
+        
+        System.out.println("\nMatriz de angulos\n");
+        Matriz.matrizDesgaste = Matriz.matrizDesgasteTSP();
+        Matriz.guardarArchivo(Matriz.matrizDesgaste, "Mariz desgaste 5 cuidades");
+        Matriz.imprimirMatriz(Matriz.matrizDesgaste);
+        
         System.out.println("\n");
         int[] genotipo = {0,1,2,3,4};
         IndividuoTSP individuo = new IndividuoTSP(genotipo, 0.6F, 0.4F);

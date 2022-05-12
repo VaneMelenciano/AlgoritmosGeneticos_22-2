@@ -9,6 +9,7 @@ import Individuos.IndividuoBinario;
 import geneticosParalelos.Consola;
 import java.util.ArrayList;
 import java.util.Arrays;
+import objetos.Clasificador;
 import objetos.Cruza;
 import objetos.Herramientas;
 import objetos.Muestreo;
@@ -19,7 +20,7 @@ import objetos.Seleccion;
  *
  * @author Vanessa
  */
-public class GeneticoBinario extends Genetico{
+public final class GeneticoBinario extends Genetico{
     /*private int tamanioPoblacion; //numero de cuidades
     private int numGeneraciones;
     private double probMuta; //probabilidad de muta*/
@@ -27,11 +28,37 @@ public class GeneticoBinario extends Genetico{
     private IndividuoBinario mejorIndividuo;
     private IndividuoBinario nuevoMejorIndividuo; //cuando se recibe un individuo
     
-    public GeneticoBinario(int t, int n, double p){ //24, 20, 0.2
-        super(t, n, p);
+    public static Clasificador clasificador;
+    public static boolean banderaUsarClasificador = false;
+    
+    public GeneticoBinario(int tamanioPoblacion, int numeroGeneraciones, double probabilidadMuta, boolean banderaUsarClasificador){ //24, 20, 0.2
+        super(tamanioPoblacion, numeroGeneraciones, probabilidadMuta);
+        if(banderaUsarClasificador){
+            clasificador = new Clasificador();
+            GeneticoBinario.banderaUsarClasificador=true;
+        }
+        generarPoblacionInicial();
     }
     public GeneticoBinario(int tamanioPoblacion, int numeroGeneraciones, double probabilidadMuta, int seleM, int seleP, int tipoMuestreo, float muestreo, Consola consola){ //24, 20, 0.2
         super(tamanioPoblacion, numeroGeneraciones, probabilidadMuta, seleM, seleP, tipoMuestreo, muestreo, consola);
+        this.poblacion = new ArrayList<>();
+        generarPoblacionInicial();
+    }
+     public GeneticoBinario(int tamanioPoblacion, int numeroGeneraciones, double probabilidadMuta, int seleM, int seleP, int tipoMuestreo, float muestreo, Consola consola, boolean banderaUsarClasificador){ //24, 20, 0.2
+        super(tamanioPoblacion, numeroGeneraciones, probabilidadMuta, seleM, seleP, tipoMuestreo, muestreo, consola);
+        if(banderaUsarClasificador){
+            clasificador = new Clasificador();
+            GeneticoBinario.banderaUsarClasificador=true;
+        }
+        this.poblacion = new ArrayList<>();
+        generarPoblacionInicial();
+    }
+    public GeneticoBinario(int tamanioPoblacion, int numeroGeneraciones, double probabilidadMuta, int seleM, int seleP, int tipoMuestreo, float muestreo, boolean banderaUsarClasificador){ //24, 20, 0.2
+        super(tamanioPoblacion, numeroGeneraciones, probabilidadMuta, seleM, seleP, tipoMuestreo, muestreo);
+        if(banderaUsarClasificador){
+            clasificador = new Clasificador();
+            GeneticoBinario.banderaUsarClasificador=true;
+        }
         this.poblacion = new ArrayList<>();
         generarPoblacionInicial();
     }
@@ -43,7 +70,9 @@ public class GeneticoBinario extends Genetico{
     public void evolucionar(){
         ArrayList<IndividuoBinario> pobAux;
         //una sola mascara para todo el proceso evolutivo
-        int[] mascara = Herramientas.generarArregloBinario(24);
+        int[] mascara;
+        if(GeneticoBinario.banderaUsarClasificador) mascara = Herramientas.generarArregloBinario(GeneticoBinario.clasificador.getNumeroAtributos());
+        else mascara = Herramientas.generarArregloBinario(clasificador.getNumeroAtributos());
         //someter a la poblacion a un proceso evolutivo
        for(int i=0; i<getNumeroGeneraciones(); i++){
            //crear una población nueva
@@ -56,7 +85,6 @@ public class GeneticoBinario extends Genetico{
              else if(getTipoMuestreo()==1){
                  pobAux = Muestreo.torneoBinario(this.poblacion, cantidadMuestreo);
              }
-             
               if(getInsertarMejorIndividuo()==true){ //INSERTAR MEJOR INDIVIDUO DE OTRO GENETICO
                   pobAux.add(nuevoMejorIndividuo); cantidadMuestreo++;
                     setInsertarMejorIndividuo(false); 
@@ -88,11 +116,16 @@ public class GeneticoBinario extends Genetico{
            
            IndividuoBinario mejor = Seleccion.seleccionTorneoBinario(this.poblacion);
            this.mejorIndividuo = mejor;
-           if(this.getUsarGeneticosParalelos()){
+           if(this.getUsarGeneticosParalelos() && banderaUsarClasificador==true){
+                String texto = "Generacion: " + i + " Fitness: " + mejor.getFitnessDecimal()+ "  Mejor resultado: "+ Arrays.toString(mejor.getGenotipo() )+ "\n";
+                this.consola.setTexto(texto);
+           }else if(this.getUsarGeneticosParalelos()){
                 String texto = "Generacion: " + i + " Fitness: " + mejor.getFitness()+ "  Fenotipo: " +mejor.getFenotipo()+  "  Mejor resultado: "+ Arrays.toString(mejor.getGenotipo() )+ "\n";
                 this.consola.setTexto(texto);
+           }else if(banderaUsarClasificador){
+               System.out.println("Generacion: " + i + " Fitness: " + mejor.getFitnessDecimal()+ "  Mejor resultado: "+ Arrays.toString(mejor.getGenotipo()));
            }else{
-               System.out.println("Generacion: " + i + " Fitness: " + mejor.getFitness()+ "  Mejor resultado: "+ Arrays.toString(mejor.getGenotipo()));
+             System.out.println("Generacion: " + i + " Fitness: " + mejor.getFitness()+ "  Mejor resultado: "+ Arrays.toString(mejor.getGenotipo()));
            }
            /*IndividuoBinario mejor = Seleccion.seleccionTorneoBinario(this.poblacion);
            if(mejor.getFenotipo()<16777215){
@@ -108,7 +141,8 @@ public class GeneticoBinario extends Genetico{
         this.poblacion = new ArrayList<>();
         //se genere de manera aleatoria
         for(int i=0; i<getTamanioPoblacion(); i++)
-            this.poblacion.add(new IndividuoBinario());
+            if(banderaUsarClasificador)this.poblacion.add(new IndividuoBinario(GeneticoBinario.clasificador.getNumeroAtributos()));
+            else this.poblacion.add(new IndividuoBinario());
         this.mejorIndividuo = this.poblacion.get(0);
         
     }
