@@ -6,6 +6,7 @@
 package objetos;
 
 import Individuos.IndividuoBinario;
+import Individuos.IndividuoHorario;
 import Individuos.IndividuoReinas;
 import Individuos.IndividuoSAT;
 import Individuos.IndividuoTSP;
@@ -62,6 +63,14 @@ public class Seleccion {
        }
        return (new IndividuoReinas(mejor.getGenotipo()));
     }
+    public static IndividuoHorario seleccionTorneoHorarios(ArrayList<IndividuoHorario> poblacion) {
+        IndividuoHorario mejor = poblacion.get(0);
+       for(IndividuoHorario i: poblacion){
+           if(i.getFitness()<mejor.getFitness()) //minimizar
+               mejor = i;
+       }
+       return (new IndividuoHorario(mejor.getGenotipo()));
+    }
     
     //seleccion aleatoria
     public static IndividuoBinario seleccionAleatoriaBinario(ArrayList<IndividuoBinario> poblacion){
@@ -89,6 +98,11 @@ public class Seleccion {
        //System.out.println("\t " + pos);
        return new IndividuoSAT(poblacion.get(pos).getGenotipo());
     }
+    public static IndividuoHorario seleccionAleatoriaHorarios(ArrayList<IndividuoHorario> poblacion) {
+         Random r = new Random();
+       int pos = r.nextInt(poblacion.size());
+       return new IndividuoHorario(poblacion.get(pos).getGenotipo());
+    }
     
     //Ruleta
     public static IndividuoTSP seleccionRuletaTSP(ArrayList<IndividuoTSP> poblacion){
@@ -97,6 +111,5 @@ public class Seleccion {
         int pos = r.nextInt(poblacion.size());
         return new IndividuoTSP(poblacion.get(pos).getGenotipo());
     }
-    
-    
+
 }

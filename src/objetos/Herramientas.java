@@ -6,6 +6,7 @@
 package objetos;
 
 import Individuos.IndividuoTSP;
+import geneticos.GeneticoHorario;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
@@ -107,5 +108,16 @@ public class Herramientas {
         for(int i : a){
             System.out.print(i + " ");
         }System.out.println();
+    }
+
+    public static int[] generarArregloHorario(int n) {
+        //Arreglo que tendrá la longitud de: grupos * materias/grupo * veces Materia/Semana -> puede tener: modulo * 5
+        int[] aux = new int[n];
+        Random r = new Random();
+        for(int i=0; i<Horario.modulosPorSemana; i++){
+            int j = r.nextInt(n);
+            aux[i]=j;
+        }
+        return aux;
     }
 }

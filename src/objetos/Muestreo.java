@@ -6,6 +6,7 @@
 package objetos;
 
 import Individuos.IndividuoBinario;
+import Individuos.IndividuoHorario;
 import Individuos.IndividuoReinas;
 import Individuos.IndividuoSAT;
 import Individuos.IndividuoTSP;
@@ -150,6 +151,35 @@ public class Muestreo {
             nuevaPob.add(pob.get(i));
         }
         return nuevaPob;
+    }
+    
+    /* HORARIOS */
+    public static ArrayList<IndividuoHorario> aleatorioHorarios(ArrayList<IndividuoHorario> pob, int cantidad) {
+        //solo toma % de los mejores
+        ArrayList<IndividuoHorario> nuevaPob = new ArrayList<IndividuoHorario>();
+        //int cantidad = porcentaje*pob.size()/100;
+        for(int i=0; i<cantidad; i++){
+             Random r = new Random();
+            int pos = r.nextInt(pob.size());
+            nuevaPob.add(pob.get(pos));
+        }
+        return nuevaPob;
+    }
+
+    public static ArrayList<IndividuoHorario> torneoHorarios(ArrayList<IndividuoHorario> poblacion, int cantidad) {
+        //solo toma % de los mejores
+        ArrayList<IndividuoHorario> nuevaPob = new ArrayList<IndividuoHorario>();
+        //int cantidad = porcentaje*pob.size()/100;
+        poblacion = ordenarHorario((ArrayList<IndividuoHorario>) poblacion.clone());
+        for(int i=0; i<cantidad; i++){
+            nuevaPob.add(poblacion.get(i));
+        }
+        return nuevaPob;
+    }
+
+    private static ArrayList<IndividuoHorario> ordenarHorario(ArrayList<IndividuoHorario> pob) {
+         pob.sort(Comparator.comparingInt(i -> i.getFitness()));
+        return pob;
     }
     
 }

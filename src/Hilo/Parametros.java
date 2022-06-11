@@ -6,10 +6,13 @@
 package Hilo;
 
 import geneticos.GeneticoBinario;
+import geneticos.GeneticoHorario;
 import geneticos.GeneticoReinas;
 import geneticos.GeneticoSAT;
 import geneticos.GeneticoTSP;
+import objetos.Horario;
 import objetos.Matriz;
+import objetos.TokenizadorHorarios;
 
 /**
  *
@@ -21,8 +24,9 @@ public class Parametros extends javax.swing.JFrame {
     private GeneticoBinario geneticoBinario;
     private GeneticoReinas geneticoReinas;
     private GeneticoTSP geneticoTSP;
+    private GeneticoHorario geneticoHorario;
     private int seleccion; 
-    //Binario=0, Reinas=1, SAT=2, TSP=3
+    //Binario=0, Reinas=1, SAT=2, TSP=3, Horario = 4
     /**
      * Creates new form Parametros
      */
@@ -34,11 +38,19 @@ public class Parametros extends javax.swing.JFrame {
        this.seleccion=2;
        Thread hilo = new Thread(geneticoSAT);
        hilo.start();*/
-       initComponents();
+       /*initComponents();
         //Matriz.matriz=Matriz.leerArchivo(1); //0: TSP, 1: SB
        geneticoBinario = new GeneticoBinario(100, 50000, 0, 0, 0, 0, 0, true);
        this.seleccion=0;
        Thread hilo = new Thread(geneticoBinario);
+       hilo.start();*/
+        initComponents();
+        TokenizadorHorarios.leerArchivo();
+        Horario horario = new Horario(5, 5, 7, 15, 6, TokenizadorHorarios.listaActividades);
+        //int tamanioPoblacion, int numeroGeneraciones, double probabilidadMuta
+        geneticoHorario = new GeneticoHorario(25, 300000, 0.4);
+        seleccion=4;
+        Thread hilo = new Thread(geneticoHorario);
        hilo.start();
     }
     public Parametros(GeneticoSAT genetico, String titulo) {
@@ -271,6 +283,13 @@ public class Parametros extends javax.swing.JFrame {
                    this.tipoMuestreo.setSelectedIndex(this.geneticoSAT.getTipoMuestreo());
                    this.tamanioMuestreo.setText(String.valueOf(this.geneticoSAT.getPorcentajeMuestreo()));
                    break;
+               case 4:
+                    this.tamanioPoblacion.setText(String.valueOf(this.geneticoHorario.getTamanioPoblacion()));
+                   this.probabilidadMuta.setText(String.valueOf(this.geneticoHorario.getProbabilidadMuta()));
+                   this.seleccionMadre.setSelectedIndex(this.geneticoHorario.getSeleccionMadre());
+                   this.seleccionPadre.setSelectedIndex(this.geneticoHorario.getSeleccionPadre());
+                   this.tipoMuestreo.setSelectedIndex(this.geneticoHorario.getTipoMuestreo());
+                   this.tamanioMuestreo.setText(String.valueOf(this.geneticoHorario.getPorcentajeMuestreo()));
                default:
                    this.tamanioPoblacion.setText(String.valueOf(this.geneticoTSP.getTamanioPoblacion()));
                    this.probabilidadMuta.setText(String.valueOf(this.geneticoTSP.getProbabilidadMuta()));
@@ -372,6 +391,8 @@ public class Parametros extends javax.swing.JFrame {
                    break;
                case 2: this.geneticoSAT.setSeleccionMadre(this.seleccionMadre.getSelectedIndex());
                    break;
+               case 4: this.geneticoHorario.setSeleccionMadre(this.seleccionMadre.getSelectedIndex());
+                   break;
                default: this.geneticoTSP.setSeleccionMadre(this.seleccionMadre.getSelectedIndex());
                    break;
            }
@@ -386,6 +407,8 @@ public class Parametros extends javax.swing.JFrame {
                    break;
                case 2: this.geneticoSAT.setProbabilidadMuta(muta);
                    break;
+               case 4: this.geneticoHorario.setProbabilidadMuta(muta);
+                   break;
                default: this.geneticoTSP.setProbabilidadMuta(muta);
                    break;
            }
@@ -399,6 +422,8 @@ public class Parametros extends javax.swing.JFrame {
                    break;
                case 2:this.geneticoSAT.setSeleccionPadre(this.seleccionPadre.getSelectedIndex());
                    break;
+               case 4:this.geneticoHorario.setSeleccionPadre(this.seleccionPadre.getSelectedIndex());
+                   break;
                default: this.geneticoTSP.setSeleccionPadre(this.seleccionPadre.getSelectedIndex());
                    break;
            }
@@ -411,6 +436,8 @@ public class Parametros extends javax.swing.JFrame {
                case 1: this.geneticoReinas.setTipoMuestreo(this.seleccionPadre.getSelectedIndex());
                    break;
                case 2:this.geneticoSAT.setTipoMuestreo(this.tipoMuestreo.getSelectedIndex());
+                   break;
+               case 4:this.geneticoHorario.setTipoMuestreo(this.tipoMuestreo.getSelectedIndex());
                    break;
                default: this.geneticoTSP.setTipoMuestreo(this.seleccionPadre.getSelectedIndex());
                    break;
@@ -426,6 +453,8 @@ public class Parametros extends javax.swing.JFrame {
                    break;
                case 2:this.geneticoSAT.setPorcentajeMuestreo(por);
                    break;
+               case 4:this.geneticoHorario.setPorcentajeMuestreo(por);
+                   break;
                default: this.geneticoTSP.setPorcentajeMuestreo(por);
                    break;
            }
@@ -439,6 +468,8 @@ public class Parametros extends javax.swing.JFrame {
                case 1: this.geneticoReinas.setTamanioPoblacion(poblacion);
                    break;
                case 2:this.geneticoSAT.setTamanioPoblacion(poblacion);
+                   break;
+               case 4:this.geneticoHorario.setTamanioPoblacion(poblacion);
                    break;
                default: this.geneticoTSP.setTamanioPoblacion(poblacion);
                    break;

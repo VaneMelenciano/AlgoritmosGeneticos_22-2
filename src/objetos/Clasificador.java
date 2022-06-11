@@ -27,7 +27,7 @@ public class Clasificador {
         genotiposCalculados = new ArrayList<>();
         fitnessCalculados = new ArrayList<>();
         clasificador = new NaiveBayes();
-        Tokenizador t = new Tokenizador(); //lee el archivo de las instancias
+        Tokenizador t = new Tokenizador(1); //lee el archivo de las instancias
         numeroAtributos = t.getInstancias().getNumAtributos();
         instancias = t.getInstancias();
     }

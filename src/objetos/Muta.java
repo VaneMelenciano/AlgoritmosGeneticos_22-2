@@ -6,6 +6,7 @@
 package objetos;
 
 import Individuos.IndividuoBinario;
+import Individuos.IndividuoHorario;
 import Individuos.IndividuoReinas;
 import Individuos.IndividuoSAT;
 import Individuos.IndividuoTSP;
@@ -55,5 +56,15 @@ public class Muta {
     private static Random r = new Random();
     private static int calcularAleatorio(int n){
         return r.nextInt(n-1)+1;
+    }
+
+    public static void muta(IndividuoHorario i) {
+        int pos = calcularAleatorio(i.getGenotipo().length); //r.nextInt(i.getGenotipo().length-1)+1; //elige una posición entre el genotipo del individuo, al azar
+        int pos2 = calcularAleatorio(i.getGenotipo().length);
+        while(pos==pos2) pos2=calcularAleatorio(i.getGenotipo().length);
+        int aux = i.getGenotipo()[pos];
+        i.getGenotipo()[pos] = i.getGenotipo()[pos2]; //si es 0, lo pone en 1 y viseversa
+        i.getGenotipo()[pos2] = aux; //si es 0, lo pone en 1 y viseversa
+        i.actualizar(); //actualiza el firtness y genotipo del individuo
     }
 }

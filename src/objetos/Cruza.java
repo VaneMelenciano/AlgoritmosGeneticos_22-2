@@ -6,6 +6,7 @@
 package objetos;
 
 import Individuos.IndividuoBinario;
+import Individuos.IndividuoHorario;
 import Individuos.IndividuoReinas;
 import Individuos.IndividuoSAT;
 import Individuos.IndividuoTSP;
@@ -164,5 +165,63 @@ public class Cruza {
         System.out.println("\tFitness: " + h2.getFitness());*/
         
         return (h1.getFitness()>h2.getFitness() ? h1 : h2);
+    }
+
+    public static IndividuoHorario cruzaHorarios(IndividuoHorario m, IndividuoHorario p, int[] mascara) {
+        int[] g1 = new int[m.getGenotipo().length];    
+        int[] g2 = new int[m.getGenotipo().length];    
+        //recorriendo la mascara
+        for(int i=0; i<mascara.length; i++){
+            //copias genotipicas en los genes de los hijos
+            if(mascara[i]==1){
+                g1[i]=m.getGenotipo()[i];
+                g2[i]=p.getGenotipo()[i];
+            }else{
+                g1[i]=p.getGenotipo()[i];
+                g2[i]=m.getGenotipo()[i];
+            }
+        }
+        IndividuoHorario h1 = new IndividuoHorario(g1);
+        IndividuoHorario h2 = new IndividuoHorario(g2);
+        return verificarMenor(h1, h2);
+    }
+    
+    public static IndividuoHorario cruzaHorarios(IndividuoHorario m, IndividuoHorario p) {
+        int[] geneticoAux1 = new int[m.getGenotipo().length];
+        int[] geneticoAux2 = new int[m.getGenotipo().length];;
+        
+        boolean bandera = true;
+        int j=0;
+        //primer individuo
+        for(int i=0; i<m.getGenotipo().length; i++){
+            if(bandera){
+                geneticoAux1[j++] = m.getGenotipo()[i];
+                bandera=false;
+            }
+            if(!bandera){
+                geneticoAux1[j++] = p.getGenotipo()[i];
+                bandera=true;
+            }
+        }
+        //segundo individuo
+        bandera = true; j=0;
+        for(int i=m.getGenotipo().length-1; i>0; i--){
+            if(bandera){
+                geneticoAux2[j++] = m.getGenotipo()[i];
+                bandera=false;
+            }
+            if(!bandera){
+                geneticoAux2[j++] = p.getGenotipo()[i];
+                bandera=true;
+            }
+        }
+        IndividuoHorario hijo1 = new IndividuoHorario(geneticoAux1);
+        IndividuoHorario hijo2 = new IndividuoHorario(geneticoAux2);
+        return verificarMenor(hijo1, hijo2);
+    }
+
+    private static IndividuoHorario verificarMenor(IndividuoHorario hijo1, IndividuoHorario hijo2) {
+        if(hijo1.getFitness()>hijo2.getFitness()) return hijo2;
+        else return hijo1;
     }
 }
